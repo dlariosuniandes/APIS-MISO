@@ -16,10 +16,10 @@ export class CultureEntity {
   id: string;
 
   @Column()
-  nombre: string;
+  name: string;
 
   @Column()
-  descripcion: string;
+  desciption: string;
 
   @ManyToMany(() => ProductEntity, (product) => product.cultures)
   products: ProductEntity[];
