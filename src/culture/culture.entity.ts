@@ -31,5 +31,5 @@ export class CultureEntity {
   restaurants: RestaurantEntity[];
 
   @OneToMany(() => RecipeEntity, (recipe) => recipe.culture)
-  recipe: RecipeEntity[];
+  recipes: RecipeEntity[];
 }
