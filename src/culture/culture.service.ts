@@ -13,14 +13,14 @@ export class CultureService {
 
   async findAll(): Promise<CultureEntity[]> {
     return await this.cultureRepository.find({
-      relations: ['recipes', 'products', 'recipes', 'countries'],
+      relations: ['recipes', 'restaurants', 'products', 'recipes'],
     });
   }
 
   async findOne(id: string): Promise<CultureEntity> {
     const culture: CultureEntity = await this.cultureRepository.findOne({
       where: { id },
-      relations: ['recipes', 'products', 'recipes', 'countries'],
+      relations: ['recipes', 'products', 'restaurants', 'countries'],
     });
     if (!culture) {
       throw new BusinessLogicException(
