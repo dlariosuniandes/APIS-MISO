@@ -19,7 +19,7 @@ export class CultureEntity {
   name: string;
 
   @Column()
-  desciption: string;
+  description: string;
 
   @ManyToMany(() => ProductEntity, (product) => product.cultures)
   products: ProductEntity[];
