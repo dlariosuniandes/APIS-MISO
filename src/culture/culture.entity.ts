@@ -2,7 +2,14 @@ import { CountryEntity } from 'src/country/country.entity';
 import { ProductEntity } from 'src/product/product.entity';
 import { RecipeEntity } from 'src/recipe/recipe.entity';
 import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class CultureEntity {
@@ -15,7 +22,8 @@ export class CultureEntity {
   @Column()
   description: string;
 
-  @OneToMany(() => ProductEntity, (product) => product.culture)
+  @ManyToMany(() => ProductEntity, (product) => product.cultures)
+  @JoinTable()
   products: ProductEntity[];
 
   @OneToMany(() => CountryEntity, (country) => country.culture)

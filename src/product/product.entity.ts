@@ -1,11 +1,25 @@
 import { CultureEntity } from 'src/culture/culture.entity';
-import { Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { CategoryEnum } from '../enums/category.enum';
 @Entity()
 export class ProductEntity {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('uuid') id: string;
 
-  @ManyToOne(() => ProductEntity, (product) => product.culture)
-  culture: CultureEntity;
+  @Column()
+  name: string;
+
+  @Column()
+  description: string;
+
+  @Column()
+  story: string;
+
+  @Column({
+    type: 'enum',
+    enum: CategoryEnum,
+  })
+  category: CategoryEnum;
+
+  @ManyToMany(() => CultureEntity, (culture) => culture.products)
+  cultures: CultureEntity[];
 }
