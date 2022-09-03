@@ -15,7 +15,7 @@ describe('CultureService', () => {
     repository.clear();
     cultureList = [];
     for (let i = 0; i < 5; i++) {
-      const museum: CultureEntity = await repository.save({
+      const culture: CultureEntity = await repository.save({
         id: faker.datatype.uuid(),
         name: faker.lorem.sentence(),
         description: faker.lorem.sentence(),
@@ -24,7 +24,7 @@ describe('CultureService', () => {
         products: [],
         restaurants: [],
       });
-      cultureList.push(museum);
+      cultureList.push(culture);
     }
   };
 
