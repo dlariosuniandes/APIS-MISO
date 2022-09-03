@@ -1,4 +1,10 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { MichelineStarEntity } from './micheline-star.entity';
+import { MichelineStarService } from './micheline-star.service';
 
-@Module({})
+@Module({
+  imports: [TypeOrmModule.forFeature([MichelineStarEntity])],
+  providers: [MichelineStarService],
+})
 export class MichelineStarModule {}
