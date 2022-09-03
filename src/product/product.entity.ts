@@ -3,7 +3,8 @@ import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { CategoryEnum } from '../enums/category.enum';
 @Entity()
 export class ProductEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column()
   name: string;
@@ -14,10 +15,7 @@ export class ProductEntity {
   @Column()
   story: string;
 
-  @Column({
-    type: 'enum',
-    enum: CategoryEnum,
-  })
+  @Column('int')
   category: CategoryEnum;
 
   @ManyToMany(() => CultureEntity, (culture) => culture.products)

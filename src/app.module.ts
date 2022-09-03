@@ -12,7 +12,7 @@ import { RestaurantEntity } from './restaurant/restaurant.entity';
 import { RecipeEntity } from './recipe/recipe.entity';
 import { CountryEntity } from './country/country.entity';
 import { ProductEntity } from './product/product.entity';
-
+import { CultureProductModule } from './culture-product/culture-product.module';
 
 @Module({
   imports: [
@@ -39,6 +39,7 @@ import { ProductEntity } from './product/product.entity';
       synchronize: true,
       keepConnectionAlive: true,
     }),
+    CultureProductModule,
   ],
   controllers: [AppController],
   providers: [AppService],

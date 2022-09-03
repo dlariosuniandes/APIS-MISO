@@ -19,10 +19,16 @@ export class ProductService {
   }
 
   async findOne(id: string): Promise<ProductEntity> {
-    return await this.productRepository.findOne({
+    const product: ProductEntity = await this.productRepository.findOne({
       where: { id },
       relations: ['cultures'],
     });
+    if (!product) {
+      throw new NotFoundException(
+        'The culture with the given id was not found',
+      );
+    }
+    return product;
   }
 
   async updateOne(id: string, product: ProductEntity): Promise<ProductEntity> {
