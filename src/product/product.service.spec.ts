@@ -92,6 +92,12 @@ describe('ProductService', () => {
     );
   });
 
+  it('should delete an existing product', async () => {
+    await provider.deleteOne(productList[0].id);
+    const products: ProductEntity[] = await provider.findAll();
+    expect(products.length).toEqual(4);
+  });
+
   afterAll(() => {
     repository.clear();
   });
