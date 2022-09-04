@@ -20,7 +20,7 @@ export class RestaurantEntity {
   city: string;
 
   @ManyToOne(() => CultureEntity, (culture) => culture.restaurants)
-  culture: CultureEntity;
+  cultures: CultureEntity[];
 
   @OneToMany(
     () => MichelineStarEntity,

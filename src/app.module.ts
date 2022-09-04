@@ -14,6 +14,7 @@ import { CountryEntity } from './country/country.entity';
 import { ProductEntity } from './product/product.entity';
 import { MichelineStarModule } from './micheline-star/micheline-star.module';
 import { MichelineStarEntity } from './micheline-star/micheline-star.entity';
+import { RestaurantMichelineStarModule } from './restaurant-micheline-star/restaurant-micheline-star.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { MichelineStarEntity } from './micheline-star/micheline-star.entity';
     RecipeModule,
     RestaurantModule,
     MichelineStarModule,
+    RestaurantMichelineStarModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',

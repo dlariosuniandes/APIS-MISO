@@ -11,14 +11,17 @@ export class RestaurantService {
     private readonly restaurantRepository: Repository<RestaurantEntity>,
   ) {}
 
+  private messageExcepetionRestaurantNotFound =
+    'The Restaurant with the given id was not found';
+
   async findAll(): Promise<RestaurantEntity[]> {
     return await this.restaurantRepository.find({
-      relations: ['micheline-stars'],
+      relations: ['michelineStars'],
     });
   }
 
   async findOne(id: string): Promise<RestaurantEntity> {
-    return await this.#findOneBy(id, ['micheline-stars']);
+    return await this.findOneBy(id, ['michelineStars']);
   }
 
   async create(restaurant: RestaurantEntity): Promise<RestaurantEntity> {
@@ -29,16 +32,16 @@ export class RestaurantService {
     id: string,
     restaurant: RestaurantEntity,
   ): Promise<RestaurantEntity> {
-    await this.#findOneBy(id);
+    await this.findOneBy(id);
     return await this.restaurantRepository.save(restaurant);
   }
 
   async delete(id: string) {
-    const restaurant: RestaurantEntity = await this.#findOneBy(id);
+    const restaurant: RestaurantEntity = await this.findOneBy(id);
     return await this.restaurantRepository.delete(restaurant);
   }
 
-  async #findOneBy(
+  async findOneBy(
     id: string,
     relations: Array<string> = [],
   ): Promise<RestaurantEntity> {
@@ -53,7 +56,7 @@ export class RestaurantService {
 
   async #handleNotFoundRestaurant() {
     throw new BusinessLogicException(
-      'The restaurant with the given id was not found',
+      this.messageExcepetionRestaurantNotFound,
       BusinessError.NOT_FOUND,
     );
   }

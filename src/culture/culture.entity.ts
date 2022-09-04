@@ -21,7 +21,7 @@ export class CultureEntity {
   @OneToMany(() => CountryEntity, (country) => country.culture)
   countries: CountryEntity[];
 
-  @OneToMany(() => RestaurantEntity, (restaurant) => restaurant.culture)
+  @OneToMany(() => RestaurantEntity, (restaurant) => restaurant.cultures)
   restaurants: RestaurantEntity[];
 
   @OneToMany(() => RecipeEntity, (recipe) => recipe.culture)
