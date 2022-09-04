@@ -73,7 +73,7 @@ export class CultureRestaurantService {
     for (let i = 0; i < restaurants.length; i++) {
       const restaurant: RestaurantEntity =
         await this.restaurantRepository.findOne({
-          where: { id: restaurants[i].id },
+          where: { id: `${restaurants[i].id}` },
         });
       if (!restaurant)
         throw new BusinessLogicException(

@@ -48,7 +48,7 @@ describe('RestaurantService', () => {
 
   const getStoredRestaurant = async (restaurant: RestaurantEntity) => {
     return await repository.findOne({
-      where: { id: restaurant.id },
+      where: { id: `${restaurant.id}` },
     });
   };
 
