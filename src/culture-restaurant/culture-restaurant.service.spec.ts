@@ -11,6 +11,7 @@ import { faker } from '@faker-js/faker';
 
 describe('CultureRestaurantService', () => {
   let service: CultureRestaurantService;
+  let cultureService: CultureService;
   let cultureRepository: Repository<CultureEntity>;
   let restaurantRepository: Repository<RestaurantEntity>;
   let culture: CultureEntity;
