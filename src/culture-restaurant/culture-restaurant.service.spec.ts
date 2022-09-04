@@ -161,7 +161,7 @@ describe('CultureRestaurantService', () => {
     const restaurant: RestaurantEntity = restaurantsList[0];
     await service.deleteRestaurantFromCulture(culture.id, restaurant.id);
     const storedCulture: CultureEntity = await cultureRepository.findOne({
-      where: { id: `${culture.id}` },
+      where: { id: culture.id },
       relations: ['restaurants'],
     });
     const deletedRestaurant: RestaurantEntity = storedCulture.restaurants.find(
