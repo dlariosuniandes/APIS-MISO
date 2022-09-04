@@ -15,9 +15,10 @@ describe('RecipeService', () => {
     const recipeDict: object = {
       id: faker.datatype.uuid(),
       name: faker.lorem.sentence(),
+      description: faker.lorem.sentence(),
       preparation: faker.lorem.sentence(),
-      url_photo: faker.image(),
-      url_video: faker.internet(),
+      url_photo: faker.internet.url(),
+      url_video: faker.internet.url(),
     };
     return recipeDict;
   };
@@ -41,6 +42,7 @@ describe('RecipeService', () => {
     repository = module.get<Repository<RecipeEntity>>(
       getRepositoryToken(RecipeEntity),
     );
+    await seedDatabase();
   });
 
   it('should be defined', () => {
@@ -53,16 +55,16 @@ describe('RecipeService', () => {
     const newStoredRecipe = await service.findOne(newRecipe.id);
     expect(newStoredRecipe).not.toBeNull();
     const newStoredRecipeObj = JSON.parse(JSON.stringify(newStoredRecipe));
-    delete newStoredRecipeObj['cultures'];
+    delete newStoredRecipeObj['culture'];
     expect(JSON.parse(JSON.stringify(newRecipe))).toEqual(newStoredRecipeObj);
   });
-  
+
   it('existing recipes should be found', async () => {
     const storedRecipe: RecipeEntity = recipeList[recipeList.length - 1];
     const recipe: RecipeEntity = await service.findOne(storedRecipe.id);
     expect(recipe).not.toBeNull();
     const recipeObj = JSON.parse(JSON.stringify(recipe));
-    delete recipeObj['cultures'];
+    delete recipeObj['culture'];
     expect(recipeObj).toEqual(JSON.parse(JSON.stringify(storedRecipe)));
   });
 
@@ -72,16 +74,14 @@ describe('RecipeService', () => {
     let storedRecipe: RecipeEntity = await service.findOne(
       editingRecipe.id,
     );
-    const { cultures, ...rest } = JSON.parse(JSON.stringify(storedRecipe));
+    const { culture, ...rest } = JSON.parse(JSON.stringify(storedRecipe));
     expect(storedRecipe).not.toBeNull();
     expect(JSON.parse(JSON.stringify(editingRecipe))).not.toBe(rest);
     await service.updateOne(editingRecipe.id, editingRecipe);
     storedRecipe = await service.findOne(editingRecipe.id);
     const storedRecipeObj = JSON.parse(JSON.stringify(storedRecipe));
-    delete storedRecipeObj['cultures'];
-    expect(JSON.parse(JSON.stringify(editingRecipe))).toEqual(
-      storedRecipeObj,
-    );
+    delete storedRecipeObj['culture'];
+    expect(JSON.parse(JSON.stringify(editingRecipe))).toEqual(storedRecipeObj);
   });
 
   it('should delete an existing recipe', async () => {
