@@ -24,6 +24,7 @@ describe('CultureRestaurantService', () => {
     }).compile();
 
     service = module.get<CultureRestaurantService>(CultureRestaurantService);
+    cultureService = module.get<CultureService>(CultureService);
     cultureRepository = module.get<Repository<CultureEntity>>(
       getRepositoryToken(CultureEntity),
     );
@@ -161,10 +162,9 @@ describe('CultureRestaurantService', () => {
   it('deleteRestaurantToCulture should remove an restaurant from a culture', async () => {
     const restaurant: RestaurantEntity = restaurantsList[0];
     await service.deleteRestaurantFromCulture(culture.id, restaurant.id);
-    const storedCulture: CultureEntity = await cultureRepository.findOne({
-      where: { id: culture.id },
-      relations: ['restaurants'],
-    });
+    const storedCulture: CultureEntity = await cultureService.findOne(
+      culture.id,
+    );
     const deletedRestaurant: RestaurantEntity = storedCulture.restaurants.find(
       (a) => a.id === restaurant.id,
     );
