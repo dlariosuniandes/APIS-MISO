@@ -73,7 +73,6 @@ describe('CultureRecipeService', () => {
     for (let i = 0; i < recipeList.length; i++) {
       recipeList[i] = await recipeProvider.findOne(recipeList[i].id);
     }
-    console.log();
   };
 
   beforeEach(async () => {
