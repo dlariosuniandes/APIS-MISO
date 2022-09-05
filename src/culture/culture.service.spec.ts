@@ -84,9 +84,7 @@ describe('CultureService', () => {
     const newCulture: CultureEntity = await service.create(culture);
     expect(newCulture).not.toBeNull();
 
-    const storedCulture: CultureEntity = await repository.findOne({
-      where: { id: newCulture.id },
-    });
+    const storedCulture: CultureEntity = await service.findOne(newCulture.id);
     expect(storedCulture).not.toBeNull();
     expect(storedCulture.name).toEqual(newCulture.name);
     expect(storedCulture.description).toEqual(newCulture.description);
@@ -101,9 +99,7 @@ describe('CultureService', () => {
       culture,
     );
     expect(updatedCulture).not.toBeNull();
-    const storedCulture: CultureEntity = await repository.findOne({
-      where: { id: culture.id },
-    });
+    const storedCulture: CultureEntity = await service.findOne(culture.id);
     expect(storedCulture).not.toBeNull();
     expect(storedCulture.name).toEqual(culture.name);
     expect(storedCulture.description).toEqual(culture.description);
@@ -125,10 +121,12 @@ describe('CultureService', () => {
   it('delete should remove a culture', async () => {
     const culture: CultureEntity = cultureList[0];
     await service.delete(culture.id);
-    const deletedCulture: CultureEntity = await repository.findOne({
-      where: { id: culture.id },
-    });
-    expect(deletedCulture).toBeNull();
+    try {
+      await service.findOne(culture.id);
+    } catch {
+      const storedCultures: CultureEntity[] = await service.findAll();
+      expect(storedCultures.length).toEqual(4);
+    }
   });
 
   it('delete should throw an exception for an invalid culture', async () => {
