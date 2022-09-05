@@ -23,6 +23,7 @@ export class RecipeEntity {
 
   @ManyToOne(() => CultureEntity, (culture) => culture.recipes, {
     onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
   })
   culture: CultureEntity;
 }
