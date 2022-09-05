@@ -25,9 +25,7 @@ export class RecipeService {
       relations: ['culture'],
     });
     if (!recipe) {
-      throw new NotFoundException(
-        'The culture with the given id was not found',
-      );
+      throw new NotFoundException('The recipe with the given id was not found');
     }
     return recipe;
   }

@@ -15,6 +15,7 @@ import { ProductEntity } from './product/product.entity';
 import { CultureProductModule } from './culture-product/culture-product.module';
 import { MichelineStarModule } from './micheline-star/micheline-star.module';
 import { MichelineStarEntity } from './micheline-star/micheline-star.entity';
+import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { MichelineStarEntity } from './micheline-star/micheline-star.entity';
       keepConnectionAlive: true,
     }),
     CultureProductModule,
+    CultureRecipeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

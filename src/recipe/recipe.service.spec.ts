@@ -71,9 +71,7 @@ describe('RecipeService', () => {
   it('should edit an existing recipe', async () => {
     const editingRecipe = recipeList[recipeList.length - 1];
     editingRecipe.preparation = faker.lorem.sentence();
-    let storedRecipe: RecipeEntity = await service.findOne(
-      editingRecipe.id,
-    );
+    let storedRecipe: RecipeEntity = await service.findOne(editingRecipe.id);
     const { culture, ...rest } = JSON.parse(JSON.stringify(storedRecipe));
     expect(storedRecipe).not.toBeNull();
     expect(JSON.parse(JSON.stringify(editingRecipe))).not.toBe(rest);
