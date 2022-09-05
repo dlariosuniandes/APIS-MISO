@@ -47,7 +47,7 @@ export class RestaurantService {
   ): Promise<RestaurantEntity> {
     const restaurant: RestaurantEntity =
       await this.restaurantRepository.findOne({
-        where: { id },
+        where: { id: id },
         relations: relations,
       });
     if (!restaurant) await this.#handleNotFoundRestaurant();

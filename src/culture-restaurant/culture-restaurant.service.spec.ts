@@ -101,7 +101,7 @@ describe('CultureRestaurantService', () => {
       service.addRestaurantToCulture('0', newRestaurant.id),
     ).rejects.toHaveProperty(
       'message',
-      'The Culture with the given id was not found',
+      'The culture with the given id was not found',
     );
   });
 
@@ -116,7 +116,7 @@ describe('CultureRestaurantService', () => {
       service.findRestaurantsByCultureId('0'),
     ).rejects.toHaveProperty(
       'message',
-      'The Culture with the given id was not found',
+      'The culture with the given id was not found',
     );
   });
 
@@ -144,7 +144,7 @@ describe('CultureRestaurantService', () => {
       service.associateRestaurantsToCulture('0', [newRestaurant]),
     ).rejects.toHaveProperty(
       'message',
-      'The Culture with the given id was not found',
+      'The culture with the given id was not found',
     );
   });
 
@@ -186,7 +186,7 @@ describe('CultureRestaurantService', () => {
       service.deleteRestaurantFromCulture('0', restaurant.id),
     ).rejects.toHaveProperty(
       'message',
-      'The Culture with the given id was not found',
+      'The culture with the given id was not found',
     );
   });
 
@@ -195,11 +195,14 @@ describe('CultureRestaurantService', () => {
       name: faker.company.name(),
       city: faker.address.cityName(),
     });
-    await expect(() =>
-      service.deleteRestaurantFromCulture(culture.id, newRestaurant.id),
-    ).rejects.toHaveProperty(
-      'message',
-      'The Restaurant with the given id is not associated to the Culture',
-    );
+    const initialCulture = await cultureService.findOne(culture.id);
+    try {
+      await service.deleteRestaurantFromCulture(culture.id, newRestaurant.id);
+    } catch {
+      const updatedCulture = await cultureService.findOne(culture.id);
+      expect(initialCulture.restaurants.length).toEqual(
+        updatedCulture.restaurants.length,
+      );
+    }
   });
 });

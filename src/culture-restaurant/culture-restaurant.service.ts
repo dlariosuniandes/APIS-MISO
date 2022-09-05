@@ -4,6 +4,8 @@ import { CultureEntity } from 'src/culture/culture.entity';
 import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
 import { BusinessError, BusinessLogicException } from 'src/shared/errors';
 import { Repository } from 'typeorm';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import { CultureService } from '../culture/culture.service';
 
 @Injectable()
 export class CultureRestaurantService {
@@ -13,25 +15,25 @@ export class CultureRestaurantService {
 
     @InjectRepository(RestaurantEntity)
     private readonly restaurantRepository: Repository<RestaurantEntity>,
+
+    private restaurantService: RestaurantService,
+
+    private cultureService: CultureService,
   ) {}
 
   async addRestaurantToCulture(
     cultureId: string,
     restaurantId: string,
   ): Promise<CultureEntity> {
-    const restaurant: RestaurantEntity =
-      await this.restaurantRepository.findOne({
-        where: { id: restaurantId },
-      });
+    const restaurant: RestaurantEntity = await this.restaurantService.findOne(
+      restaurantId,
+    );
     if (!restaurant)
       throw new BusinessLogicException(
         'The Restaurant with the given id was not found',
         BusinessError.NOT_FOUND,
       );
-    const culture: CultureEntity = await this.cultureRepository.findOne({
-      where: { id: cultureId },
-      relations: ['restaurants'],
-    });
+    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
     if (!culture)
       throw new BusinessLogicException(
         'The Culture with the given id was not found',
@@ -44,10 +46,7 @@ export class CultureRestaurantService {
   async findRestaurantsByCultureId(
     cultureId: string,
   ): Promise<RestaurantEntity[]> {
-    const culture: CultureEntity = await this.cultureRepository.findOne({
-      where: { id: cultureId },
-      relations: ['restaurants'],
-    });
+    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
     if (!culture)
       throw new BusinessLogicException(
         'The Culture with the given id was not found',
@@ -60,10 +59,7 @@ export class CultureRestaurantService {
     cultureId: string,
     restaurants: RestaurantEntity[],
   ): Promise<CultureEntity> {
-    const culture: CultureEntity = await this.cultureRepository.findOne({
-      where: { id: cultureId },
-      relations: ['restaurants'],
-    });
+    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
     if (!culture)
       throw new BusinessLogicException(
         'The Culture with the given id was not found',
@@ -71,10 +67,9 @@ export class CultureRestaurantService {
       );
 
     for (let i = 0; i < restaurants.length; i++) {
-      const restaurant: RestaurantEntity =
-        await this.restaurantRepository.findOne({
-          where: { id: `${restaurants[i].id}` },
-        });
+      const restaurant: RestaurantEntity = await this.restaurantService.findOne(
+        restaurants[i].id,
+      );
       if (!restaurant)
         throw new BusinessLogicException(
           'The Restaurant with the given id was not found',
@@ -87,20 +82,16 @@ export class CultureRestaurantService {
   }
 
   async deleteRestaurantFromCulture(cultureId: string, restaurantId: string) {
-    const restaurant: RestaurantEntity =
-      await this.restaurantRepository.findOne({
-        where: { id: restaurantId },
-      });
+    const restaurant: RestaurantEntity = await this.restaurantService.findOne(
+      restaurantId,
+    );
     if (!restaurant)
       throw new BusinessLogicException(
         'The Restaurant with the given id was not found',
         BusinessError.NOT_FOUND,
       );
 
-    const culture: CultureEntity = await this.cultureRepository.findOne({
-      where: { id: cultureId },
-      relations: ['restaurants'],
-    });
+    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
     if (!culture)
       throw new BusinessLogicException(
         'The Culture with the given id was not found',
