@@ -152,6 +152,8 @@ describe('CultureRecipeService', () => {
     );
 
     expect(culture.recipes.length).toEqual(3);
+    const storedRecipes: RecipeEntity[] = await recipeProvider.findAll();
+    expect(storedRecipes.length).toEqual(3);
   });
 
   it('should remove a recipe from certain culture', async () => {
@@ -161,6 +163,15 @@ describe('CultureRecipeService', () => {
       undesiredRecipe.id,
       culture.id,
     );
+    const storedRecipes: RecipeEntity[] = await recipeProvider.findAll();
     expect(culture.recipes.length).toEqual(4);
+    expect(storedRecipes.length).toEqual(4);
+  });
+
+  it('Should remove all recipes from removed culture', async () => {
+    const culture = cultureList[0];
+    await cultureProvider.delete(culture.id);
+    const storedRecipes: RecipeEntity[] = await recipeProvider.findAll();
+    expect(storedRecipes.length).toEqual(0);
   });
 });
