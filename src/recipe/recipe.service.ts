@@ -11,9 +11,9 @@ export class RecipeService {
     private readonly recipeRepository: Repository<RecipeEntity>,
   ) {}
 
-  async create(recipe: RecipeEntity): Promise<RecipeEntity> {
-    return await this.recipeRepository.save(recipe);
-  }
+  // async create(recipe: RecipeEntity): Promise<RecipeEntity> {
+  //   return await this.recipeRepository.save(recipe);
+  // }
 
   async findAll(): Promise<RecipeEntity[]> {
     return await this.recipeRepository.find();
@@ -21,7 +21,7 @@ export class RecipeService {
 
   async findOne(id: string): Promise<RecipeEntity> {
     const recipe: RecipeEntity = await this.recipeRepository.findOne({
-      where: { id },
+      where: { id: id },
       relations: ['culture'],
     });
     if (!recipe) {

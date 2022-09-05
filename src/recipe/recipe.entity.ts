@@ -21,6 +21,8 @@ export class RecipeEntity {
   @Column()
   url_video: string;
 
-  @ManyToOne(() => RecipeEntity, (recipe) => recipe.culture)
+  @ManyToOne(() => CultureEntity, (culture) => culture.recipes, {
+    onDelete: 'CASCADE',
+  })
   culture: CultureEntity;
 }

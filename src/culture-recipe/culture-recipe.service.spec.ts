@@ -63,12 +63,17 @@ describe('CultureRecipeService', () => {
         generateRecipe(),
       );
       recipe.culture = culture;
-      await recipeRepository.save(recipe);
+      const storedRecipe = await recipeRepository.save(recipe);
+      recipeList.push(storedRecipe);
     }
     const updatedCulture: CultureEntity = await cultureProvider.findOne(
       culture.id,
     );
     cultureList.push(updatedCulture);
+    for (let i = 0; i < recipeList.length; i++) {
+      recipeList[i] = await recipeProvider.findOne(recipeList[i].id);
+    }
+    console.log();
   };
 
   beforeEach(async () => {
@@ -82,7 +87,7 @@ describe('CultureRecipeService', () => {
     cultureProvider = module.get<CultureService>(CultureService);
     recipeProvider = module.get<RecipeService>(RecipeService);
     recipeRepository = module.get<Repository<RecipeEntity>>(
-      getRepositoryToken(CultureEntity),
+      getRepositoryToken(RecipeEntity),
     );
     cultureRepository = module.get<Repository<CultureEntity>>(
       getRepositoryToken(CultureEntity),
@@ -93,27 +98,28 @@ describe('CultureRecipeService', () => {
   it('should be defined', () => {
     expect(cultureRecipeProvider).toBeDefined();
   });
+
   it('should add recipe to a culture', async () => {
-    const culture: CultureEntity = Object.assign(
-      new CultureEntity(),
-      cultureList[0],
+    let culture: CultureEntity = cultureList[0];
+    const newRecipe: RecipeEntity = Object.assign(
+      new RecipeEntity(),
+      generateRecipe(),
     );
-    const cultureId = culture.id;
-    const newCulture: CultureEntity =
-      await cultureRecipeProvider.addRecipeToCulture(cultureId, recipeList[2]);
-    const recipeId = r.id;
-    expect(culture.recipes[2].id).toBe(recipeId);
-    expect(culture.recipes[2]).not.toBeNull();
-    expect(culture.recipes.length).toBe(4);
+    culture = await cultureRecipeProvider.addRecipeToCulture(
+      culture.id,
+      newRecipe,
+    );
+    expect(culture.recipes.length).toEqual(6);
   });
+
   it('should add recipe to a culture should throw an exception for an invalid culture', async () => {
-    await cultureProvider.create(cultureList[0]);
-    await expect(() =>
-      cultureRecipeProvider.addRecipeToCulture('0', recipeList[2]),
-    ).rejects.toHaveProperty(
-      propertyExcepetionResourceNotFound,
-      messageExcepetionCultureNotFound,
-    );
+    const recipe = Object.assign(new RecipeEntity(), generateRecipe());
+    let culture = null;
+    try {
+      culture = await cultureRecipeProvider.addRecipeToCulture('0', recipe);
+    } catch {
+      expect(culture).toBeNull();
+    }
   });
 
   it('should find recipe in culture', async () => {
@@ -126,10 +132,36 @@ describe('CultureRecipeService', () => {
       );
     expect(recipe).toBeDefined();
   });
+
   it('should return all recipes in culture', async () => {
     const cultureId = cultureList[0].id;
     const newRecipes: RecipeEntity[] =
       await cultureRecipeProvider.findRecipesByCultureId(cultureId);
-    expect(newRecipes.length).toBe(5);
+    expect(newRecipes.length).toEqual(5);
+  });
+
+  it('should update culture recipe list', async () => {
+    let culture: CultureEntity = cultureList[0];
+    const newRecipeList: RecipeEntity[] = [];
+    for (let i = 0; i < 3; i++) {
+      newRecipeList.push(Object.assign(new RecipeEntity(), generateRecipe()));
+    }
+
+    culture = await cultureRecipeProvider.updateCultureRecipes(
+      culture.id,
+      newRecipeList,
+    );
+
+    expect(culture.recipes.length).toEqual(3);
+  });
+
+  it('should remove a recipe from certain culture', async () => {
+    let culture = cultureList[0];
+    const undesiredRecipe = recipeList[recipeList.length - 1];
+    culture = await cultureRecipeProvider.deleteRecipeFromCulture(
+      undesiredRecipe.id,
+      culture.id,
+    );
+    expect(culture.recipes.length).toEqual(4);
   });
 });

@@ -1,15 +1,10 @@
-import {
-  Injectable,
-  PreconditionFailedException,
-  ConflictException,
-  NotFoundException,
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CultureEntity } from 'src/culture/culture.entity';
-import { CultureService } from 'src/culture/culture.service';
-import { RecipeEntity } from 'src/recipe/recipe.entity';
-import { RecipeService } from 'src/recipe/recipe.service';
-import { Repository } from 'typeorm';
+import {Injectable, NotFoundException, PreconditionFailedException,} from '@nestjs/common';
+import {InjectRepository} from '@nestjs/typeorm';
+import {CultureEntity} from 'src/culture/culture.entity';
+import {CultureService} from 'src/culture/culture.service';
+import {RecipeEntity} from 'src/recipe/recipe.entity';
+import {RecipeService} from 'src/recipe/recipe.service';
+import {Repository} from 'typeorm';
 
 @Injectable()
 export class CultureRecipeService {
@@ -39,11 +34,25 @@ export class CultureRecipeService {
 
   async addRecipeToCulture(
     cultureId: string,
-    recipeEntity: RecipeEntity,
+    recipe: RecipeEntity,
   ): Promise<CultureEntity> {
-    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
-    recipeEntity.culture = culture;
-    await this.recipeRepository.save(recipeEntity);
+    recipe.culture = await this.cultureService.findOne(cultureId);
+    await this.recipeRepository.save(recipe);
+    return await this.cultureService.findOne(cultureId);
+  }
+
+  async updateCultureRecipes(
+    cultureId: string,
+    recipes: RecipeEntity[],
+  ): Promise<CultureEntity> {
+    let culture: CultureEntity = await this.cultureService.findOne(cultureId);
+    culture.recipes = [];
+    culture = await this.cultureRepository.save(culture);
+    for (let i = 0; i < recipes.length; i++) {
+      recipes[i].culture = culture;
+      await this.recipeRepository.save(recipes[i]);
+    }
+
     return await this.cultureService.findOne(cultureId);
   }
   async findRecipeByCultureIdRecipeId(
@@ -62,13 +71,9 @@ export class CultureRecipeService {
     }
     return culture.recipes;
   }
-  async deleteRecetaFromCulture(recipeId, cultureId): Promise<CultureEntity> {
-    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
-    const undesiredProduct: RecipeEntity = this.findRecipeInCulture(
-      recipeId,
-      culture,
-    );
-    culture.recipes = culture.recipes.filter((rcp) => rcp !== undesiredProduct);
-    return await this.cultureRepository.save(culture);
+
+  async deleteRecipeFromCulture(recipeId, cultureId): Promise<CultureEntity> {
+    await this.recipeService.deleteOne(recipeId);
+    return await this.cultureService.findOne(cultureId);
   }
 }
