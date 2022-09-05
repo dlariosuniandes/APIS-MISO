@@ -17,6 +17,7 @@ import { MichelineStarModule } from './micheline-star/micheline-star.module';
 import { MichelineStarEntity } from './micheline-star/micheline-star.entity';
 import { RestaurantMichelineStarModule } from './restaurant-micheline-star/restaurant-micheline-star.module';
 import { CultureRestaurantModule } from './culture-restaurant/culture-restaurant.module';
+import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
 
 @Module({
   imports: [
@@ -48,6 +49,7 @@ import { CultureRestaurantModule } from './culture-restaurant/culture-restaurant
       keepConnectionAlive: true,
     }),
     CultureProductModule,
+    CultureRecipeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,4 +1,10 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { RecipeEntity } from './recipe.entity';
+import { RecipeService } from './recipe.service';
 
-@Module({})
+@Module({
+    imports: [TypeOrmModule.forFeature([RecipeEntity])],
+    providers: [RecipeService],
+})
 export class RecipeModule {}
