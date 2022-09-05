@@ -40,16 +40,14 @@ describe('RestaurantService', () => {
     }
   };
 
-  const getStoredRestaurantRandom = async () => {
+  const getStoredRestaurantRandom = () => {
     return restaurantsList[
       faker.datatype.number({ min: 0, max: restaurantsList.length - 1 })
     ];
   };
 
   const getStoredRestaurant = async (restaurant: RestaurantEntity) => {
-    return await repository.findOne({
-      where: { id: `${restaurant.id}` },
-    });
+    return await service.findOne(restaurant.id);
   };
 
   it('should be defined', () => {
@@ -135,12 +133,10 @@ describe('RestaurantService', () => {
   });
 
   it('delete should remove a restaurant', async () => {
-    const restaurant: RestaurantEntity = await getStoredRestaurantRandom();
+    const restaurant: RestaurantEntity = getStoredRestaurantRandom();
     await service.delete(restaurant.id);
-    const deletedRestaurant: RestaurantEntity = await getStoredRestaurant(
-      restaurant,
-    );
-    expect(deletedRestaurant).toBeNull();
+    const allStoredRestaurants = await service.findAll();
+    expect(allStoredRestaurants.length).toEqual(4);
   });
 
   it('delete should throw an exception for an invalida restaurant', async () => {
