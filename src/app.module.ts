@@ -15,6 +15,8 @@ import { ProductEntity } from './product/product.entity';
 import { CultureProductModule } from './culture-product/culture-product.module';
 import { MichelineStarModule } from './micheline-star/micheline-star.module';
 import { MichelineStarEntity } from './micheline-star/micheline-star.entity';
+import { RestaurantMichelineStarModule } from './restaurant-micheline-star/restaurant-micheline-star.module';
+import { CultureRestaurantModule } from './culture-restaurant/culture-restaurant.module';
 import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
 
 @Module({
@@ -25,6 +27,8 @@ import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
     RecipeModule,
     RestaurantModule,
     MichelineStarModule,
+    RestaurantMichelineStarModule,
+    CultureRestaurantModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',

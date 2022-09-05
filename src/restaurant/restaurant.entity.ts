@@ -3,6 +3,7 @@ import { MichelineStarEntity } from 'src/micheline-star/micheline-star.entity';
 import {
   Column,
   Entity,
+  ManyToMany,
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
@@ -19,8 +20,8 @@ export class RestaurantEntity {
   @Column()
   city: string;
 
-  @ManyToOne(() => CultureEntity, (culture) => culture.restaurants)
-  culture: CultureEntity;
+  @ManyToMany(() => CultureEntity, (culture) => culture.restaurants)
+  cultures: CultureEntity[];
 
   @OneToMany(
     () => MichelineStarEntity,
