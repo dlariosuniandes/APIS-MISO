@@ -45,7 +45,7 @@ export class CultureController {
     return await this.cultureService.update(cultureId, culture);
   }
 
-  @Delete(':museumId')
+  @Delete(':cultureId')
   @HttpCode(204)
   async delete(@Param('cultureId') cultureId: string) {
     await this.cultureService.delete(cultureId);
