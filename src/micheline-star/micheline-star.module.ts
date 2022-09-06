@@ -6,5 +6,6 @@ import { MichelineStarService } from './micheline-star.service';
 @Module({
   imports: [TypeOrmModule.forFeature([MichelineStarEntity])],
   providers: [MichelineStarService],
+  exports: [MichelineStarService],
 })
 export class MichelineStarModule {}

@@ -4,20 +4,17 @@ import { CultureEntity } from 'src/culture/culture.entity';
 import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
 import { BusinessError, BusinessLogicException } from 'src/shared/errors';
 import { Repository } from 'typeorm';
-import { RestaurantService } from '../restaurant/restaurant.service';
-import { CultureService } from '../culture/culture.service';
+import { RestaurantService } from 'src/restaurant/restaurant.service';
+import { CultureService } from 'src/culture/culture.service';
 
 @Injectable()
 export class CultureRestaurantService {
   constructor(
     @InjectRepository(CultureEntity)
     private readonly cultureRepository: Repository<CultureEntity>,
-
     @InjectRepository(RestaurantEntity)
     private readonly restaurantRepository: Repository<RestaurantEntity>,
-
     private restaurantService: RestaurantService,
-
     private cultureService: CultureService,
   ) {}
 

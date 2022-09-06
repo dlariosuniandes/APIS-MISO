@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  NotFoundException,
-  PreconditionFailedException,
-} from '@nestjs/common';
+import { Injectable, PreconditionFailedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CultureEntity } from 'src/culture/culture.entity';
 import { CultureService } from 'src/culture/culture.service';

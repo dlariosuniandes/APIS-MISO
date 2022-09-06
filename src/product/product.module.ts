@@ -6,5 +6,6 @@ import { ProductEntity } from './product.entity';
 @Module({
   providers: [ProductService],
   imports: [TypeOrmModule.forFeature([ProductEntity])],
+  exports: [ProductService],
 })
 export class ProductModule {}

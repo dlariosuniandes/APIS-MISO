@@ -1,13 +1,17 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CultureEntity } from 'src/culture/culture.entity';
-import { CultureService } from 'src/culture/culture.service';
+import { CultureModule } from 'src/culture/culture.module';
 import { RecipeEntity } from 'src/recipe/recipe.entity';
-import { RecipeService } from 'src/recipe/recipe.service';
+import { RecipeModule } from 'src/recipe/recipe.module';
 import { CultureRecipeService } from './culture-recipe.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CultureEntity, RecipeEntity])],
-  providers: [CultureRecipeService, CultureService, RecipeService],
+  providers: [CultureRecipeService],
+  imports: [
+    TypeOrmModule.forFeature([RecipeEntity, CultureEntity]),
+    RecipeModule,
+    CultureModule,
+  ],
 })
 export class CultureRecipeModule {}
