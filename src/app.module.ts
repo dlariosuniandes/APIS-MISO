@@ -29,6 +29,8 @@ import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
     MichelineStarModule,
     RestaurantMichelineStarModule,
     CultureRestaurantModule,
+    CultureProductModule,
+    CultureRecipeModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',
@@ -48,8 +50,6 @@ import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
       synchronize: true,
       keepConnectionAlive: true,
     }),
-    CultureProductModule,
-    CultureRecipeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

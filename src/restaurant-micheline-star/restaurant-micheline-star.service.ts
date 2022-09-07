@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MichelineStarEntity } from 'src/micheline-star/micheline-star.entity';
 import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { RestaurantService } from '../restaurant/restaurant.service';
+import { RestaurantService } from 'src/restaurant/restaurant.service';
 import { Repository } from 'typeorm';
 import { BusinessError, BusinessLogicException } from 'src/shared/errors';
 import { MichelineStarService } from 'src/micheline-star/micheline-star.service';
