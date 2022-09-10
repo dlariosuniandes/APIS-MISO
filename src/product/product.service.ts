@@ -15,33 +15,37 @@ export class ProductService {
   }
 
   async findAll(): Promise<ProductEntity[]> {
-    return await this.productRepository.find();
+    return await this.productRepository.find({ relations: ['cultures'] });
   }
 
   async findOne(id: string): Promise<ProductEntity> {
     const product: ProductEntity = await this.productRepository.findOne({
-      where: { id },
+      where: { id: id },
       relations: ['cultures'],
     });
     if (!product) {
       throw new NotFoundException(
-        'The culture with the given id was not found',
+        'The product with the given id was not found',
       );
     }
     return product;
   }
 
-  async updateOne(id: string, product: ProductEntity): Promise<ProductEntity> {
+  async updateOne(
+    searchedId: string,
+    product: ProductEntity,
+  ): Promise<ProductEntity> {
     const productDB: ProductEntity = await this.productRepository.findOne({
-      where: { id },
+      where: { id: searchedId },
       relations: ['cultures'],
     });
     if (!productDB) {
       throw new NotFoundException(
-        'The culture with the given id was not found',
+        'The product with the given id was not found',
       );
     }
-    return await this.productRepository.save({ ...productDB, ...product });
+    const { id, ...rest } = product;
+    return await this.productRepository.save({ ...productDB, ...rest });
   }
 
   async deleteOne(id: string): Promise<string> {
@@ -51,7 +55,7 @@ export class ProductService {
     });
     if (!productDB) {
       throw new NotFoundException(
-        'The culture with the given id was not found',
+        'The product with the given id was not found',
       );
     }
     await this.productRepository.remove(productDB);

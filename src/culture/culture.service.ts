@@ -19,7 +19,7 @@ export class CultureService {
 
   async findOne(id: string): Promise<CultureEntity> {
     const culture: CultureEntity = await this.cultureRepository.findOne({
-      where: { id: id },
+      where: { id },
       relations: ['recipes', 'products', 'restaurants', 'countries'],
     });
     if (!culture) {

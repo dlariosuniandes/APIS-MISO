@@ -5,6 +5,8 @@ import { CultureModule } from 'src/culture/culture.module';
 import { ProductEntity } from 'src/product/product.entity';
 import { ProductModule } from 'src/product/product.module';
 import { CultureProductService } from './culture-product.service';
+import { CultureProductsController } from './culture-products.controller';
+import {ProductCulturesController} from "./product-cultures.controller";
 
 @Module({
   providers: [CultureProductService],
@@ -13,5 +15,6 @@ import { CultureProductService } from './culture-product.service';
     CultureModule,
     ProductModule,
   ],
+  controllers: [CultureProductsController, ProductCulturesController],
 })
 export class CultureProductModule {}

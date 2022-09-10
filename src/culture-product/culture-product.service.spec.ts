@@ -24,7 +24,7 @@ describe('CultureProductService', () => {
       name: faker.lorem.sentence(),
       description: faker.lorem.sentence(),
       story: faker.lorem.sentence(),
-      category: faker.datatype.number({ min: 0, max: 5 }),
+      category: faker.lorem.sentence(),
       cultures: [],
     };
     return productDict;
@@ -202,9 +202,10 @@ describe('CultureProductService', () => {
   it('should associate cultures to product', async () => {
     const productId = productList[0].id;
     const newCultures: CultureEntity[] = await cultureProvider.findAll();
+    const newCulturesIds: string[] = newCultures.map((culture) => culture.id);
     await cultureProductProvider.associateCulturesToProduct(
       productId,
-      newCultures,
+      newCulturesIds,
     );
     const product = await productProvider.findOne(productId);
     expect(product.cultures.length).toEqual(5);
@@ -213,9 +214,10 @@ describe('CultureProductService', () => {
   it('should associate products to culture', async () => {
     const cultureId = cultureList[0].id;
     const newProducts: ProductEntity[] = await productProvider.findAll();
+    const newProductsIds: string[] = newProducts.map((product) => product.id);
     await cultureProductProvider.associateProductsToCulture(
       cultureId,
-      newProducts,
+      newProductsIds,
     );
     const culture = await cultureProvider.findOne(cultureId);
     expect(culture.products.length).toEqual(5);
