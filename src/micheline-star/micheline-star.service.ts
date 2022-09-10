@@ -14,6 +14,12 @@ export class MichelineStarService {
   private messageExcepetionMichelineStarNotFound =
     'The Micheline Star with the given id was not found';
 
+  async create(
+    michelineStar: MichelineStarEntity,
+  ): Promise<MichelineStarEntity> {
+    return await this.michelineStarRepository.save(michelineStar);
+  }
+
   async findOneBy(id: string): Promise<MichelineStarEntity> {
     const michelineStar: MichelineStarEntity =
       await this.michelineStarRepository.findOne({

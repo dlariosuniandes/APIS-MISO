@@ -5,6 +5,7 @@ import { MichelineStarModule } from 'src/micheline-star/micheline-star.module';
 import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
 import { RestaurantModule } from 'src/restaurant/restaurant.module';
 import { RestaurantMichelineStarService } from './restaurant-micheline-star.service';
+import { RestaurantMichelineStarController } from './restaurant-micheline-star.controller';
 
 @Module({
   imports: [
@@ -13,5 +14,6 @@ import { RestaurantMichelineStarService } from './restaurant-micheline-star.serv
     MichelineStarModule,
   ],
   providers: [RestaurantMichelineStarService],
+  controllers: [RestaurantMichelineStarController],
 })
 export class RestaurantMichelineStarModule {}

@@ -23,17 +23,16 @@ export class RestaurantMichelineStarService {
 
   async addMichelineStarToRestaurant(
     restaurantId: string,
-    MichelineStarEntity: MichelineStarEntity,
+    michelineStar: MichelineStarEntity,
   ): Promise<RestaurantEntity> {
     const restaurant: RestaurantEntity = await this.serviceRestaurant.findOneBy(
       restaurantId,
-      ['michelineStars'],
     );
-    restaurant.michelineStars = [
-      ...restaurant.michelineStars,
-      MichelineStarEntity,
-    ];
-    return await this.restaurantRepository.save(restaurant);
+    michelineStar.restaurant = restaurant;
+    await this.serviceMichelineStar.create(michelineStar);
+    return await this.serviceRestaurant.findOneBy(restaurantId, [
+      'michelineStars',
+    ]);
   }
 
   async findMichelineStarByRestaurantIdAndMichelineStarId(
@@ -77,7 +76,9 @@ export class RestaurantMichelineStarService {
       ...persistedMichelineStar,
       ...michelineStar,
     });
-    return restaurant;
+    return await this.serviceRestaurant.findOneBy(restaurantId, [
+      'michelineStars',
+    ]);
   }
 
   async deleteMichelineStarOfARestaurant(

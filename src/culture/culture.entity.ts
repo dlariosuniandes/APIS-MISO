@@ -26,7 +26,8 @@ export class CultureEntity {
   @JoinTable()
   products: ProductEntity[];
 
-  @OneToMany(() => CountryEntity, (country) => country.culture)
+  @ManyToMany(() => CountryEntity, (country) => country.cultures)
+  @JoinTable()
   countries: CountryEntity[];
 
   @ManyToMany(() => RestaurantEntity, (restaurant) => restaurant.cultures)

@@ -1,3 +1,4 @@
+import { CountryEntity } from 'src/country/country.entity';
 import { CultureEntity } from 'src/culture/culture.entity';
 import { MichelineStarEntity } from 'src/micheline-star/micheline-star.entity';
 import {
@@ -19,6 +20,9 @@ export class RestaurantEntity {
 
   @Column()
   city: string;
+
+  @ManyToOne(() => CountryEntity, (country) => country.restaurants)
+  country: CountryEntity;
 
   @ManyToMany(() => CultureEntity, (culture) => culture.restaurants)
   cultures: CultureEntity[];

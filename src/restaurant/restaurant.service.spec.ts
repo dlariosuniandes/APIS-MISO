@@ -85,6 +85,7 @@ describe('RestaurantService', () => {
       city: faker.address.cityName(),
       michelineStars: [],
       cultures: [],
+      country: undefined,
     };
 
     const createdRestaurant: RestaurantEntity = await service.create(
