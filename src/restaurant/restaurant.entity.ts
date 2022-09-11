@@ -21,6 +21,9 @@ export class RestaurantEntity {
   @Column()
   city: string;
 
+  @ManyToOne(() => CountryEntity, (country) => country.restaurants)
+  country: CountryEntity;
+
   @ManyToMany(() => CultureEntity, (culture) => culture.restaurants)
   cultures: CultureEntity[];
 
