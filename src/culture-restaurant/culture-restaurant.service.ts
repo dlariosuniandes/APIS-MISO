@@ -40,7 +40,7 @@ export class CultureRestaurantService {
     return await this.cultureRepository.save(culture);
   }
 
-  async findRestaurantByCultureIdAndRestuarantId(
+  async findRestaurantByCultureIdAndRestaurantId(
     cultureId: string,
     restaurantId: string,
   ): Promise<RestaurantEntity> {

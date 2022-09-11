@@ -34,11 +34,11 @@ export class CultureRestaurantController {
   }
 
   @Get(':cultureId/restaurants/:restarantId')
-  async findRestaurantByCultureIdAndRestuarantId(
+  async findRestaurantByCultureIdAndRestaurantId(
     @Param('cultureId') cultureId: string,
     @Param('restaurantId') restaurantId: string,
   ) {
-    return await this.cultureRestaurantService.findRestaurantByCultureIdAndRestuarantId(
+    return await this.cultureRestaurantService.findRestaurantByCultureIdAndRestaurantId(
       cultureId,
       restaurantId,
     );
