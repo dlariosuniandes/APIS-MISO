@@ -23,7 +23,7 @@ export class CountryRestaurantService {
       restaurantId,
     );
     const country: CountryEntity = await this.countryService.findOne(countryId);
-    if (restaurant.country.id === restaurantId) {
+    if (restaurant.country && restaurant.country.id === countryId) {
       throw new ConflictException('Country already has this restaurant');
     }
     restaurant.country = country;

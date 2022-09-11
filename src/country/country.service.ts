@@ -15,13 +15,11 @@ export class CountryService {
     'The Country with the given id was not found';
 
   async findAll(): Promise<CountryEntity[]> {
-    return await this.countryRepository.find({
-      relations: ['restaurants'],
-    });
+    return await this.countryRepository.find();
   }
 
   async findOne(id: string): Promise<CountryEntity> {
-    return await this.findOneBy(id, ['restaurants']);
+    return await this.findOneBy(id);
   }
 
   async create(country: CountryEntity): Promise<CountryEntity> {
