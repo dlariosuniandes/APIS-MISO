@@ -18,6 +18,8 @@ import { MichelineStarEntity } from './micheline-star/micheline-star.entity';
 import { RestaurantMichelineStarModule } from './restaurant-micheline-star/restaurant-micheline-star.module';
 import { CultureRestaurantModule } from './culture-restaurant/culture-restaurant.module';
 import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
+import { CultureCountryModule } from './culture-country/culture-country.module';
+import { CountryRestaurantModule } from './restaurant-country/country-restaurant.module';
 
 @Module({
   imports: [
@@ -31,6 +33,8 @@ import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
     CultureRestaurantModule,
     CultureProductModule,
     CultureRecipeModule,
+    CultureCountryModule,
+    CountryRestaurantModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: 'localhost',

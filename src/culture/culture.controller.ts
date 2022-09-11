@@ -22,12 +22,12 @@ export class CultureController {
 
   @Get()
   async findAll() {
-    await this.cultureService.findAll();
+    return await this.cultureService.findAll();
   }
 
   @Get(':cultureId')
   async findOne(@Param('cultureId') cultureId: string) {
-    await this.cultureService.findOne(cultureId);
+    return await this.cultureService.findOne(cultureId);
   }
 
   @Post()
@@ -36,7 +36,7 @@ export class CultureController {
     return await this.cultureService.create(culture);
   }
 
-  @Put()
+  @Put(':cultureId')
   async update(
     @Param('cultureId') cultureId: string,
     @Body() cultureDto: CultureDto,

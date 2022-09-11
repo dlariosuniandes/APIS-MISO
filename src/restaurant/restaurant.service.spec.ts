@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { faker } from '@faker-js/faker';
+import { CountryEntity } from 'src/country/country.entity';
 
 describe('RestaurantService', () => {
   let service: RestaurantService;
@@ -85,6 +86,7 @@ describe('RestaurantService', () => {
       city: faker.address.cityName(),
       michelineStars: [],
       cultures: [],
+      country: {} as CountryEntity,
     };
 
     const createdRestaurant: RestaurantEntity = await service.create(
