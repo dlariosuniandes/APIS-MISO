@@ -32,4 +32,7 @@ export class RestaurantEntity {
     (michelineStar) => michelineStar.restaurant,
   )
   michelineStars: MichelineStarEntity[];
+
+  @ManyToOne(() => CountryEntity, (country) => country.restaurants)
+  country: CountryEntity;
 }
