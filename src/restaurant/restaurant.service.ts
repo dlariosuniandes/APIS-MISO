@@ -21,7 +21,7 @@ export class RestaurantService {
   }
 
   async findOne(id: string): Promise<RestaurantEntity> {
-    return await this.findOneBy(id, ['michelineStars']);
+    return await this.findOneBy(id, ['michelineStars', 'country']);
   }
 
   async create(restaurant: RestaurantEntity): Promise<RestaurantEntity> {
