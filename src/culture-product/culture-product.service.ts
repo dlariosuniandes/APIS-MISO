@@ -73,7 +73,7 @@ export class CultureProductService {
     const product: ProductEntity = await this.productService.findOne(productId);
     const culture: CultureEntity = await this.cultureService.findOne(cultureId);
     if (product.cultures.find((cu) => cu.id === cultureId)) {
-      throw new ConflictException('Culture already has this product');
+      throw new ConflictException('Product already has this culture');
     }
     product.cultures.push(culture);
     return await this.productRepository.save(product);
