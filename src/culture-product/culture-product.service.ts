@@ -73,7 +73,7 @@ export class CultureProductService {
     const product: ProductEntity = await this.productService.findOne(productId);
     const culture: CultureEntity = await this.cultureService.findOne(cultureId);
     if (product.cultures.find((cu) => cu.id === cultureId)) {
-      throw new ConflictException('Culture already has this product');
+      throw new ConflictException('Product already has this culture');
     }
     product.cultures.push(culture);
     return await this.productRepository.save(product);
@@ -107,19 +107,27 @@ export class CultureProductService {
 
   async associateCulturesToProduct(
     productId: string,
-    cultures: CultureEntity[],
+    culturesIds: string[],
   ): Promise<ProductEntity> {
     const product: ProductEntity = await this.productService.findOne(productId);
-    product.cultures = cultures;
+    const newCultures = [];
+    for (let i = 0; i < culturesIds.length; i++) {
+      newCultures.push(await this.cultureService.findOne(culturesIds[i]));
+    }
+    product.cultures = newCultures;
     return await this.productRepository.save(product);
   }
 
   async associateProductsToCulture(
     cultureId: string,
-    products: ProductEntity[],
+    productsIds: string[],
   ): Promise<CultureEntity> {
     const culture: CultureEntity = await this.cultureService.findOne(cultureId);
-    culture.products = products;
+    const newProducts = [];
+    for (let i = 0; i < productsIds.length; i++) {
+      newProducts.push(await this.productService.findOne(productsIds[i]));
+    }
+    culture.products = newProducts;
     return await this.cultureRepository.save(culture);
   }
 
@@ -133,7 +141,10 @@ export class CultureProductService {
     return await this.cultureRepository.save(culture);
   }
 
-  async deleteCultureFromProduct(productId, cultureId): Promise<ProductEntity> {
+  async deleteCultureFromProduct(
+    productId: string,
+    cultureId: string,
+  ): Promise<ProductEntity> {
     const product: ProductEntity = await this.productService.findOne(productId);
     const undesiredCulture: CultureEntity = this.findCultureInProduct(
       cultureId,

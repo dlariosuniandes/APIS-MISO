@@ -18,7 +18,7 @@ describe('ProductService', () => {
       name: faker.lorem.sentence(),
       description: faker.lorem.sentence(),
       story: faker.lorem.sentence(),
-      category: faker.datatype.number({ min: 0, max: 5 }),
+      category: faker.lorem.sentence(),
     };
     return productDict;
   };

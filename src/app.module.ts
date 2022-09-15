@@ -20,6 +20,9 @@ import { CultureRestaurantModule } from './culture-restaurant/culture-restaurant
 import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
 import { CultureCountryModule } from './culture-country/culture-country.module';
 import { CountryRestaurantModule } from './restaurant-country/country-restaurant.module';
+import { databaseConfig } from './shared/db-utils/project-database-config';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -33,27 +36,9 @@ import { CountryRestaurantModule } from './restaurant-country/country-restaurant
     CultureRestaurantModule,
     CultureProductModule,
     CultureRecipeModule,
-    CultureCountryModule,
-    CountryRestaurantModule,
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'culture',
-      entities: [
-        CultureEntity,
-        RestaurantEntity,
-        RecipeEntity,
-        CountryEntity,
-        ProductEntity,
-        MichelineStarEntity,
-      ],
-      dropSchema: true,
-      synchronize: true,
-      keepConnectionAlive: true,
-    }),
+    AuthModule,
+    UsersModule,
+    TypeOrmModule.forRoot(databaseConfig),
   ],
   controllers: [AppController],
   providers: [AppService],

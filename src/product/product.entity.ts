@@ -15,8 +15,8 @@ export class ProductEntity {
   @Column()
   story: string;
 
-  @Column('int')
-  category: CategoryEnum;
+  @Column()
+  category: string;
 
   @ManyToMany(() => CultureEntity, (culture) => culture.products)
   cultures: CultureEntity[];
