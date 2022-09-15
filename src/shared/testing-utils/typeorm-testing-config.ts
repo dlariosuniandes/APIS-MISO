@@ -5,6 +5,7 @@ import { CultureEntity } from '../../culture/culture.entity';
 import { ProductEntity } from '../../product/product.entity';
 import { RecipeEntity } from '../../recipe/recipe.entity';
 import { RestaurantEntity } from '../../restaurant/restaurant.entity';
+import { UserEntity } from '../../users/user.entity';
 
 export const TypeOrmTestingConfig = () => [
   TypeOrmModule.forRoot({
@@ -18,6 +19,7 @@ export const TypeOrmTestingConfig = () => [
       RecipeEntity,
       CountryEntity,
       MichelineStarEntity,
+      UserEntity,
     ],
     synchronize: true,
     keepConnectionAlive: true,
@@ -29,5 +31,6 @@ export const TypeOrmTestingConfig = () => [
     RecipeEntity,
     CountryEntity,
     MichelineStarEntity,
+    UserEntity,
   ]),
 ];

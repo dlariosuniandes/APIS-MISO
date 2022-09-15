@@ -21,7 +21,7 @@ export class RestaurantService {
   }
 
   async findOne(id: string): Promise<RestaurantEntity> {
-    return await this.findOneBy(id, ['michelineStars']);
+    return await this.findOneBy(id, ['michelineStars', 'country']);
   }
 
   async create(restaurant: RestaurantEntity): Promise<RestaurantEntity> {
@@ -32,8 +32,11 @@ export class RestaurantService {
     id: string,
     restaurant: RestaurantEntity,
   ): Promise<RestaurantEntity> {
-    await this.findOneBy(id);
-    return await this.restaurantRepository.save(restaurant);
+    const persistedRestaurant = await this.findOneBy(id);
+    return await this.restaurantRepository.save({
+      ...persistedRestaurant,
+      ...restaurant,
+    });
   }
 
   async delete(id: string) {

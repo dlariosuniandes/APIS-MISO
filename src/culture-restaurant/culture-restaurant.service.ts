@@ -40,6 +40,41 @@ export class CultureRestaurantService {
     return await this.cultureRepository.save(culture);
   }
 
+  async findRestaurantByCultureIdAndRestaurantId(
+    cultureId: string,
+    restaurantId: string,
+  ): Promise<RestaurantEntity> {
+    const restaurant: RestaurantEntity =
+      await this.restaurantRepository.findOne({
+        where: { id: restaurantId },
+      });
+    if (!restaurant)
+      throw new BusinessLogicException(
+        'The Restaurant with the given id was not found',
+        BusinessError.NOT_FOUND,
+      );
+
+    const culture: CultureEntity = await this.cultureRepository.findOne({
+      where: { id: cultureId },
+      relations: ['restaurants'],
+    });
+    if (!culture)
+      throw new BusinessLogicException(
+        'The Culture with the given id was not found',
+        BusinessError.NOT_FOUND,
+      );
+
+    const cultureRestaurant: RestaurantEntity = culture.restaurants.find(
+      (e) => e.id === restaurant.id,
+    );
+    if (!cultureRestaurant)
+      throw new BusinessLogicException(
+        'The artwork with the given id is not associated to the museum',
+        BusinessError.PRECONDITION_FAILED,
+      );
+    return cultureRestaurant;
+  }
+
   async findRestaurantsByCultureId(
     cultureId: string,
   ): Promise<RestaurantEntity[]> {

@@ -5,11 +5,13 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  Put, UseInterceptors,
 } from '@nestjs/common';
 import { CultureProductService } from './culture-product.service';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 
 @Controller('cultures')
+@UseInterceptors(BusinessErrorsInterceptor)
 export class CultureProductsController {
   constructor(private cultureProductService: CultureProductService) {}
 
