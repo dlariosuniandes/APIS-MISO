@@ -4,7 +4,6 @@ import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-co
 import { Repository } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import exp from 'constants';
 
 describe('UsersService', () => {
   let service: UsersService;
@@ -16,13 +15,12 @@ describe('UsersService', () => {
       providers: [UsersService],
       imports: [...TypeOrmTestingConfig()],
     }).compile();
-
     service = module.get<UsersService>(UsersService);
     userRepository = module.get<Repository<UserEntity>>(
       getRepositoryToken(UserEntity),
     );
     await service.onModuleInit();
-    userList = service.generateSeedUsers();
+    userList = service.defaultUsers;
   });
 
   it('should be defined', () => {
@@ -36,7 +34,7 @@ describe('UsersService', () => {
 
   it('admin user should exist', async () => {
     const adminUser = userList[0];
-    const savedUser = await service.findOne(adminUser.id);
+    const savedUser = await service.findOne(adminUser.userName);
     expect(savedUser).not.toBeNull();
   });
 });
