@@ -1,20 +1,23 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { jwtConstants } from 'src/shared/auth/jwtconstants';
+import { Token } from '../auth.service';
 
 @Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
+export class AdminStrategy extends PassportStrategy(Strategy) {
   constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
+      ignoreExpiration: true,
       secretOrKey: jwtConstants.secret,
     });
   }
 
-  async validate(payload: any) {
-    console.log(payload);
+  async validate(payload: Token) {
+    if (payload.role !== 'ADMIN') {
+      throw new UnauthorizedException("You don't have enough permissions");
+    }
     return { id: payload.sub, username: payload.username };
   }
 }

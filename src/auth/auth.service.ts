@@ -3,7 +3,13 @@ import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from 'src/shared/auth/jwtconstants';
+import { RoleEnum } from 'src/enums/role.enum';
 
+export type Token = {
+  sub: string;
+  username: string;
+  role: string;
+};
 @Injectable()
 export class AuthService {
   constructor(
@@ -26,7 +32,12 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const payload = { name: user.username, sub: user.id };
+    const userRetrieved = await this.usersService.findOne(user.userName);
+    const payload: Token = {
+      username: user.username,
+      sub: user.id,
+      role: userRetrieved.role,
+    };
     return {
       token: this.jwtService.sign(payload, {
         privateKey: jwtConstants.secret,

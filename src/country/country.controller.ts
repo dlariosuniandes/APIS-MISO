@@ -16,12 +16,14 @@ import { CountryService } from './country.service';
 import { CountryDto } from './country.dto';
 import { CountryEntity } from './country.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
+import { AdminStrategy } from 'src/auth/admin-strategy/admin.strategy';
 
 @UseInterceptors(BusinessErrorsInterceptor)
 @Controller('countries')
 export class CountryController {
   constructor(private readonly countryService: CountryService) {}
 
+  @UseGuards(AdminStrategy)
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
