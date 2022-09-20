@@ -8,9 +8,10 @@ import { UsersModule } from 'src/users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from 'src/users/user.entity';
 import { LocalStrategy } from './local-strategy/local-strategy';
+import { JwtStrategy } from './jwt-strategy/jwt.strategy';
 
 @Module({
-  providers: [AuthService, JwtService, LocalStrategy],
+  providers: [AuthService, JwtService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],
   imports: [
     UsersModule,

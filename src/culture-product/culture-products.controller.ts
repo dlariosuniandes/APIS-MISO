@@ -5,21 +5,25 @@ import {
   Get,
   Param,
   Post,
-  Put, UseInterceptors,
+  Put,
+  UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { CultureProductService } from './culture-product.service';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
-
+import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
 @Controller('cultures')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class CultureProductsController {
   constructor(private cultureProductService: CultureProductService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Get(':cultureId/products')
   async findAllCultureProducts(@Param('cultureId') cultureId: string) {
     return await this.cultureProductService.findProductsByCultureId(cultureId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':cultureId/products/:productId')
   async findProductByCultureIdProductId(
     @Param('cultureId') cultureId: string,
@@ -31,6 +35,7 @@ export class CultureProductsController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post(':cultureId/products/:productId')
   async addProductToCulture(
     @Param('cultureId') cultureId: string,
@@ -42,6 +47,7 @@ export class CultureProductsController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':cultureId/products')
   async associateProductsToCulture(
     @Param('cultureId') cultureId: string,
@@ -53,6 +59,7 @@ export class CultureProductsController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':cultureId/products/:productId')
   async removeProductFromCulture(
     @Param('cultureId') cultureId: string,
