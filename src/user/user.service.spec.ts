@@ -33,11 +33,9 @@ describe('UserService', () => {
     expect(savedUsers).not.toBeNull();
   });
 
-  /*
   it('admin user should exist', async () => {
     const adminUser = userList[0];
-    const savedUser = await service.findOne(adminUser.id);
+    const savedUser = await service.findOne(adminUser.userName);
     expect(savedUser).not.toBeNull();
   });
-  */
 });
