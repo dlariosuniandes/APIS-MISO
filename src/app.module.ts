@@ -15,6 +15,8 @@ import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
 import { databaseConfig } from './shared/db-utils/project-database-config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { RolesGuard } from './authorization/guards/role.guard';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -33,6 +35,12 @@ import { UserModule } from './user/user.module';
     TypeOrmModule.forRoot(databaseConfig),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

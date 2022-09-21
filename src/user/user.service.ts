@@ -6,6 +6,7 @@ import { faker } from '@faker-js/faker';
 import { RoleEnum } from '../shared/enums/role.enum';
 import { plainToInstance } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
+import { Role } from 'src/authorization/role.enum';
 
 @Injectable()
 export class UserService implements OnModuleInit {
@@ -33,13 +34,19 @@ export class UserService implements OnModuleInit {
       {
         userName: 'Admin',
         password: 'Admin',
-        role: RoleEnum[RoleEnum.ADMIN],
+        role: Role.Admin,
+        isActive: true,
+      },
+      {
+        userName: 'Creator',
+        password: 'Creator',
+        role: Role.Creator,
         isActive: true,
       },
       {
         userName: 'Reader',
         password: 'Reader',
-        role: RoleEnum[RoleEnum.READ],
+        role: Role.Reader,
         isActive: true,
       },
       {
