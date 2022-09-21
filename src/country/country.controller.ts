@@ -9,7 +9,7 @@ import {
   Put,
   UseInterceptors,
 } from '@nestjs/common';
-import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { plainToInstance } from 'class-transformer';
 import { CountryService } from './country.service';
 import { CountryDto } from './country.dto';

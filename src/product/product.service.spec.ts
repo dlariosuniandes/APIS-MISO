@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { ProductEntity } from './product.entity';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CategoryEnum } from '../enums/category.enum';
 
 describe('ProductService', () => {
   let provider: ProductService;

@@ -10,9 +10,9 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { RestaurantDto } from 'src/restaurant/restaurant.dto';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
+import { RestaurantDto } from '../restaurant/restaurant.dto';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { CultureRestaurantService } from './culture-restaurant.service';
 
 @Controller('cultures')

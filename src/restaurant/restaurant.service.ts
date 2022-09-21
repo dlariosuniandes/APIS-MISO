@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BusinessError, BusinessLogicException } from 'src/shared/errors';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
 import { RestaurantEntity } from './restaurant.entity';
 

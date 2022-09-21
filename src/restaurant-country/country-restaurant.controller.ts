@@ -6,7 +6,7 @@ import {
   Post,
   UseInterceptors,
 } from '@nestjs/common';
-import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { CountryRestaurantService } from './country-restaurant.service';
 
 @Controller('restaurants')
@@ -29,7 +29,7 @@ export class CountryRestaurantController {
 
   @Delete(':restaurantId/countries/:countryId')
   @HttpCode(204)
-  async deleteCountryOfACulture(
+  async deleteCountryOfARestaurant(
     @Param('restaurantId') restaurantId: string,
     @Param('countryId') countryId: string,
   ) {

@@ -10,9 +10,9 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { MichelineStarDto } from 'src/micheline-star/micheline-star.dto';
-import { MichelineStarEntity } from 'src/micheline-star/micheline-star.entity';
-import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
+import { MichelineStarDto } from '../micheline-star/micheline-star.dto';
+import { MichelineStarEntity } from '../micheline-star/micheline-star.entity';
+import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { RestaurantMichelineStarService } from './restaurant-micheline-star.service';
 
 @Controller('restaurants')

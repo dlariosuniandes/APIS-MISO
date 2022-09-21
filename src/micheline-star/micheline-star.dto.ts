@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { StarRating } from './micheline-star.entity';
+import { StarRating } from '../shared/enums/star-rating.enum';
 
 export class MichelineStarDto {
   @IsEnum(StarRating)
