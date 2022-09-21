@@ -31,14 +31,12 @@ export class AuthService {
   }
 
   async login(user: any) {
-    console.log(user.user);
     const userRetrieved = await this.userService.findOne(user.user.userName);
     const payload: Token = {
       username: userRetrieved.userName,
       sub: userRetrieved.id,
       role: userRetrieved.role,
     };
-    console.log(payload);
     return {
       token: this.jwtService.sign(payload, {
         privateKey: jwtConstants.JWT_SECRET,

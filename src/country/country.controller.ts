@@ -16,27 +16,30 @@ import { CountryService } from './country.service';
 import { CountryDto } from './country.dto';
 import { CountryEntity } from './country.entity';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
-import { AdminStrategy } from 'src/auth/admin-strategy/admin.strategy';
+import { Roles } from 'src/authorization/role.decorator';
+import { Role } from 'src/authorization/role.enum';
 
 @UseInterceptors(BusinessErrorsInterceptor)
 @Controller('countries')
 export class CountryController {
   constructor(private readonly countryService: CountryService) {}
 
-  @UseGuards(AdminStrategy)
   @UseGuards(JwtAuthGuard)
+  @Roles(Role.Reader, Role.Creator)
   @Get()
   async findAll() {
     return await this.countryService.findAll();
   }
 
   @UseGuards(JwtAuthGuard)
+  @Roles(Role.Reader, Role.Creator)
   @Get(':countryId')
   async findOne(@Param('countryId') countryId: string) {
     return await this.countryService.findOne(countryId);
   }
 
   @UseGuards(JwtAuthGuard)
+  @Roles(Role.Creator)
   @Post()
   async create(@Body() countryDto: CountryDto) {
     const country: CountryEntity = plainToInstance(CountryEntity, countryDto);
@@ -44,6 +47,7 @@ export class CountryController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Roles(Role.Creator)
   @Put(':countryId')
   async update(
     @Param('countryId') countryId: string,
@@ -54,6 +58,7 @@ export class CountryController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @Roles(Role.Creator)
   @Delete(':countryId')
   @HttpCode(204)
   async delete(@Param('countryId') countryId: string) {
