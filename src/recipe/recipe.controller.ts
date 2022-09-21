@@ -30,7 +30,7 @@ export class RecipeController {
   }
 
   @Put(':recipeId')
-  async update(
+  async updateOne(
     @Param('recipeId') recipeId: string,
     @Body() recipeDto: RecipeDto,
   ) {
@@ -40,7 +40,7 @@ export class RecipeController {
 
   @Delete(':recipeId')
   @HttpCode(204)
-  async delete(@Param('recipeId') recipeId: string) {
+  async deleteOne(@Param('recipeId') recipeId: string) {
     return await this.recipeService.deleteOne(recipeId);
   }
 }
