@@ -21,7 +21,7 @@ describe('UserService', () => {
       getRepositoryToken(UserEntity),
     );
     await service.onModuleInit();
-    userList = service.generateSeedUsers();
+    userList = service.defaultUsers;
   });
 
   it('should be defined', () => {

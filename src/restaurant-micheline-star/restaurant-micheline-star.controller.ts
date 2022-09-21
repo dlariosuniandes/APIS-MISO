@@ -7,12 +7,14 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { MichelineStarDto } from '../micheline-star/micheline-star.dto';
-import { MichelineStarEntity } from '../micheline-star/micheline-star.entity';
-import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { MichelineStarDto } from 'src/micheline-star/micheline-star.dto';
+import { MichelineStarEntity } from 'src/micheline-star/micheline-star.entity';
+import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { RestaurantMichelineStarService } from './restaurant-micheline-star.service';
 
 @Controller('restaurants')
@@ -22,6 +24,7 @@ export class RestaurantMichelineStarController {
     private readonly restaurantMichelineStarService: RestaurantMichelineStarService,
   ) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post(':restaurantId/micheline-stars')
   async addMichelineStarToRestaurant(
     @Param('restaurantId') restaurantId: string,
@@ -37,6 +40,7 @@ export class RestaurantMichelineStarController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':restaurantId/micheline-stars/:michelineStarId')
   async findMichelineStarByRestaurantIdAndMichelineStarId(
     @Param('restaurantId') restaurantId: string,
@@ -48,6 +52,7 @@ export class RestaurantMichelineStarController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':restaurantId/micheline-stars')
   async findMichelineStarsByRestaurantId(
     @Param('restaurantId') restaurantId: string,
@@ -57,6 +62,7 @@ export class RestaurantMichelineStarController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':restaurantId/micheline-stars/:michelineStarId')
   async updateMichelineStar(
     @Param('restaurantId') resturantId: string,
@@ -74,6 +80,7 @@ export class RestaurantMichelineStarController {
     );
   }
 
+  @UseGuards(JwtAuthGuard)
   @Delete(':restaurantId/micheline-stars/:michelineStarId')
   @HttpCode(204)
   async deleteMichelineStarOfARestaurant(

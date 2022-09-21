@@ -4,21 +4,22 @@ import {
   Delete,
   Get,
   HttpCode,
-  HttpStatus,
   Param,
   Post,
   Put,
-  Res,
+  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDto } from './product.dto';
 import { ProductEntity } from './product.entity';
 import { plainToInstance } from 'class-transformer';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('products')
 export class ProductController {
   constructor(private productService: ProductService) {}
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(@Body() productDto: ProductDto) {
     const productInstance: ProductEntity = plainToInstance(
@@ -28,16 +29,19 @@ export class ProductController {
     return await this.productService.create(productInstance);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
     return await this.productService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':productId')
   async findOne(@Param('productId') productId: string) {
     return await this.productService.findOne(productId);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Put(':productId')
   async updateOne(
     @Param('productId') productId: string,
@@ -50,6 +54,7 @@ export class ProductController {
     return await this.productService.updateOne(productId, productInstance);
   }
 
+  @UseGuards(JwtAuthGuard)
   @HttpCode(204)
   @Delete(':productId')
   async deleteOne(@Param('productId') productId: string) {
