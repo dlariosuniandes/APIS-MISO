@@ -70,7 +70,6 @@ export class UserService implements OnModuleInit {
   }
 
   async findOne(userName: string): Promise<UserEntity> {
-    console.log(userName, "here");
     return await this.userRepository.findOne({ where: { userName: userName } });
   }
 }

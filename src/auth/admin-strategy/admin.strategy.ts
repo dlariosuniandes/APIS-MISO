@@ -1,8 +1,8 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { jwtConstants } from 'src/shared/auth/jwtconstants';
 import { Token } from '../auth.service';
+import jwtConstants from 'src/shared/security/constants';
 
 @Injectable()
 export class AdminStrategy extends PassportStrategy(Strategy) {
@@ -10,7 +10,7 @@ export class AdminStrategy extends PassportStrategy(Strategy) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: true,
-      secretOrKey: jwtConstants.secret,
+      secretOrKey: jwtConstants.JWT_SECRET,
     });
   }
 

@@ -11,7 +11,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RestaurantDto } from 'src/restaurant/restaurant.dto';
 import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';

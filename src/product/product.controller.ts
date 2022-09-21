@@ -4,18 +4,16 @@ import {
   Delete,
   Get,
   HttpCode,
-  HttpStatus,
   Param,
   Post,
   Put,
-  Res,
   UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDto } from './product.dto';
 import { ProductEntity } from './product.entity';
 import { plainToInstance } from 'class-transformer';
-import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Controller('products')
 export class ProductController {

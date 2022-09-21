@@ -15,7 +15,7 @@ import { CultureDto } from './culture.dto';
 import { CultureEntity } from './culture.entity';
 import { CultureService } from './culture.service';
 import { plainToInstance } from 'class-transformer';
-import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @UseInterceptors(BusinessErrorsInterceptor)
 @Controller('cultures')

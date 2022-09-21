@@ -15,7 +15,7 @@ import { plainToInstance } from 'class-transformer';
 import { CountryService } from './country.service';
 import { CountryDto } from './country.dto';
 import { CountryEntity } from './country.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { AdminStrategy } from 'src/auth/admin-strategy/admin.strategy';
 
 @UseInterceptors(BusinessErrorsInterceptor)
