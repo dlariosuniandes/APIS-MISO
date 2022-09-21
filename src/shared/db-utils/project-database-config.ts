@@ -4,7 +4,7 @@ import { RecipeEntity } from '../../recipe/recipe.entity';
 import { CountryEntity } from '../../country/country.entity';
 import { ProductEntity } from '../../product/product.entity';
 import { MichelineStarEntity } from '../../micheline-star/micheline-star.entity';
-import { UserEntity } from '../../users/user.entity';
+import { UserEntity } from '../../user/user.entity';
 
 export const databaseConfig: object = {
   type: process.env.DBTYPE || 'postgres',

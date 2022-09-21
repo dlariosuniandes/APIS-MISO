@@ -1,5 +1,5 @@
 import { IsEnum, IsString } from 'class-validator';
-import { CategoryEnum } from '../enums/category.enum';
+import { CategoryEnum } from '../shared/enums/category.enum';
 
 export class ProductDto {
   @IsString()

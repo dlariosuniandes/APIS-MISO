@@ -1,6 +1,6 @@
-import { CountryEntity } from 'src/country/country.entity';
-import { CultureEntity } from 'src/culture/culture.entity';
-import { MichelineStarEntity } from 'src/micheline-star/micheline-star.entity';
+import { CountryEntity } from '../country/country.entity';
+import { CultureEntity } from '../culture/culture.entity';
+import { MichelineStarEntity } from '../micheline-star/micheline-star.entity';
 import {
   Column,
   Entity,

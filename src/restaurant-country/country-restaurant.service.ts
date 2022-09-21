@@ -1,10 +1,10 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CountryEntity } from 'src/country/country.entity';
-import { CountryService } from 'src/country/country.service';
-import { RestaurantService } from 'src/restaurant/restaurant.service';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
+import { CountryEntity } from '../country/country.entity';
+import { CountryService } from '../country/country.service';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
 
 @Injectable()
 export class CountryRestaurantService {

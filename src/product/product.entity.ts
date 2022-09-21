@@ -1,6 +1,6 @@
 import { CultureEntity } from 'src/culture/culture.entity';
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { CategoryEnum } from '../enums/category.enum';
+
 @Entity()
 export class ProductEntity {
   @PrimaryGeneratedColumn('uuid')

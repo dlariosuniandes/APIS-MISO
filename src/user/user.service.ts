@@ -3,12 +3,12 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { faker } from '@faker-js/faker';
-import { RoleEnum } from '../enums/role.enum';
+import { RoleEnum } from '../shared/enums/role.enum';
 import { plainToInstance } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
-export class UsersService implements OnModuleInit {
+export class UserService implements OnModuleInit {
   defaultUsers: UserEntity[];
 
   constructor(

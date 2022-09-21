@@ -17,7 +17,10 @@ import { JwtStrategy } from './jwt-strategy/jwt.strategy';
     UsersModule,
     TypeOrmModule.forFeature([UserEntity]),
     PassportModule,
-    JwtModule.register(jwtConstants),
+    JwtModule.register({
+      secret: jwtConstants.JWT_SECRET,
+      signOptions: { expiresIn: jwtConstants.JWT_EXPIRES_IN },
+    }),
   ],
   exports: [AuthService, JwtService],
 })

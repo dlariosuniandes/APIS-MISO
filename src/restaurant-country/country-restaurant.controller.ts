@@ -33,7 +33,7 @@ export class CountryRestaurantController {
   @UseGuards(JwtAuthGuard)
   @Delete(':restaurantId/countries/:countryId')
   @HttpCode(204)
-  async deleteCountryOfACulture(
+  async deleteCountryOfARestaurant(
     @Param('restaurantId') restaurantId: string,
     @Param('countryId') countryId: string,
   ) {
