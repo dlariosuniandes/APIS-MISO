@@ -1,11 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CultureEntity } from 'src/culture/culture.entity';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { BusinessError, BusinessLogicException } from 'src/shared/errors';
+import { CultureEntity } from '../culture/culture.entity';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import { RestaurantService } from 'src/restaurant/restaurant.service';
-import { CultureService } from 'src/culture/culture.service';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import { CultureService } from '../culture/culture.service';
 
 @Injectable()
 export class CultureRestaurantService {

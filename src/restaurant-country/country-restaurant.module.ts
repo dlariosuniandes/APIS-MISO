@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CountryEntity } from 'src/country/country.entity';
-import { CountryModule } from 'src/country/country.module';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { RestaurantModule } from 'src/restaurant/restaurant.module';
+import { CountryEntity } from '../country/country.entity';
+import { CountryModule } from '../country/country.module';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import { RestaurantModule } from '../restaurant/restaurant.module';
 import { CountryRestaurantController } from './country-restaurant.controller';
 import { CountryRestaurantService } from './country-restaurant.service';
 

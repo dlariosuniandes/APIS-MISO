@@ -1,0 +1,1159 @@
+{
+	"info": {
+		"_postman_id": "5ca23390-dd5b-4808-ae27-77027619cdea",
+		"name": "Restaurants - Micheline Stars",
+		"description": "Representa las estrellas micheline que ha obtenido un restaurante.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23001418"
+	},
+	"item": [
+		{
+			"name": "Add a micheline star to a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"michelineStarId\", data.michelineStars[0].id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"starRating\": \"One Star\",\n    \"awardedDate\": \"2017-12-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars"
+					]
+				},
+				"description": "Crea una estrella micheline para un restaurante"
+			},
+			"response": [
+				{
+					"name": "Add a micheline star to a restaurant",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"starRating\": \"One Star\",\n    \"awardedDate\": \"2017-12-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120002\",\n    \"name\": \"Mirazur\",\n    \"city\": \"Menton\",\n    \"michelineStars\": [\n        {\n            \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n            \"starRating\": \"One Star\",\n            \"awardedDate\": \"2017-12-01\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Add a micheline star to an invalid restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Restaurant with the given id was not found');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"starRating\": \"One Star\",\n    \"awardedDate\": \"2017-12-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"00000000-0000-0000-0000-000000000000",
+						"micheline-stars"
+					]
+				},
+				"description": "Ejemplo de un request para agregar una estrella micheline a un restaurante que no existe."
+			},
+			"response": [
+				{
+					"name": "Add a micheline star to an invalid restaurant",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"star_rating\": \"One Star\",\n    \"awarded_date\": \"2017-12-1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"00000000-0000-0000-0000-000000000000",
+								"micheline-stars"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The Restaurant with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get a micheline star of a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars",
+						"{{michelineStarId}}"
+					]
+				},
+				"description": "Obtiene la estrella micheline segun el ID de un restaurante"
+			},
+			"response": [
+				{
+					"name": "Get a micheline star of a restaurant",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars",
+								"{{michelineStarId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n    \"starRating\": \"One Star\",\n    \"awardedDate\": \"2017-12-01\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get an invalid micheline star of a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Micheline Star with the given id was not found');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Ejemplo de un request para obtener una estrella micheline que no existe."
+			},
+			"response": [
+				{
+					"name": "Get an invalid micheline star of a restaurant",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The Micheline Star with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get a micheline star of an invalid restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Restaurant with the given id was not found');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars/{{michelineStarId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"00000000-0000-0000-0000-000000000000",
+						"micheline-stars",
+						"{{michelineStarId}}"
+					]
+				},
+				"description": "Ejemplo de un request para obtener una estrella micheline de un restaurante que no existe."
+			},
+			"response": [
+				{
+					"name": "Get a micheline star of an invalid restaurant",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars/{{michelineStarId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"00000000-0000-0000-0000-000000000000",
+								"micheline-stars",
+								"{{michelineStarId}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The Restaurant with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get an micheline star non-associated to a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 412', function() {",
+							"    pm.response.to.have.status(412);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Micheline Star with the given id is not associated to the Restaurant');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId_2}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars",
+						"{{michelineStarId_2}}"
+					]
+				},
+				"description": "Ejemplo de un request para obtener una estrella micheline que no esta asociada al restaurante."
+			},
+			"response": [
+				{
+					"name": "Get an micheline star non-associated to a restaurant",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId_2}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars",
+								"{{michelineStarId_2}}"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 412,\n   \"message\": \"The Micheline Star with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all micheline stars  of a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars"
+					]
+				},
+				"description": "Obtiene las estrellas micheline asociadas a un restaurante"
+			},
+			"response": [
+				{
+					"name": "Get all micheline stars  of a restaurant",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n        \"starRating\": \"One Star\",\n        \"awardedDate\": \"2018-12-01\"\n    },\n    {\n        \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n        \"starRating\": \"One Star\",\n        \"awardedDate\": \"2018-12-01\"\n    },\n    {\n        \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n        \"starRating\": \"One Star\",\n        \"awardedDate\": \"2018-12-019\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get all micheline stars  of an invalid restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Restaurant with the given id was not found');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"00000000-0000-0000-0000-000000000000",
+						"micheline-stars"
+					]
+				},
+				"description": "Ejemplo de un request para obtener las estrellas micheline de un restaurante que no existe."
+			},
+			"response": [
+				{
+					"name": "Get all micheline stars  of an invalid restaurant",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"00000000-0000-0000-0000-000000000000",
+								"micheline-stars"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The Restaurant with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update micheline star  of a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"starRating\": \"Two Star\",\n    \"awardedDate\": \"2020-01-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars",
+						"{{michelineStarId}}"
+					]
+				},
+				"description": "Actualizar una estrella micheline segun el ID de un restaurante"
+			},
+			"response": [
+				{
+					"name": "Update micheline star of a restaurant",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"starRating\": \"Two Star\",\n    \"awardedDate\": \"2020-01-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars",
+								"{{michelineStarId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120002\",\n    \"name\": \"Mirazur\",\n    \"city\": \"Menton\",\n    \"michelinStars\": [\n        {\n            \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n            \"starRating\": \"Two Star\",\n            \"awardedDate\": \"2020-01-01\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Update invalid micheline star  of a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Micheline Star with the given id was not found');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"starRating\": \"Two Star\",\n    \"awardedDate\": \"2020-01-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Ejemplo de un request para actualizar una estrella micheline que no existe."
+			},
+			"response": [
+				{
+					"name": "Update invalid micheline star  of a restaurant",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"starRating\": \"Two Star\",\n    \"awardedDate\": \"2020-01-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 404,\n   \"message\": \"The Micheline Star with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update micheline star  of an invalid restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Restaurant with the given id was not found');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"starRating\": \"Two Star\",\n    \"awardedDate\": \"2020-01-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars/{{michelineStarId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"00000000-0000-0000-0000-000000000000",
+						"micheline-stars",
+						"{{michelineStarId}}"
+					]
+				},
+				"description": "Ejemplo de un request para actualizar una estrella micheline a un restaurante que no existe."
+			},
+			"response": [
+				{
+					"name": "Update micheline star  of an invalid restaurant",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"starRating\": \"Two Star\",\n    \"awardedDate\": \"2020-01-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars/{{michelineStarId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"00000000-0000-0000-0000-000000000000",
+								"micheline-stars",
+								"{{michelineStarId}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The Restaurant with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update micheline star non-associated to a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 412', function() {",
+							"    pm.response.to.have.status(412);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Micheline Star with the given id is not associated to the Restaurant');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"starRating\": \"Two Star\",\n    \"awardedDate\": \"2020-01-01\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId_2}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars",
+						"{{michelineStarId_2}}"
+					]
+				},
+				"description": "Ejemplo de un request para actualizar una estrella micheline a un restaurante que no existe."
+			},
+			"response": [
+				{
+					"name": "Update micheline star non-associated to a restaurant",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"starRating\": \"Two Star\",\n    \"awardedDate\": \"2020-01-01\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId2}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars",
+								"{{michelineStarId2}}"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"The Micheline Star with the given id is not associated to the Restaurant\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete a micheline star of a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function() {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars",
+						"{{michelineStarId}}"
+					]
+				},
+				"description": "Eliminar la asociación de una estrella micheline a un restaurante"
+			},
+			"response": [
+				{
+					"name": "Delete a micheline star of a restaurant",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars",
+								"{{michelineStarId}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete a micheline star of an invalid restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Restaurant with the given id was not found');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars/{{michelineStarId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"00000000-0000-0000-0000-000000000000",
+						"micheline-stars",
+						"{{michelineStarId}}"
+					]
+				},
+				"description": "Ejemplo de un request para eliminar una estrella micheline a un restaurante que no existe."
+			},
+			"response": [
+				{
+					"name": "Delete a micheline star of an invalid restaurant",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000/micheline-stars/{{michelineStarId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"00000000-0000-0000-0000-000000000000",
+								"micheline-stars",
+								"{{michelineStarId}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The Restaurant with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete an invalid micheline star of restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Micheline Star with the given id was not found');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Ejemplo de un request para eliminar una estrella micheline que no existe."
+			},
+			"response": [
+				{
+					"name": "Delete an invalid micheline star of restaurant",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The Micheline Star with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete a micheline star non-associated of a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 412', function() {",
+							"    pm.response.to.have.status(412);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Micheline Star with the given id is not associated to the Restaurant');",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId_2}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}",
+						"micheline-stars",
+						"{{michelineStarId_2}}"
+					]
+				},
+				"description": "Ejemplo de un request para eliminar una estrella micheline que no pertenece a un restaurante."
+			},
+			"response": [
+				{
+					"name": "Delete a micheline star non-associated of a restaurant",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}/micheline-stars/{{michelineStarId_2}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}",
+								"micheline-stars",
+								"{{michelineStarId_2}}"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"The Micheline Star with the given id is not associated to the Restaurant\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		}
+	]
+}

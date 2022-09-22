@@ -4,11 +4,11 @@ import { Repository } from 'typeorm';
 import { faker } from '@faker-js/faker';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CultureEntity } from 'src/culture/culture.entity';
-import { CountryEntity } from 'src/country/country.entity';
-import { RestaurantService } from 'src/restaurant/restaurant.service';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { CountryService } from 'src/country/country.service';
+import { CultureEntity } from '../culture/culture.entity';
+import { CountryEntity } from '../country/country.entity';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import { CountryService } from '../country/country.service';
 
 describe('CountryRestaurantService', () => {
   let countryRestaurantProvider: CountryRestaurantService;

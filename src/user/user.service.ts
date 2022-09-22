@@ -3,12 +3,13 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { faker } from '@faker-js/faker';
-import { RoleEnum } from '../enums/role.enum';
+import { RoleEnum } from '../shared/enums/role.enum';
 import { plainToInstance } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
+import { Role } from 'src/authorization/role.enum';
 
 @Injectable()
-export class UsersService implements OnModuleInit {
+export class UserService implements OnModuleInit {
   defaultUsers: UserEntity[];
 
   constructor(
@@ -34,14 +35,20 @@ export class UsersService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'Admin',
         password: 'Admin',
-        role: RoleEnum[RoleEnum.ADMIN],
+        role: Role.Admin,
+        isActive: true,
+      },
+      {
+        userName: 'Creator',
+        password: 'Creator',
+        role: Role.Creator,
         isActive: true,
       },
       {
         id: faker.datatype.uuid(),
         userName: 'Reader',
         password: 'Reader',
-        role: RoleEnum[RoleEnum.READ],
+        role: Role.Reader,
         isActive: true,
       },
       {

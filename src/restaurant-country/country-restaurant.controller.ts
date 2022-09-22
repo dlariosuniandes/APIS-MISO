@@ -7,7 +7,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { CountryRestaurantService } from './country-restaurant.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -36,7 +36,7 @@ export class CountryRestaurantController {
   @UseGuards(JwtAuthGuard)
   @Delete(':restaurantId/countries/:countryId')
   @HttpCode(204)
-  async deleteCountryOfACulture(
+  async deleteCountryOfARestaurant(
     @Param('restaurantId') restaurantId: string,
     @Param('countryId') countryId: string,
   ) {
