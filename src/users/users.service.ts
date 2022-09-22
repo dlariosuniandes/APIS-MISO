@@ -31,18 +31,21 @@ export class UsersService implements OnModuleInit {
     const salt = bcrypt.genSaltSync(10);
     const seedObjectUsers: object[] = [
       {
+        id: faker.datatype.uuid(),
         userName: 'Admin',
         password: 'Admin',
         role: RoleEnum[RoleEnum.ADMIN],
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'Reader',
         password: 'Reader',
         role: RoleEnum[RoleEnum.READ],
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'specificReader',
         password: 'specificReader',
         role: RoleEnum[RoleEnum.READ],
@@ -50,12 +53,14 @@ export class UsersService implements OnModuleInit {
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'Editor',
         password: 'Editor',
         role: RoleEnum[RoleEnum.POST_EDIT],
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'Remover',
         password: 'Remover',
         role: RoleEnum[RoleEnum.DELETE],
@@ -70,7 +75,6 @@ export class UsersService implements OnModuleInit {
   }
 
   async findOne(userName: string): Promise<UserEntity> {
-    console.log(userName, "here");
     return await this.userRepository.findOne({ where: { userName: userName } });
   }
 }

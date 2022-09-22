@@ -3,7 +3,7 @@ import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { jwtConstants } from 'src/shared/auth/jwtconstants';
-import { RoleEnum } from 'src/enums/role.enum';
+import { UserEntity } from '../users/user.entity';
 
 export type Token = {
   sub: string;
@@ -32,16 +32,32 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const userRetrieved = await this.usersService.findOne(user.userName);
+    const userRetrieved = await this.usersService.findOne(user.username);
     const payload: Token = {
-      username: user.username,
-      sub: user.id,
+      username: userRetrieved.userName,
+      sub: userRetrieved.id,
       role: userRetrieved.role,
     };
     return {
       token: this.jwtService.sign(payload, {
-        privateKey: jwtConstants.secret,
+        secret: jwtConstants.secret,
+        expiresIn: jwtConstants.signOptions.expiresIn,
       }),
     };
+  }
+
+  async validateRole(
+    token: string | undefined,
+    role: string,
+  ): Promise<boolean> {
+    try {
+      const tokenPayload = this.jwtService.verify(token, {});
+      const storedUser: UserEntity = await this.usersService.findOne(
+        tokenPayload.username,
+      );
+      return storedUser.role === role && storedUser.role === tokenPayload.role;
+    } catch {
+      throw new UnauthorizedException('Invalid Token');
+    }
   }
 }

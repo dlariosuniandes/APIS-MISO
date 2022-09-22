@@ -16,7 +16,10 @@ import { RestaurantDto } from 'src/restaurant/restaurant.dto';
 import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { CultureRestaurantService } from './culture-restaurant.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Cultures - Restaurants')
+@ApiBearerAuth()
 @Controller('cultures')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class CultureRestaurantController {

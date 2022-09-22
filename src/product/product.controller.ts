@@ -16,7 +16,10 @@ import { ProductDto } from './product.dto';
 import { ProductEntity } from './product.entity';
 import { plainToInstance } from 'class-transformer';
 import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('Products')
 @Controller('products')
 export class ProductController {
   constructor(private productService: ProductService) {}

@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CultureModule } from './culture/culture.module';
 import { ProductModule } from './product/product.module';
 import { CountryModule } from './country/country.module';
@@ -21,8 +19,8 @@ import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
 import { CultureCountryModule } from './culture-country/culture-country.module';
 import { CountryRestaurantModule } from './restaurant-country/country-restaurant.module';
 import { databaseConfig } from './shared/db-utils/project-database-config';
-import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -36,11 +34,9 @@ import { UsersModule } from './users/users.module';
     CultureRestaurantModule,
     CultureProductModule,
     CultureRecipeModule,
-    AuthModule,
     UsersModule,
+    AuthModule,
     TypeOrmModule.forRoot(databaseConfig),
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

@@ -6,7 +6,7 @@ import { UserEntity } from './user.entity';
 @Module({
   providers: [UsersService],
   imports: [TypeOrmModule.forFeature([UserEntity])],
-  exports: [UsersService],
+  exports: [UsersService]
 })
 export class UsersModule implements OnModuleInit {
   constructor(private usersService: UsersService) {}

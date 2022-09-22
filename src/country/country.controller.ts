@@ -16,21 +16,23 @@ import { CountryService } from './country.service';
 import { CountryDto } from './country.dto';
 import { CountryEntity } from './country.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
-import { AdminStrategy } from 'src/auth/admin-strategy/admin.strategy';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AdminGuard } from '../auth/admin-guard/admin.guard';
 
+@ApiTags('Countries')
 @UseInterceptors(BusinessErrorsInterceptor)
+@ApiBearerAuth()
 @Controller('countries')
 export class CountryController {
   constructor(private readonly countryService: CountryService) {}
 
-  @UseGuards(AdminStrategy)
+  @UseGuards(AdminGuard)
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
     return await this.countryService.findAll();
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':countryId')
   async findOne(@Param('countryId') countryId: string) {
     return await this.countryService.findOne(countryId);
