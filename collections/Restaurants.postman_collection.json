@@ -1,0 +1,560 @@
+{
+	"info": {
+		"_postman_id": "8e1106f8-ddc1-4e29-9d65-7185dbe840ea",
+		"name": "Restaurants",
+		"description": "Recurso que representa los restaurantes que ofrecen una o mas de una cultura gastronomica.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23001418"
+	},
+	"item": [
+		{
+			"name": "Add a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json();",
+							"pm.globals.set(\"restaurantId\", data.id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"El cielo\",\n    \"city\": \"Washington D. C.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/restaurants",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants"
+					]
+				},
+				"description": "Crea un nuevo restaurante"
+			},
+			"response": [
+				{
+					"name": "Add a restaurant",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"El cielo\",\n    \"city\": \"Washington D. C.\",\n    \"country\": \"Estados Unidos\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/restaurants",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"name\": \"El cielo\",\n    \"city\": \"Washington D. C.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all restaurants",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of restaurants > ' + 0, function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.length).to.greaterThan(0);",
+							"});",
+							"",
+							"pm.test('Status code is 200', function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants"
+					]
+				},
+				"description": "Obtiene una lista de restaurantes"
+			},
+			"response": [
+				{
+					"name": "Get all restaurants",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"14f05d0e-1275-11ed-861d-0242ac120002\",\n        \"name\": \"Mirazur\",\n        \"city\": \"Menton\",\n        \"country\": \"Francia\",\n        \"miheline_stars\": [\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"star_rating\": \"Primera\",\n                \"awarded_date\": \"01-12-2017\"\n            },\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"star_rating\": \"Segunda\",\n                \"awarded_date\": \"01-12-2018\"\n            },\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"star_rating\": \"Tercera\",\n                \"awarded_date\": \"01-12-2019\"\n            }\n        ]\n    },\n    {\n        \"id\": \"14f05d0e-1275-11ed-861d-0242ac120002\",\n        \"name\": \"Nuevo Noma\",\n        \"city\": \"Copenhague\",\n        \"country\": \"Dinamarca\",\n        \"miheline_stars\": [\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"star_rating\": \"Primera\",\n                \"awarded_date\": \"01-12-2009\"\n            },\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"star_rating\": \"Segunda\",\n                \"awarded_date\": \"01-12-2012\"\n            },\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"star_rating\": \"Tercera\",\n                \"awarded_date\": \"01-12-2021\"\n            }\n        ]\n    },\n    {\n        \"id\": \"14f05d0e-1275-11ed-861d-0242ac120002\",\n        \"name\": \"Sant Pau\",\n        \"city\": \"Barcelona\",\n        \"country\": \"España\",\n        \"miheline_stars\": [\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"star_rating\": \"Primera\",\n                \"awarded_date\": \"01-12-2014\"\n            },\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"star_rating\": \"Segunda\",\n                \"awarded_date\": \"01-05-2015\"\n            },\n            {\n                \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n                \"star_rating\": \"Tercera\",\n                \"awarded_date\": \"01-08-2018\"\n            }\n        ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get one restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}"
+					]
+				},
+				"description": "Obtiene un restaurante segun el ID."
+			},
+			"response": [
+				{
+					"name": "Get one restaurant",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"14f05d0e-1275-11ed-861d-0242ac120002\",\n    \"name\": \"Mirazur\",\n    \"city\": \"Menton\",\n    \"country\": \"Francia\",\n    \"micheline_stars\": [\n        {\n            \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n            \"star_rating\": \"Primera\",\n            \"awarded_date\": \"01-12-2017\"\n        },\n        {\n            \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n            \"star_rating\": \"Segunda\",\n            \"awarded_date\": \"01-12-2018\"\n        },\n        {\n            \"id\": \"14f05d0e-1275-11ed-861d-0242ac120032\",\n            \"star_rating\": \"Tercera\",\n            \"awarded_date\": \"01-12-2019\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get an invalid restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function () {",
+							"    pm.response.to.have.status(404)",
+							"});",
+							"",
+							"pm.test('Get expected error message', function () {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Restaurant with the given id was not found');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Ejemplo de un request para obtener un restaurante que no existe."
+			},
+			"response": [
+				{
+					"name": "Get an invalid restaurant",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 404,\n   \"message\": \"The Restaurant with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function() {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Cielo lindo\",\n    \"city\": \"Washington D. C.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}"
+					]
+				},
+				"description": "Actualización de un restaurante"
+			},
+			"response": [
+				{
+					"name": "Update a restaurant",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Cielo lindo\",\n    \"ciudad\": \"Washington D. C.\",\n    \"pais\": \"Estados Unidos\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"name\": \"Cielo lindo\",\n    \"city\": \"Washington D. C.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update an invalid restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Get expected error message', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Restaurant with the given id was not found')",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Cielo lindo\",\n    \"city\": \"Washington D. C.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Ejemplo de un request para actualizar un restaurante que no existe."
+			},
+			"response": [
+				{
+					"name": "Update an invalid restaurant",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Cielo lindo\",\n    \"city\": \"Washington D. C.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 404,\n   \"message\": \"The Restaurant with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete a restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function() {",
+							"    pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/{{restaurantId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"{{restaurantId}}"
+					]
+				},
+				"description": "Eliminación de un restaurante segun el ID"
+			},
+			"response": [
+				{
+					"name": "Delete a restaurant",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/{{restaurantId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"{{restaurantId}}"
+							]
+						}
+					},
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete an invalid restaurant",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test('Expected message error', function() {",
+							"    var data = pm.response.json();",
+							"    pm.expect(data.message).to.eql('The Restaurant with the given id was not found');",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"restaurants",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Ejemplo de un request para eliminar un restaurante que no existe."
+			},
+			"response": [
+				{
+					"name": "Delete an invalid restaurant",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/restaurants/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"restaurants",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The Restaurant with the given id was not found\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		}
+	]
+}
