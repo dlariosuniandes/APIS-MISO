@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Role } from '../role.enum';
 import { ROLES_KEY } from '../role.decorator';
 import { Token } from 'src/auth/auth.service';
+import { resourcesList } from '../../shared/security/constants';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -28,9 +29,21 @@ export class RolesGuard implements CanActivate {
     switch (decoded.role) {
       case 'admin':
         return true;
+
       default:
         if (requiredRoles.some((role) => decoded.role === role)) {
-          return true;
+          if (decoded.resources) {
+            const url: string = context.switchToHttp().getRequest().url;
+
+            let allResources = resourcesList.join('|');
+            allResources =
+              '\\W*(?:\\b(?!(?:' + allResources + ')\\b)\\w+\\W*|\\W+)+';
+            const Rx = new RegExp(allResources, 'g');
+            const urlResources = [
+              ...new Set(url.replace(Rx, '|').split('|')),
+            ].filter((s) => s);
+            return urlResources.every((r) => decoded.resources.includes(r));
+          } else return true;
         } else return false;
     }
   }

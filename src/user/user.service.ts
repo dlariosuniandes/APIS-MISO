@@ -32,40 +32,47 @@ export class UserService implements OnModuleInit {
     const salt = bcrypt.genSaltSync(10);
     const seedObjectUsers: object[] = [
       {
+        id: faker.datatype.uuid(),
         userName: 'Admin',
         password: 'Admin',
         role: Role.Admin,
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'Creator',
         password: 'Creator',
         role: Role.Creator,
+        resources: ['countries', 'cultures'],
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'Reader',
         password: 'Reader',
         role: Role.Reader,
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'specificReader',
         password: 'specificReader',
-        role: RoleEnum[RoleEnum.READ],
-        resources: ['products', 'cultures'],
+        role: Role.Reader,
+        resources: ['cultures'],
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'Editor',
         password: 'Editor',
-        role: RoleEnum[RoleEnum.POST_EDIT],
+        role: Role.Editor,
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'Remover',
         password: 'Remover',
-        role: RoleEnum[RoleEnum.DELETE],
+        role: Role.Remover,
         isActive: true,
       },
     ];

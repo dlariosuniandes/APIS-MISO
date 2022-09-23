@@ -10,7 +10,10 @@ import {
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { CountryRestaurantService } from './country-restaurant.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Countries - Restaurants')
+@ApiBearerAuth()
 @Controller('restaurants')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class CountryRestaurantController {

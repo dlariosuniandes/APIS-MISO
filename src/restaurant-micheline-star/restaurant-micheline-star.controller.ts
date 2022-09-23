@@ -16,7 +16,10 @@ import { MichelineStarDto } from 'src/micheline-star/micheline-star.dto';
 import { MichelineStarEntity } from 'src/micheline-star/micheline-star.entity';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { RestaurantMichelineStarService } from './restaurant-micheline-star.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Restaurants - Stars')
+@ApiBearerAuth()
 @Controller('restaurants')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class RestaurantMichelineStarController {

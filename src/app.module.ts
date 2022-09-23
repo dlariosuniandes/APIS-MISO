@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { CultureModule } from './culture/culture.module';
 import { ProductModule } from './product/product.module';
 import { CountryModule } from './country/country.module';
@@ -34,9 +32,7 @@ import { APP_GUARD } from '@nestjs/core';
     UserModule,
     TypeOrmModule.forRoot(databaseConfig),
   ],
-  controllers: [AppController],
   providers: [
-    AppService,
     {
       provide: APP_GUARD,
       useClass: RolesGuard,

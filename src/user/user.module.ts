@@ -4,13 +4,13 @@ import { AuthService } from '../auth/auth.service';
 import { UserService } from './user.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
-import { UserController } from './user.controller';
+import { UsersController } from './users.controller';
 
 @Module({
   providers: [UserService, AuthService, JwtService],
   imports: [TypeOrmModule.forFeature([UserEntity])],
   exports: [UserService],
-  controllers: [UserController],
+  controllers: [UsersController],
 })
 export class UserModule implements OnModuleInit {
   constructor(private userService: UserService) {}

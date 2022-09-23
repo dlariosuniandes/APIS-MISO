@@ -11,8 +11,11 @@ import {
 } from '@nestjs/common';
 import { CultureProductService } from './culture-product.service';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Products - Cultures')
+@ApiBearerAuth()
 @Controller('products')
 @UseInterceptors(BusinessErrorsInterceptor)
 export class ProductCulturesController {
