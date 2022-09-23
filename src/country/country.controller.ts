@@ -15,10 +15,10 @@ import { plainToInstance } from 'class-transformer';
 import { CountryService } from './country.service';
 import { CountryDto } from './country.dto';
 import { CountryEntity } from './country.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/authorization/role.decorator';
 import { Role } from 'src/authorization/role.enum';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Countries')
 @UseInterceptors(BusinessErrorsInterceptor)

@@ -15,8 +15,10 @@ import { CultureDto } from './culture.dto';
 import { CultureEntity } from './culture.entity';
 import { CultureService } from './culture.service';
 import { plainToInstance } from 'class-transformer';
-import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../authorization/role.decorator';
+import { Role } from '../authorization/role.enum';
 
 @ApiTags('Cultures')
 @UseInterceptors(BusinessErrorsInterceptor)
@@ -25,6 +27,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class CultureController {
   constructor(private readonly cultureService: CultureService) {}
 
+  @Roles(Role.Reader)
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {

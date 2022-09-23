@@ -15,7 +15,7 @@ import { CountryEntity } from 'src/country/country.entity';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { CultureCountryService } from './culture-country.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/jwt-strategy/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Cultures-Countries')
 @ApiBearerAuth()

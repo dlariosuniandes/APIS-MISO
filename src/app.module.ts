@@ -32,9 +32,7 @@ import { APP_GUARD } from '@nestjs/core';
     UserModule,
     TypeOrmModule.forRoot(databaseConfig),
   ],
-  controllers: [AppController],
   providers: [
-    AppService,
     {
       provide: APP_GUARD,
       useClass: RolesGuard,

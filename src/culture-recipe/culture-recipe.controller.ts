@@ -14,7 +14,10 @@ import { RecipeDto } from 'src/recipe/recipe.dto';
 import { RecipeEntity } from 'src/recipe/recipe.entity';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { CultureRecipeService } from './culture-recipe.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiBearerAuth()
+@ApiTags('Cultures - Recipes')
 @UseInterceptors(BusinessErrorsInterceptor)
 @Controller('cultures')
 export class CultureRecipeController {

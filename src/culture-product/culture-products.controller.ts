@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CultureProductService } from './culture-product.service';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
-import { JwtAuthGuard } from 'src/auth/jwt-strategy/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Cultures-Products')

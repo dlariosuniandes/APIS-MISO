@@ -13,7 +13,10 @@ import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-erro
 import { RecipeDto } from './recipe.dto';
 import { RecipeEntity } from './recipe.entity';
 import { RecipeService } from './recipe.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Recipes')
+@ApiBearerAuth()
 @UseInterceptors(BusinessErrorsInterceptor)
 @Controller('recipes')
 export class RecipeController {

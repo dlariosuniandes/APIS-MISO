@@ -2,14 +2,16 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from 'src/shared/auth/jwtconstants';
-import { UserEntity } from '../users/user.entity';
+import jwtConstants from '../shared/security/constants';
+import { UserEntity } from '../user/user.entity';
 
 export type Token = {
   sub: string;
   username: string;
   role: string;
+  resources: string[] | undefined;
 };
+
 @Injectable()
 export class AuthService {
   constructor(
@@ -32,32 +34,20 @@ export class AuthService {
   }
 
   async login(user: any) {
-    const userRetrieved = await this.usersService.findOne(user.username);
+    const userRetrieved: UserEntity = await this.userService.findOne(
+      user.username,
+    );
     const payload: Token = {
       username: userRetrieved.userName,
       sub: userRetrieved.id,
       role: userRetrieved.role,
+      resources: userRetrieved.resources,
     };
     return {
       token: this.jwtService.sign(payload, {
-        secret: jwtConstants.secret,
-        expiresIn: jwtConstants.signOptions.expiresIn,
+        secret: jwtConstants.JWT_SECRET,
+        expiresIn: jwtConstants.JWT_EXPIRES_IN,
       }),
     };
-  }
-
-  async validateRole(
-    token: string | undefined,
-    role: string,
-  ): Promise<boolean> {
-    try {
-      const tokenPayload = this.jwtService.verify(token, {});
-      const storedUser: UserEntity = await this.usersService.findOne(
-        tokenPayload.username,
-      );
-      return storedUser.role === role && storedUser.role === tokenPayload.role;
-    } catch {
-      throw new UnauthorizedException('Invalid Token');
-    }
   }
 }
