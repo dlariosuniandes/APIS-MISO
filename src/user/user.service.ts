@@ -39,9 +39,11 @@ export class UserService implements OnModuleInit {
         isActive: true,
       },
       {
+        id: faker.datatype.uuid(),
         userName: 'Creator',
         password: 'Creator',
         role: Role.Creator,
+        resources: ['countries', 'cultures'],
         isActive: true,
       },
       {

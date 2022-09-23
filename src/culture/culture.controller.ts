@@ -27,7 +27,7 @@ import { Role } from '../authorization/role.enum';
 export class CultureController {
   constructor(private readonly cultureService: CultureService) {}
 
-  @Roles(Role.Reader)
+  @Roles(Role.Reader, Role.Creator)
   @UseGuards(JwtAuthGuard)
   @Get()
   async findAll() {
