@@ -29,11 +29,9 @@ export class RolesGuard implements CanActivate {
     switch (decoded.role) {
       case 'admin':
         return true;
-      case 'reader':
-        const readerRoleRequired = requiredRoles.find(
-          (role) => decoded.role === role,
-        );
-        if (readerRoleRequired) {
+
+      default:
+        if (requiredRoles.some((role) => decoded.role === role)) {
           if (decoded.resources) {
             const url: string = context.switchToHttp().getRequest().url;
 
@@ -44,14 +42,8 @@ export class RolesGuard implements CanActivate {
             const urlResources = [
               ...new Set(url.replace(Rx, '|').split('|')),
             ].filter((s) => s);
-            if (urlResources.every((r) => decoded.resources.includes(r))) {
-              return true;
-            } else return false;
+            return urlResources.every((r) => decoded.resources.includes(r));
           } else return true;
-        } else return false;
-      default:
-        if (requiredRoles.some((role) => decoded.role === role)) {
-          return true;
         } else return false;
     }
   }
