@@ -39,9 +39,7 @@ export class RecipeService {
       relations: ['culture'],
     });
     if (!recipeDB) {
-      throw new NotFoundException(
-        'The culture with the given id was not found',
-      );
+      throw new NotFoundException('The recipe with the given id was not found');
     }
     return await this.recipeRepository.save({ ...recipeDB, ...recipe });
   }
@@ -53,7 +51,7 @@ export class RecipeService {
     });
     if (!recipeDB) {
       throw new BusinessLogicException(
-        'The culture with the given id was not found',
+        'The recipe with the given id was not found',
         BusinessError.NOT_FOUND,
       );
     }

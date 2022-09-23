@@ -1,4 +1,8 @@
-import { Injectable, PreconditionFailedException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  PreconditionFailedException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CultureEntity } from 'src/culture/culture.entity';
 import { CultureService } from 'src/culture/culture.service';
@@ -59,6 +63,12 @@ export class CultureRecipeService {
     recipeId: string,
     cultureId: string,
   ): Promise<RecipeEntity> {
+    const interestRecipe: RecipeEntity[] = await this.recipeRepository.findBy({
+      id: recipeId,
+    });
+    if (!interestRecipe[0]) {
+      throw new NotFoundException('The recipe with the given id was not found');
+    }
     const culture: CultureEntity = await this.cultureService.findOne(cultureId);
     return this.findRecipeInCulture(recipeId, culture);
   }
@@ -67,7 +77,16 @@ export class CultureRecipeService {
     return culture.recipes;
   }
 
-  async deleteRecipeFromCulture(recipeId, cultureId): Promise<CultureEntity> {
+  async deleteRecipeFromCulture(
+    recipeId: string,
+    cultureId: string,
+  ): Promise<CultureEntity> {
+    const interestRecipe: RecipeEntity[] = await this.recipeRepository.findBy({
+      id: recipeId,
+    });
+    if (!interestRecipe[0]) {
+      throw new NotFoundException('The recipe with the given id was not found');
+    }
     const culture = await this.cultureService.findOne(cultureId);
     culture.recipes = culture.recipes.filter((rc) => rc.id !== recipeId);
     await this.cultureRepository.save(culture);
