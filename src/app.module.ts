@@ -35,7 +35,7 @@ import { CountryRestaurantModule } from './restaurant-country/country-restaurant
     AuthModule,
     UserModule,
     TypeOrmModule.forRoot(databaseConfig),
-    CacheModule.register({ ttl: 600 }),
+    CacheModule.register({ ttl: 600, isGlobal: true }),
   ],
   providers: [
     {

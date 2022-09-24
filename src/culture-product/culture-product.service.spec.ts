@@ -8,6 +8,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { CultureEntity } from '../culture/culture.entity';
 import { CultureService } from '../culture/culture.service';
 import { ProductService } from '../product/product.service';
+import { CacheModule } from '@nestjs/common';
 
 describe('CultureProductService', () => {
   let cultureProductProvider: CultureProductService;
@@ -78,7 +79,10 @@ describe('CultureProductService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CultureProductService, ProductService, CultureService],
-      imports: [...TypeOrmTestingConfig()],
+      imports: [
+        ...TypeOrmTestingConfig(),
+        CacheModule.register({ ttl: 600, isGlobal: true }),
+      ],
     }).compile();
 
     cultureProductProvider = module.get<CultureProductService>(
@@ -213,7 +217,7 @@ describe('CultureProductService', () => {
 
   it('should associate products to culture', async () => {
     const cultureId = cultureList[0].id;
-    const newProducts: ProductEntity[] = await productProvider.findAll();
+    const newProducts: ProductEntity[] = await productProvider.findAll(0, 5);
     const newProductsIds: string[] = newProducts.map((product) => product.id);
     await cultureProductProvider.associateProductsToCulture(
       cultureId,
