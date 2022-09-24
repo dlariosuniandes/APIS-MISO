@@ -1,21 +1,36 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from './product.entity';
 import { Repository } from 'typeorm';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class ProductService {
   constructor(
     @InjectRepository(ProductEntity)
     private productRepository: Repository<ProductEntity>,
+    @Inject('CACHE_MANAGER')
+    private cacheManager: Cache,
   ) {}
 
   async create(product: ProductEntity): Promise<ProductEntity> {
     return await this.productRepository.save(product);
   }
 
-  async findAll(): Promise<ProductEntity[]> {
-    return await this.productRepository.find({ relations: ['cultures'] });
+  async findAll(skip: number, amount: number): Promise<ProductEntity[]> {
+    const cacheKey = `products.skip_${skip}.amount_${amount}`;
+    const cached: ProductEntity[] = await this.cacheManager.get<
+      ProductEntity[]
+    >(cacheKey);
+    if (!cached) {
+      const products: ProductEntity[] = await this.productRepository.find({
+        skip: skip,
+        take: amount,
+      });
+      await this.cacheManager.set<ProductEntity[]>(cacheKey, products);
+      return products;
+    }
+    return cached;
   }
 
   async findOne(id: string): Promise<ProductEntity> {

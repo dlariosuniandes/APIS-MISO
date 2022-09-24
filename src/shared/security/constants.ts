@@ -10,6 +10,7 @@ export const resourcesList = [
   'users',
   'recipes',
   'restaurants',
+  'micheline-stars',
 ];
 
 export default jwtConstants;

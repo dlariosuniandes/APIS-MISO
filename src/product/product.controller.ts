@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
@@ -14,7 +15,7 @@ import { ProductDto } from './product.dto';
 import { ProductEntity } from './product.entity';
 import { plainToInstance } from 'class-transformer';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 @ApiBearerAuth()
 @ApiTags('Products')
@@ -32,10 +33,12 @@ export class ProductController {
     return await this.productService.create(productInstance);
   }
 
+  @ApiQuery({ name: 'skip', type: Number, required: false })
+  @ApiQuery({ name: 'amount', type: Number, required: false })
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll() {
-    return await this.productService.findAll();
+  async findAll(@Query('skip') skip = 0, @Query('amount') amount = 1000) {
+    return await this.productService.findAll(skip, amount);
   }
 
   @UseGuards(JwtAuthGuard)
