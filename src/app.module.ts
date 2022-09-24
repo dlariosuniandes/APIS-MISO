@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { CultureModule } from './culture/culture.module';
 import { ProductModule } from './product/product.module';
 import { CountryModule } from './country/country.module';
@@ -15,6 +15,8 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { RolesGuard } from './authorization/guards/role.guard';
 import { APP_GUARD } from '@nestjs/core';
+import { CultureCountryModule } from './culture-country/culture-country.module';
+import { CountryRestaurantModule } from './restaurant-country/country-restaurant.module';
 
 @Module({
   imports: [
@@ -28,9 +30,12 @@ import { APP_GUARD } from '@nestjs/core';
     CultureRestaurantModule,
     CultureProductModule,
     CultureRecipeModule,
+    CultureCountryModule,
+    CountryRestaurantModule,
     AuthModule,
     UserModule,
     TypeOrmModule.forRoot(databaseConfig),
+    CacheModule.register({ ttl: 600 }),
   ],
   providers: [
     {
