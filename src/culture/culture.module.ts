@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { CacheModule, Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CultureEntity } from './culture.entity';
 import { CultureService } from './culture.service';
@@ -18,6 +18,7 @@ import { CountryEntity } from 'src/country/country.entity';
       ProductEntity,
       CountryEntity,
     ]),
+    CacheModule.register(),
   ],
   controllers: [CultureController],
   exports: [CultureService],

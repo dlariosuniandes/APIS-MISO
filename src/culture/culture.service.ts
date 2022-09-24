@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   BusinessError,
@@ -6,18 +6,29 @@ import {
 } from 'src/shared/errors/business-errors';
 import { Repository } from 'typeorm';
 import { CultureEntity } from './culture.entity';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class CultureService {
+  cacheKey = 'cultures';
+
   constructor(
     @InjectRepository(CultureEntity)
     private readonly cultureRepository: Repository<CultureEntity>,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   async findAll(): Promise<CultureEntity[]> {
-    return await this.cultureRepository.find({
-      relations: ['recipes', 'restaurants', 'products', 'recipes'],
-    });
+    const cached: CultureEntity[] = await this.cacheManager.get<
+      CultureEntity[]
+    >(this.cacheKey);
+    if (!cached) {
+      return await this.cultureRepository.find({
+        relations: ['recipes', 'restaurants', 'products', 'recipes'],
+      });
+    }
+    return cached;
   }
 
   async findOne(id: string): Promise<CultureEntity> {
