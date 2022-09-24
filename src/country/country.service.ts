@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   BusinessError,
@@ -6,19 +6,30 @@ import {
 } from 'src/shared/errors/business-errors';
 import { Repository } from 'typeorm';
 import { CountryEntity } from './country.entity';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class CountryService {
+  cacheKey = 'countries';
+
   constructor(
     @InjectRepository(CountryEntity)
     private readonly countryRepository: Repository<CountryEntity>,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   private messageExceptionCountryNotFound =
     'The Country with the given id was not found';
 
   async findAll(): Promise<CountryEntity[]> {
-    return await this.countryRepository.find();
+    const cached: CountryEntity[] = await this.cacheManager.get<
+      CountryEntity[]
+    >(this.cacheKey);
+    if (!cached) {
+      return await this.countryRepository.find();
+    }
+    return cached;
   }
 
   async findOne(id: string): Promise<CountryEntity> {

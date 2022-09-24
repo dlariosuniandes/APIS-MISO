@@ -6,6 +6,7 @@ import { ProductEntity } from '../../product/product.entity';
 import { RecipeEntity } from '../../recipe/recipe.entity';
 import { RestaurantEntity } from '../../restaurant/restaurant.entity';
 import { UserEntity } from '../../user/user.entity';
+import { CacheModule } from '@nestjs/common';
 
 export const TypeOrmTestingConfig = () => [
   TypeOrmModule.forRoot({
@@ -33,4 +34,5 @@ export const TypeOrmTestingConfig = () => [
     MichelineStarEntity,
     UserEntity,
   ]),
+  CacheModule.register(),
 ];
