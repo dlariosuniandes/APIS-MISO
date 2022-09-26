@@ -17,6 +17,8 @@ import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-erro
 import { CultureRecipeService } from './culture-recipe.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { Roles } from 'src/authorization/role.decorator';
+import { Role } from 'src/authorization/role.enum';
 
 @ApiBearerAuth()
 @ApiTags('Cultures - Recipes')
@@ -38,6 +40,7 @@ export class CultureRecipeController {
     );
   }
 
+  @Roles(Role.Creator, Role.Reader)
   @UseGuards(JwtAuthGuard)
   @Put(':cultureId/recipes')
   async updateCultureRecipes(
@@ -51,6 +54,7 @@ export class CultureRecipeController {
     );
   }
 
+  @Roles(Role.Reader, Role.Creator)
   @UseGuards(JwtAuthGuard)
   @Get(':cultureId/recipes/:recipeId')
   async findRecipeByCultureIdRecipeId(
@@ -63,12 +67,14 @@ export class CultureRecipeController {
     );
   }
 
+  @Roles(Role.Reader, Role.Creator)
   @UseGuards(JwtAuthGuard)
   @Get(':cultureId/recipes')
   async findRecipesByCultureId(@Param('cultureId') cultureId: string) {
     return await this.cultureRecipeService.findRecipesByCultureId(cultureId);
   }
 
+  @Roles(Role.Remover)
   @UseGuards(JwtAuthGuard)
   @Delete(':cultureId/recipes/:recipeId')
   @HttpCode(204)
