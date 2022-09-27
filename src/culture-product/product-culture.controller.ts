@@ -14,62 +14,62 @@ import { BusinessErrorsInterceptor } from '../shared/interceptors/business-error
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Cultures-Products')
+@ApiTags('Products - Cultures')
 @ApiBearerAuth()
-@Controller('cultures')
+@Controller('products')
 @UseInterceptors(BusinessErrorsInterceptor)
-export class CultureProductsController {
+export class ProductCultureController {
   constructor(private cultureProductService: CultureProductService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Get(':cultureId/products')
-  async findAllCultureProducts(@Param('cultureId') cultureId: string) {
-    return await this.cultureProductService.findProductsByCultureId(cultureId);
+  @Get(':productId/cultures')
+  async findAllProductCultures(@Param('productId') productId: string) {
+    return await this.cultureProductService.findCulturesByProductId(productId);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':cultureId/products/:productId')
-  async findProductByCultureIdProductId(
+  @Get(':productId/cultures/:cultureId')
+  async findCultureByProductIdCultureId(
     @Param('cultureId') cultureId: string,
     @Param('productId') productId: string,
   ) {
-    return await this.cultureProductService.findProductByCultureIdProductId(
+    return await this.cultureProductService.findCultureByProductIdCultureId(
       productId,
       cultureId,
     );
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post(':cultureId/products/:productId')
-  async addProductToCulture(
+  @Post(':productId/cultures/:cultureId')
+  async addCultureToProduct(
     @Param('cultureId') cultureId: string,
     @Param('productId') productId: string,
   ) {
-    return await this.cultureProductService.addProductToCulture(
+    return await this.cultureProductService.addCultureToProduct(
       productId,
       cultureId,
     );
   }
 
   @UseGuards(JwtAuthGuard)
-  @Put(':cultureId/products')
-  async associateProductsToCulture(
-    @Param('cultureId') cultureId: string,
-    @Body() productsIds: string[],
+  @Put(':productId/cultures')
+  async associateCulturesToProduct(
+    @Param('productId') productId: string,
+    @Body() culturesIds: string[],
   ) {
-    return await this.cultureProductService.associateProductsToCulture(
-      cultureId,
-      productsIds,
+    return await this.cultureProductService.associateCulturesToProduct(
+      productId,
+      culturesIds,
     );
   }
 
   @UseGuards(JwtAuthGuard)
-  @Delete(':cultureId/products/:productId')
-  async removeProductFromCulture(
+  @Delete(':productId/cultures/:cultureId')
+  async removeCultureFromProduct(
     @Param('cultureId') cultureId: string,
     @Param('productId') productId: string,
   ) {
-    return await this.cultureProductService.deleteProductFromCulture(
+    return await this.cultureProductService.deleteCultureFromProduct(
       productId,
       cultureId,
     );
