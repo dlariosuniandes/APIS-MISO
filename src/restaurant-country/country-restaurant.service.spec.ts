@@ -9,6 +9,7 @@ import { CountryEntity } from '../country/country.entity';
 import { RestaurantService } from '../restaurant/restaurant.service';
 import { RestaurantEntity } from '../restaurant/restaurant.entity';
 import { CountryService } from '../country/country.service';
+import {CacheModule} from "@nestjs/common";
 
 describe('CountryRestaurantService', () => {
   let countryRestaurantProvider: CountryRestaurantService;
@@ -68,7 +69,7 @@ describe('CountryRestaurantService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CountryRestaurantService, CountryService, RestaurantService],
-      imports: [...TypeOrmTestingConfig()],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
     }).compile();
     countryRestaurantProvider = module.get<CountryRestaurantService>(
       CountryRestaurantService,

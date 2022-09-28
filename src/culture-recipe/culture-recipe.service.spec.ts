@@ -8,6 +8,7 @@ import { RecipeService } from 'src/recipe/recipe.service';
 import { TypeOrmTestingConfig } from 'src/shared/testing-utils/typeorm-testing-config';
 import { Repository } from 'typeorm';
 import { CultureRecipeService } from './culture-recipe.service';
+import {CacheModule} from "@nestjs/common";
 
 describe('CultureRecipeService', () => {
   let cultureRecipeProvider: CultureRecipeService;
@@ -78,7 +79,7 @@ describe('CultureRecipeService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CultureRecipeService, RecipeService, CultureService],
-      imports: [...TypeOrmTestingConfig()],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
     }).compile();
 
     cultureRecipeProvider =

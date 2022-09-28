@@ -9,7 +9,11 @@ import { CultureService } from 'src/culture/culture.service';
 import { CountryService } from 'src/country/country.service';
 import { CountryEntity } from 'src/country/country.entity';
 import { plainToInstance } from 'class-transformer';
-import {ConflictException, PreconditionFailedException} from '@nestjs/common';
+import {
+  CacheModule,
+  ConflictException,
+  PreconditionFailedException,
+} from '@nestjs/common';
 
 describe('CultureCountryService', () => {
   let cultureCountryProvider: CultureCountryService;
@@ -71,7 +75,7 @@ describe('CultureCountryService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CultureCountryService, CultureService, CountryService],
-      imports: [...TypeOrmTestingConfig()],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
     }).compile();
     cultureCountryProvider = module.get<CultureCountryService>(
       CultureCountryService,

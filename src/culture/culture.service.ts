@@ -28,24 +28,18 @@ export class CultureService {
   }
 
   async findOne(id: string): Promise<CultureEntity> {
-    const cacheKey = `cultures.${id}`;
-    const cached: CultureEntity = await this.cacheManager.get(cacheKey);
-    if (!cached) {
-      const culture: CultureEntity = await this.cultureRepository.findOne({
-        where: { id },
-        relations: ['recipes', 'products', 'restaurants', 'countries'],
-        relationLoadStrategy: 'query',
-      });
-      if (!culture) {
-        throw new BusinessLogicException(
-          'The culture with the given id was not found',
-          BusinessError.NOT_FOUND,
-        );
-      }
-      await this.cacheManager.set(cacheKey, culture);
-      return culture;
+    const culture: CultureEntity = await this.cultureRepository.findOne({
+      where: { id },
+      relations: ['recipes', 'products', 'restaurants', 'countries'],
+      relationLoadStrategy: 'query',
+    });
+    if (!culture) {
+      throw new BusinessLogicException(
+        'The culture with the given id was not found',
+        BusinessError.NOT_FOUND,
+      );
     }
-    return cached;
+    return culture;
   }
 
   async create(culture: CultureEntity): Promise<CultureEntity> {

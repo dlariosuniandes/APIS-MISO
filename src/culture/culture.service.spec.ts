@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { CultureEntity } from './culture.entity';
 import { CultureService } from './culture.service';
 import { faker } from '@faker-js/faker';
+import { CacheModule } from '@nestjs/common';
 
 describe('CultureService', () => {
   let service: CultureService;
@@ -31,7 +32,7 @@ describe('CultureService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CultureService],
-      imports: [...TypeOrmTestingConfig()],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
     }).compile();
 
     service = module.get<CultureService>(CultureService);

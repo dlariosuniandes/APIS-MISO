@@ -26,7 +26,7 @@ export class CountryService {
   private messageExceptionCountryNotFound =
     'The Country with the given id was not found';
 
-  async findAll(skip: number, amount: number): Promise<CountryEntity[]> {
+  async findAll(skip = 0, amount = 50000): Promise<CountryEntity[]> {
     const cacheKey = `countries.skip_${skip}.amount_${amount}`;
     const cached: CountryEntity[] = await this.cacheManager.get(cacheKey);
     if (!cached) {
