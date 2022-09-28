@@ -27,7 +27,6 @@ export class RestaurantMichelineStarController {
     private readonly restaurantMichelineStarService: RestaurantMichelineStarService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post(':restaurantId/micheline-stars')
   async addMichelineStarToRestaurant(
     @Param('restaurantId') restaurantId: string,
@@ -43,7 +42,6 @@ export class RestaurantMichelineStarController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':restaurantId/micheline-stars/:michelineStarId')
   async findMichelineStarByRestaurantIdAndMichelineStarId(
     @Param('restaurantId') restaurantId: string,
@@ -55,7 +53,6 @@ export class RestaurantMichelineStarController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':restaurantId/micheline-stars')
   async findMichelineStarsByRestaurantId(
     @Param('restaurantId') restaurantId: string,
@@ -65,7 +62,6 @@ export class RestaurantMichelineStarController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put(':restaurantId/micheline-stars/:michelineStarId')
   async updateMichelineStar(
     @Param('restaurantId') resturantId: string,
@@ -83,7 +79,6 @@ export class RestaurantMichelineStarController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':restaurantId/micheline-stars/:michelineStarId')
   @HttpCode(204)
   async deleteMichelineStarOfARestaurant(

@@ -2,7 +2,7 @@ import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { ExtractJwt } from 'passport-jwt';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { Role } from '../role.enum';
+import { Role } from 'src/shared/enums/role.enum';
 import { ROLES_KEY } from '../role.decorator';
 import { Token } from 'src/auth/auth.service';
 import { resourcesList } from '../../shared/security/constants';

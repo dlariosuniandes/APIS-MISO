@@ -21,7 +21,6 @@ export class CountryRestaurantController {
     private readonly countryRestaurantService: CountryRestaurantService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post(':restaurantId/countries/:countryId')
   async addCountryToRestaurant(
     @Param('restaurantId') restaurantId: string,
@@ -33,7 +32,6 @@ export class CountryRestaurantController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':restaurantId/countries/:countryId')
   @HttpCode(204)
   async deleteCountryOfARestaurant(

@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { faker } from '@faker-js/faker';
 import { plainToInstance } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
-import { Role } from 'src/authorization/role.enum';
+import { Role } from 'src/shared/enums/role.enum';
 
 @Injectable()
 export class UserService implements OnModuleInit {

@@ -39,7 +39,6 @@ export class ProductController {
   @Roles(Role.Reader)
   @ApiQuery({ name: 'skip', type: Number, required: false })
   @ApiQuery({ name: 'amount', type: Number, required: false })
-  @UseGuards(JwtAuthGuard)
   @Get()
   async findAll(@Query('skip') skip = 0, @Query('amount') amount = 50000) {
     return await this.productService.findAll(skip, amount);

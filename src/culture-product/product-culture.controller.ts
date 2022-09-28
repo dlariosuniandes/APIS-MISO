@@ -21,13 +21,11 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class ProductCultureController {
   constructor(private cultureProductService: CultureProductService) {}
 
-  @UseGuards(JwtAuthGuard)
   @Get(':productId/cultures')
   async findAllProductCultures(@Param('productId') productId: string) {
     return await this.cultureProductService.findCulturesByProductId(productId);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':productId/cultures/:cultureId')
   async findCultureByProductIdCultureId(
     @Param('cultureId') cultureId: string,
@@ -39,7 +37,6 @@ export class ProductCultureController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Post(':productId/cultures/:cultureId')
   async addCultureToProduct(
     @Param('cultureId') cultureId: string,
@@ -51,7 +48,6 @@ export class ProductCultureController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put(':productId/cultures')
   async associateCulturesToProduct(
     @Param('productId') productId: string,
@@ -63,7 +59,6 @@ export class ProductCultureController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':productId/cultures/:cultureId')
   async removeCultureFromProduct(
     @Param('cultureId') cultureId: string,

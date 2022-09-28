@@ -18,7 +18,7 @@ import { CountryDto } from './country.dto';
 import { CountryEntity } from './country.entity';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/authorization/role.decorator';
-import { Role } from 'src/authorization/role.enum';
+import { Role } from 'src/shared/enums/role.enum';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Countries')
@@ -37,14 +37,12 @@ export class CountryController {
     return await this.countryService.findAll(skip, amount);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Reader, Role.Creator)
   @Get(':countryId')
   async findOne(@Param('countryId') countryId: string) {
     return await this.countryService.findOne(countryId);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Creator)
   @Post()
   async create(@Body() countryDto: CountryDto) {
@@ -52,7 +50,6 @@ export class CountryController {
     return await this.countryService.create(country);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Creator)
   @Put(':countryId')
   async update(
@@ -63,7 +60,6 @@ export class CountryController {
     return await this.countryService.update(countryId, country);
   }
 
-  @UseGuards(JwtAuthGuard)
   @Roles(Role.Creator)
   @Delete(':countryId')
   @HttpCode(204)

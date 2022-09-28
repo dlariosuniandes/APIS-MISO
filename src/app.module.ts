@@ -13,10 +13,10 @@ import { CultureRecipeModule } from './culture-recipe/culture-recipe.module';
 import { databaseConfig } from './shared/db-utils/project-database-config';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { RolesGuard } from './authorization/guards/role.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { CultureCountryModule } from './culture-country/culture-country.module';
 import { CountryRestaurantModule } from './restaurant-country/country-restaurant.module';
+import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -40,7 +40,7 @@ import { CountryRestaurantModule } from './restaurant-country/country-restaurant
   providers: [
     {
       provide: APP_GUARD,
-      useClass: RolesGuard,
+      useClass: JwtAuthGuard,
     },
   ],
 })

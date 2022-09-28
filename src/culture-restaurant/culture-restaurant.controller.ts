@@ -27,7 +27,6 @@ export class CultureRestaurantController {
     private readonly cultureRestaurantService: CultureRestaurantService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
   @Post(':cultureId/restaurants/:restaurantId')
   async addRestaurantToCulture(
     @Param('cultureId') cultureId: string,
@@ -39,7 +38,6 @@ export class CultureRestaurantController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':cultureId/restaurants/:restarantId')
   async findRestaurantByCultureIdAndRestaurantId(
     @Param('cultureId') cultureId: string,
@@ -51,7 +49,6 @@ export class CultureRestaurantController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get(':cultureId/restaurants')
   async findRestaurantsByCulture(@Param('cultureId') cultureId: string) {
     return await this.cultureRestaurantService.findRestaurantsByCultureId(
@@ -59,7 +56,6 @@ export class CultureRestaurantController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Put(':cultureId/restaurants')
   async associateRestaurantsToCulture(
     @Param('cultureId') cultureId: string,
@@ -72,7 +68,6 @@ export class CultureRestaurantController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
   @Delete(':cultureId/restaurants/:restaurantId')
   @HttpCode(204)
   async deleteRestaurantOfACulture(
