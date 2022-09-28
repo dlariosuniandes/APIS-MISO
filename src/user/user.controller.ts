@@ -3,7 +3,7 @@ import { LocalAuthGuard } from 'src/auth/guards/local-auth.guard';
 import { AuthService } from '../auth/auth.service';
 import { UserDto } from './user.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { Public } from 'src/authorization/new.decorator';
+import { Public } from 'src/authorization/public.decorator';
 
 @ApiTags('Users')
 @Controller('users')
