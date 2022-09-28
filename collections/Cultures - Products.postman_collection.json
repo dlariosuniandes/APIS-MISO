@@ -1,0 +1,1665 @@
+{
+	"info": {
+		"_postman_id": "774f230d-af6b-4acc-a4b2-b03158fc4565",
+		"name": "Cultures - Products",
+		"description": "Representa la relación entre los recursos Cultura y producto.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get culture products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_1}}/products/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_1}}",
+						"products",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get culture products",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"65c44b01-bf88-48c5-9de6-51becfa5ff00\",\n        \"name\": \"wasabi\",\n        \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n        \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n        \"category\": \"GRAINS\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get products from non-existing culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{non_existing_culture}}/products/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{non_existing_culture}}",
+						"products",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get products from non-existing culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get product cultures",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_1}}/cultures/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_1}}",
+						"cultures",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get product cultures",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"831d3751-e77b-4e18-a0ec-f7b9a186da16\",\n        \"name\": \"Cultura Mexicana\",\n        \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n    },\n    {\n        \"id\": \"35e19aef-697a-4081-87eb-5f7343ceff61\",\n        \"name\": \"Cultura Mexicana\",\n        \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get cultures from non-existing product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{non_existing_product}}/cultures/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{non_existing_product}}",
+						"cultures",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get cultures from non-existing product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get product of a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_1}}/products/{{existing_product_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_1}}",
+						"products",
+						"{{existing_product_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get product of a culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"65c44b01-bf88-48c5-9de6-51becfa5ff00\",\n    \"name\": \"wasabi\",\n    \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n    \"category\": \"GRAINS\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get non-existing product from culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_1}}/products/{{non_existing_product}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_1}}",
+						"products",
+						"{{non_existing_product}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get non-existing product from culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"product with the given id is not associated to that culture\",\n    \"error\": \"Precondition Failed\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get non-associated product from culture Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_1}}/products/{{existing_product_3}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_1}}",
+						"products",
+						"{{existing_product_3}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get non-associated product from culture Copy",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"product with the given id is not associated to that culture\",\n    \"error\": \"Precondition Failed\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get culture of a product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_1}}/cultures/{{existing_culture_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_1}}",
+						"cultures",
+						"{{existing_culture_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get culture of a product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"35e19aef-697a-4081-87eb-5f7343ceff61\",\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get non-existing culture from product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_1}}/cultures/{{non_existing_culture}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_1}}",
+						"cultures",
+						"{{non_existing_culture}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get non-existing culture from product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"culture with the given id is not associated to that product\",\n    \"error\": \"Precondition Failed\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get non-associated culture from product Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_1}}/cultures/{{existing_culture_3}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_1}}",
+						"cultures",
+						"{{existing_culture_3}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get non-associated culture from product Copy",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/products/{{productId}}/cultures/{{culturetId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"products",
+								"{{productId}}",
+								"cultures",
+								"{{culturetId}}"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"culture with the given id is not associated to that product\",\n    \"error\": \"Precondition Failed\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add product to culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_1}}/products/{{existing_product_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_1}}",
+						"products",
+						"{{existing_product_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add product to culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\",\n    \"products\":\n    [\n        {\n            \"name\": \"wasabi\",\n            \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n            \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n            \"category\": \"CONDIMENTOS\"\n        },\n        {\n            \"id\": \"48a9ab90-1276-11ed-861d-0242ac120022\",\n            \"name\": \"wasabi\",\n            \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n            \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n            \"category\": \"CONDIMENTOS\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Add product to culture second time",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {",
+							"   pm.response.to.have.status(409);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_1}}/products/{{existing_product_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_1}}",
+						"products",
+						"{{existing_product_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add product to culture second time",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 409,\n    \"message\": \"Culture already has this product\",\n    \"error\": \"Conflict\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add non-existing product to culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_1}}/products/{{non_existing_product}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_1}}",
+						"products",
+						"{{non_existing_product}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add non-existing product to culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add product to non-existing culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{non_existing_culture}}/products/{{existing_product_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{non_existing_culture}}",
+						"products",
+						"{{existing_product_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add product to non-existing culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add culture to product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_1}}/cultures/{{existing_culture_2}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_1}}",
+						"cultures",
+						"{{existing_culture_2}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add culture to product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120012\",\n    \"name\": \"wasabi\",\n    \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n    \"category\": \"CONDIMENTOS\",\n    \"cultures\": [\n        {\n            \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n            \"nombre\": \"Cultura Mexicana\",\n            \"descripción\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n        },\n        {\n            \"id\": \"48a9ab90-1276-11ed-861d-0242ac120032\",\n            \"name\": \"Cultura Mexicana\",\n            \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Add culture to product second time",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 409\", function () {",
+							"   pm.response.to.have.status(409);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_1}}/cultures/{{existing_culture_2}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_1}}",
+						"cultures",
+						"{{existing_culture_2}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add culture to product second time",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "Conflict",
+					"code": 409,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 409,\n    \"message\": \"Product already has this culture\",\n    \"error\": \"Conflict\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add culture to non-existing product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{non_existing_product}}/cultures/{{existing_culture_2}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{non_existing_product}}",
+						"cultures",
+						"{{existing_culture_2}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add culture to non-existing product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Add non-existing culture to product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_1}}/cultures/{{non_existing_culture}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_1}}",
+						"cultures",
+						"{{non_existing_culture}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add culture to non-existing product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update culture products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    \"{{existing_product_4}}\",\n    \"{{existing_product_5}}\"\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_3}}/products/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_3}}",
+						"products",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update culture products",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"9a8bd5ec-a63b-40ef-bdb9-31c61e84c0fd\",\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\",\n    \"recipes\": [],\n    \"products\": [\n        {\n            \"id\": \"b9d61663-e0f6-45ba-98f3-08941047ccd8\",\n            \"name\": \"wasabi\",\n            \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n            \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n            \"category\": \"PROTEINS\",\n            \"cultures\": []\n        },\n        {\n            \"id\": \"f217395b-239f-4a3f-a6d8-21d7eb70a0b9\",\n            \"name\": \"wasabi\",\n            \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n            \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n            \"category\": \"PROTEINS\",\n            \"cultures\": []\n        }\n    ],\n    \"restaurants\": [],\n    \"countries\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Update products in non-existing culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    \"{{existing_culture_4}}\",\n    \"{{existing_culture_5}}\"\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{non_existing_culture}}/products/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{non_existing_culture}}",
+						"products",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update products in non-existing culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update mixed existing/non-existing products in culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    \"{{existing_product_4}}\",\n    \"{{existing_product_5}}\",\n    \"{{non_existing_product}}\"\n\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_3}}/products/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_3}}",
+						"products",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update mixed existing/non-existing products in culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{cultureId}}/products/",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{cultureId}}",
+								"products",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update product cultures",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    \"{{existing_culture_4}}\",\n    \"{{existing_culture_5}}\"\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_2}}/cultures/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_2}}",
+						"cultures",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update product cultures",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"9ab02020-ee2d-4deb-9367-347f2be8f2c7\",\n    \"name\": \"wasabi\",\n    \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n    \"category\": \"PROTEINS\",\n    \"cultures\": [\n        {\n            \"id\": \"cb682ff2-713a-4ec7-808d-8529b70583aa\",\n            \"name\": \"Cultura Mexicana\",\n            \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\",\n            \"recipes\": [],\n            \"products\": [],\n            \"restaurants\": [],\n            \"countries\": []\n        },\n        {\n            \"id\": \"efa98c1d-e2ee-4b9a-bd99-3e63361dfb9e\",\n            \"name\": \"Cultura Mexicana\",\n            \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\",\n            \"recipes\": [],\n            \"products\": [],\n            \"restaurants\": [],\n            \"countries\": []\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Update cultures in non-existing product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    \"{{existing_culture_4}}\",\n    \"{{existing_culture_5}}\"\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products/{{non_existing_product}}/cultures/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{non_existing_product}}",
+						"cultures",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update cultures in non-existing product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update mixed existing/non-existing cultures in product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    \"{{existing_culture_4}}\",\n    \"{{existing_culture_5}}\",\n    \"{{non_existing_culture}}\"\n\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_2}}/cultures/",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_2}}",
+						"cultures",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update mixed existing/non-existing cultures in product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete product from culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_1}}/products/{{existing_product_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_1}}",
+						"products",
+						"{{existing_product_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete product from culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"35e19aef-697a-4081-87eb-5f7343ceff61\",\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\",\n    \"recipes\": [],\n    \"products\": [],\n    \"restaurants\": [],\n    \"countries\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete non-associated product from culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{existing_culture_1}}/products/{{existing_product_4}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{existing_culture_1}}",
+						"products",
+						"{{existing_product_4}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete non-associated product from culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"product with the given id is not associated to that culture\",\n    \"error\": \"Precondition Failed\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete product from non existing culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{non_existing_culture}}/products/{{existing_product_4}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{non_existing_culture}}",
+						"products",
+						"{{existing_product_4}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete product from non existing culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete culture from product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_1}}/cultures/{{existing_culture_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_1}}",
+						"cultures",
+						"{{existing_culture_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete culture from product",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"65c44b01-bf88-48c5-9de6-51becfa5ff00\",\n    \"name\": \"wasabi\",\n    \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n    \"category\": \"GRAINS\",\n    \"cultures\": [\n        {\n            \"id\": \"831d3751-e77b-4e18-a0ec-f7b9a186da16\",\n            \"name\": \"Cultura Mexicana\",\n            \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete culture from non existing product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{non_existing_product}}/cultures/{{existing_culture_1}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{non_existing_product}}",
+						"cultures",
+						"{{existing_culture_1}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete culture from non existing product",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete non associated culture from product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{existing_product_4}}/cultures/{{existing_culture_3}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{existing_product_4}}",
+						"cultures",
+						"{{existing_culture_3}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete non associated culture from product",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"culture with the given id is not associated to that product\",\n    \"error\": \"Precondition Failed\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api/v1"
+		},
+		{
+			"key": "existing_product_1",
+			"value": "65c44b01-bf88-48c5-9de6-51becfa5ff00"
+		},
+		{
+			"key": "existing_product_2",
+			"value": "9ab02020-ee2d-4deb-9367-347f2be8f2c7"
+		},
+		{
+			"key": "existing_product_3",
+			"value": "9e5453b6-b578-4fe6-ac01-6b60c68eee6d"
+		},
+		{
+			"key": "non_existing_product",
+			"value": "35e19aef-697a-4081-87eb-5f7343ceff61"
+		},
+		{
+			"key": "existing_culture_1",
+			"value": "c4da537c-1651-4dae-8486-7db30d67b366"
+		},
+		{
+			"key": "existing_culture_2",
+			"value": "831d3751-e77b-4e18-a0ec-f7b9a186da16"
+		},
+		{
+			"key": "existing_culture_3",
+			"value": "9a8bd5ec-a63b-40ef-bdb9-31c61e84c0fd"
+		},
+		{
+			"key": "non_existing_culture",
+			"value": "9ab02020-ee2d-4deb-9367-347f2be8f2c7"
+		},
+		{
+			"key": "existing_product_4",
+			"value": "b9d61663-e0f6-45ba-98f3-08941047ccd8"
+		},
+		{
+			"key": "existing_product_5",
+			"value": "f217395b-239f-4a3f-a6d8-21d7eb70a0b9"
+		},
+		{
+			"key": "existing_culture_4",
+			"value": "cb682ff2-713a-4ec7-808d-8529b70583aa"
+		},
+		{
+			"key": "existing_culture_5",
+			"value": "efa98c1d-e2ee-4b9a-bd99-3e63361dfb9e"
+		}
+	]
+}
