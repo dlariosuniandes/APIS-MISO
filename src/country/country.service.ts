@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   BusinessError,
@@ -10,11 +10,13 @@ import { Cache } from 'cache-manager';
 
 @Injectable()
 export class CountryService {
+  cacheKey = 'countries';
+
   constructor(
     @InjectRepository(CountryEntity)
     private readonly countryRepository: Repository<CountryEntity>,
-    @Inject('CACHE_MANAGER')
-    private cacheManager: Cache,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   private async removeActualKeys() {

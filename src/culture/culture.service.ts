@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   BusinessError,
@@ -10,11 +10,13 @@ import { Cache } from 'cache-manager';
 
 @Injectable()
 export class CultureService {
+  cacheKey = 'cultures';
+
   constructor(
     @InjectRepository(CultureEntity)
     private readonly cultureRepository: Repository<CultureEntity>,
-    @Inject('CACHE_MANAGER')
-    private cacheManager: Cache,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   private async removeActualKeys(keyChars: string) {
@@ -24,7 +26,15 @@ export class CultureService {
   }
 
   async findAll(): Promise<CultureEntity[]> {
-    return await this.cultureRepository.find();
+    const cached: CultureEntity[] = await this.cacheManager.get<
+      CultureEntity[]
+    >(this.cacheKey);
+    if (!cached) {
+      const culture = await this.cultureRepository.find();
+      await this.cacheManager.set(this.cacheKey, culture);
+      return culture;
+    }
+    return cached;
   }
 
   async findOne(id: string): Promise<CultureEntity> {
