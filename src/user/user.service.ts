@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './user.entity';
 import { Repository } from 'typeorm';
 import { faker } from '@faker-js/faker';
-import { RoleEnum } from '../shared/enums/role.enum';
 import { plainToInstance } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
 import { Role } from 'src/authorization/role.enum';
