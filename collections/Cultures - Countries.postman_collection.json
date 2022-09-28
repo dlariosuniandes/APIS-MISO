@@ -1,0 +1,883 @@
+{
+	"info": {
+		"_postman_id": "9dd0ce54-e03c-43b1-95d7-6a62bfc8f2bf",
+		"name": "Cultures - Countries",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add country to a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries/{{countryId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{culturaId}}",
+						"countries",
+						"{{countryId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add country to a culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: basic",
+								"key": "Authorization",
+								"value": "Basic <credentials>"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries/{{countryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{culturaId}}",
+								"countries",
+								"{{countryId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "x-next",
+							"value": "aliqua nulla",
+							"description": "A link to the next page of responses"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"3e0a490e-35b6-4679-8e67-45ef38f4ac5c\",\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\",\n    \"recipes\": [],\n    \"products\": [],\n    \"restaurants\": [],\n    \"countries\": [\n        {\n            \"id\": \"1ce700fa-0496-460d-b503-23b8d2703e12\",\n            \"name\": \"Mexico\",\n            \"restaurants\": []\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Add country to a non existant culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The culture with the given id was not found\");",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{wrongCulture}}/countries/{{countryId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{wrongCulture}}",
+						"countries",
+						"{{countryId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add country to a culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"description": "Added as a part of security scheme: basic",
+								"key": "Authorization",
+								"value": "Basic <credentials>"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries/{{countryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{culturaId}}",
+								"countries",
+								"{{countryId}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "x-next",
+							"value": "aliqua nulla",
+							"description": "A link to the next page of responses"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update culture countries",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n            \"id\": \"1ce700fa-0496-460d-b503-23b8d2703e12\",\n            \"name\": \"Mexico\",\n            \"restaurants\": []\n        }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{culturaId}}",
+						"countries"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update culture countries",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n            \"id\": \"1ce700fa-0496-460d-b503-23b8d2703e12\",\n            \"name\": \"Mexico\",\n            \"restaurants\": []\n        }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{culturaId}}",
+								"countries"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"3e0a490e-35b6-4679-8e67-45ef38f4ac5c\",\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\",\n    \"recipes\": [],\n    \"products\": [],\n    \"restaurants\": [],\n    \"countries\": [\n        {\n            \"id\": \"1ce700fa-0496-460d-b503-23b8d2703e12\",\n            \"name\": \"Mexico\",\n            \"restaurants\": []\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Update a non existant culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The culture with the given id was not found\");",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n    {\n            \"id\": \"1ce700fa-0496-460d-b503-23b8d2703e12\",\n            \"name\": \"Mexico\",\n            \"restaurants\": []\n        }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{wrongCulture}}/countries",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{wrongCulture}}",
+						"countries"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update a non existant culture",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n    {\n            \"id\": \"1ce700fa-0496-460d-b503-23b8d2703e12\",\n            \"name\": \"Mexico\",\n            \"restaurants\": []\n        }\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{wrongCulture}}/countries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{wrongCulture}}",
+								"countries"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "74"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4a-wy1CDyNwVYvRgwzw9BPhLgMK1Rk\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 27 Sep 2022 20:45:59 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete country of a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries/{{countryId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{culturaId}}",
+						"countries",
+						"{{countryId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete country of a culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries/{{countryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{culturaId}}",
+								"countries",
+								"{{countryId}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete country of non existant culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The culture with the given id was not found\");",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/countries/{{countryId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"00000000-0000-0000-0000-000000000000",
+						"countries",
+						"{{countryId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete country of non existant culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/countries/{{countryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"00000000-0000-0000-0000-000000000000",
+								"countries",
+								"{{countryId}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get culture country",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries/{{countryId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{culturaId}}",
+						"countries",
+						"{{countryId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get culture country",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries/{{countryId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{culturaId}}",
+								"countries",
+								"{{countryId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "61"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3d-ZN2LGkF7GBg9pYuu0M8RtXd3K6U\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 27 Sep 2022 20:34:19 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": \"b9654a90-d3f0-41b6-8a85-44d1fc6cf03d\",\n    \"name\": \"Mexico\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get not associated country from culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 412\", function () {",
+							"   pm.response.to.have.status(412);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"country with the given id is not associated to that culture\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries/00000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{culturaId}}",
+						"countries",
+						"00000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get not associated country from culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries/00000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{culturaId}}",
+								"countries",
+								"00000"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "120"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"78-tncGzA+NHayQK7Y2Y5ZwBVak9AU\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 27 Sep 2022 20:37:56 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"country with the given id is not associated to that culture\",\n    \"error\": \"Precondition Failed\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get culture countries",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{culturaId}}",
+						"countries"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get culture countries",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{culturaId}}/countries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{culturaId}}",
+								"countries"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "63"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3f-fnZa4MA6xM7eKAGhZmGMpnQh3Rk\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 27 Sep 2022 20:38:44 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"b9654a90-d3f0-41b6-8a85-44d1fc6cf03d\",\n        \"name\": \"Mexico\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get countries from non existing culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The culture with the given id was not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{wrongCulture}}/countries",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{wrongCulture}}",
+						"countries"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get countries from non existing culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{wrongCulture}}/countries",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{wrongCulture}}",
+								"countries"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "74"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"4a-wy1CDyNwVYvRgwzw9BPhLgMK1Rk\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 27 Sep 2022 20:45:13 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": " http://localhost:3000/api/v1"
+		},
+		{
+			"key": "wrongCulture",
+			"value": "00000000-0000-0000-0000-000000000000"
+		},
+		{
+			"key": "culturaId",
+			"value": "c4da537c-1651-4dae-8486-7db30d67b366"
+		}
+	]
+}

@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -15,7 +16,7 @@ import { plainToInstance } from 'class-transformer';
 import { CountryService } from './country.service';
 import { CountryDto } from './country.dto';
 import { CountryEntity } from './country.entity';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/authorization/role.decorator';
 import { Role } from 'src/authorization/role.enum';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -27,11 +28,13 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 export class CountryController {
   constructor(private readonly countryService: CountryService) {}
 
+  @ApiQuery({ name: 'skip', type: Number, required: false })
+  @ApiQuery({ name: 'amount', type: Number, required: false })
   @UseGuards(JwtAuthGuard)
   @Roles(Role.Reader, Role.Creator)
   @Get()
-  async findAll() {
-    return await this.countryService.findAll();
+  async findAll(@Query('skip') skip = 0, @Query('amount') amount = 50000) {
+    return await this.countryService.findAll(skip, amount);
   }
 
   @UseGuards(JwtAuthGuard)

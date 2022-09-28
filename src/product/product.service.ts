@@ -13,7 +13,14 @@ export class ProductService {
     private cacheManager: Cache,
   ) {}
 
+  private async removeActualKeys() {
+    const keys: string[] = await this.cacheManager.store.keys();
+    const productsKeys = keys.filter((key) => key.search('products.') === 0);
+    productsKeys.map(async (key) => await this.cacheManager.del(key));
+  }
+
   async create(product: ProductEntity): Promise<ProductEntity> {
+    await this.removeActualKeys();
     return await this.productRepository.save(product);
   }
 
@@ -37,6 +44,7 @@ export class ProductService {
     const product: ProductEntity = await this.productRepository.findOne({
       where: { id: id },
       relations: ['cultures'],
+      relationLoadStrategy: 'query',
     });
     if (!product) {
       throw new NotFoundException(
@@ -60,6 +68,7 @@ export class ProductService {
       );
     }
     const { id, ...rest } = product;
+    await this.removeActualKeys();
     return await this.productRepository.save({ ...productDB, ...rest });
   }
 
@@ -74,6 +83,7 @@ export class ProductService {
       );
     }
     await this.productRepository.remove(productDB);
+    await this.removeActualKeys();
     return `product ${id} was successfully removed`;
   }
 }

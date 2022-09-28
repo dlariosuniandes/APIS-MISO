@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  Inject,
   Param,
   Post,
   Put,
@@ -13,6 +14,9 @@ import { CultureProductService } from './culture-product.service';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../authorization/role.decorator';
+import { Role } from '../authorization/role.enum';
+import { Cache } from 'cache-manager';
 
 @ApiTags('Cultures-Products')
 @ApiBearerAuth()
@@ -21,12 +25,14 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class CultureProductController {
   constructor(private cultureProductService: CultureProductService) {}
 
+  @Roles(Role.Reader)
   @UseGuards(JwtAuthGuard)
   @Get(':cultureId/products')
   async findAllCultureProducts(@Param('cultureId') cultureId: string) {
     return await this.cultureProductService.findProductsByCultureId(cultureId);
   }
 
+  @Roles(Role.Reader)
   @UseGuards(JwtAuthGuard)
   @Get(':cultureId/products/:productId')
   async findProductByCultureIdProductId(
@@ -39,6 +45,7 @@ export class CultureProductController {
     );
   }
 
+  @Roles(Role.Creator, Role.Editor)
   @UseGuards(JwtAuthGuard)
   @Post(':cultureId/products/:productId')
   async addProductToCulture(
@@ -51,6 +58,7 @@ export class CultureProductController {
     );
   }
 
+  @Roles(Role.Creator, Role.Editor)
   @UseGuards(JwtAuthGuard)
   @Put(':cultureId/products')
   async associateProductsToCulture(
@@ -63,6 +71,7 @@ export class CultureProductController {
     );
   }
 
+  @Roles(Role.Editor, Role.Remover)
   @UseGuards(JwtAuthGuard)
   @Delete(':cultureId/products/:productId')
   async removeProductFromCulture(

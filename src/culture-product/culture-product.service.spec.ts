@@ -79,10 +79,7 @@ describe('CultureProductService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CultureProductService, ProductService, CultureService],
-      imports: [
-        ...TypeOrmTestingConfig(),
-        CacheModule.register({ ttl: 600, isGlobal: true }),
-      ],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
     }).compile();
 
     cultureProductProvider = module.get<CultureProductService>(

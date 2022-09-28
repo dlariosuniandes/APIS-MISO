@@ -19,14 +19,20 @@ export class CultureService {
     private readonly cacheManager: Cache,
   ) {}
 
+  private async removeActualKeys(keyChars: string) {
+    const keys: string[] = await this.cacheManager.store.keys();
+    const productsKeys = keys.filter((key) => key.search(keyChars) === 0);
+    productsKeys.map(async (key) => await this.cacheManager.del(key));
+  }
+
   async findAll(): Promise<CultureEntity[]> {
     const cached: CultureEntity[] = await this.cacheManager.get<
       CultureEntity[]
     >(this.cacheKey);
     if (!cached) {
-      return await this.cultureRepository.find({
-        relations: ['recipes', 'restaurants', 'products', 'recipes'],
-      });
+      const culture = await this.cultureRepository.find();
+      await this.cacheManager.set(this.cacheKey, culture);
+      return culture;
     }
     return cached;
   }
@@ -35,6 +41,7 @@ export class CultureService {
     const culture: CultureEntity = await this.cultureRepository.findOne({
       where: { id },
       relations: ['recipes', 'products', 'restaurants', 'countries'],
+      relationLoadStrategy: 'query',
     });
     if (!culture) {
       throw new BusinessLogicException(
@@ -57,7 +64,7 @@ export class CultureService {
         'The culture with the given id was not found',
         BusinessError.NOT_FOUND,
       );
-
+    await this.removeActualKeys(`cultures.${id}`);
     return await this.cultureRepository.save({
       ...persistedCulture,
       ...culture,
@@ -73,7 +80,7 @@ export class CultureService {
         'The culture with the given id was not found',
         BusinessError.NOT_FOUND,
       );
-
+    await this.removeActualKeys(`cultures.${id}`);
     await this.cultureRepository.remove(culture);
   }
 }

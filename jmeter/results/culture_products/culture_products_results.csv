@@ -1,0 +1,3 @@
+Etiqueta,# Muestras,Media,Mín,Máx,Desv. Estándar,% Error,Rendimiento,Kb/sec,Sent KB/sec,Media de Bytes
+culture products list get,20,4385,17,21368,"6872,41","0,000%",",35068","506,68","0,15","1479529,0"
+Total,20,4385,17,21368,"6872,41","0,000%",",35068","506,68","0,15","1479529,0"

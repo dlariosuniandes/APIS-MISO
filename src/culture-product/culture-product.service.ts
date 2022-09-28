@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   PreconditionFailedException,
 } from '@nestjs/common';
@@ -9,6 +10,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ProductEntity } from '../product/product.entity';
 import { ProductService } from '../product/product.service';
 import { CultureService } from '../culture/culture.service';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class CultureProductService {
@@ -19,7 +21,15 @@ export class CultureProductService {
     private productRepository: Repository<ProductEntity>,
     private productService: ProductService,
     private cultureService: CultureService,
+    @Inject('CACHE_MANAGER')
+    private cacheManager: Cache,
   ) {}
+
+  private async removeActualKeys(matchingChars: string) {
+    const keys: string[] = await this.cacheManager.store.keys();
+    const productsKeys = keys.filter((key) => key.search(matchingChars) === 0);
+    productsKeys.map(async (key) => await this.cacheManager.del(key));
+  }
 
   private findProductInCulture(
     productId,
@@ -61,7 +71,11 @@ export class CultureProductService {
       throw new ConflictException('Culture already has this product');
     }
     culture.products.push(product);
-    return await this.cultureRepository.save(culture);
+    const newCulture = await this.cultureRepository.save(culture);
+    await this.removeActualKeys(
+      `CulturesProducts.cultureId.${cultureId}.products`,
+    );
+    return newCulture;
   }
 
   async addCultureToProduct(
@@ -74,7 +88,11 @@ export class CultureProductService {
       throw new ConflictException('Product already has this culture');
     }
     product.cultures.push(culture);
-    return await this.productRepository.save(product);
+    const newProduct = await this.productRepository.save(product);
+    await this.removeActualKeys(
+      `CulturesProducts.productId.${productId}.cultures`,
+    );
+    return newProduct;
   }
 
   async findProductByCultureIdProductId(
@@ -94,13 +112,35 @@ export class CultureProductService {
   }
 
   async findCulturesByProductId(productId: string): Promise<CultureEntity[]> {
-    const product: ProductEntity = await this.productService.findOne(productId);
-    return product.cultures;
+    const cacheKey = `CulturesProducts.productId.${productId}.cultures`;
+    const cached: CultureEntity[] = await this.cacheManager.get<
+      CultureEntity[]
+    >(cacheKey);
+    if (!cached) {
+      const product: ProductEntity = await this.productService.findOne(
+        productId,
+      );
+      const cultures: CultureEntity[] = product.cultures;
+      await this.cacheManager.set(cacheKey, cultures);
+      return cultures;
+    }
+    return cached;
   }
 
   async findProductsByCultureId(cultureId: string): Promise<ProductEntity[]> {
-    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
-    return culture.products;
+    const cacheKey = `CulturesProducts.cultureId.${cultureId}.products`;
+    const cached: ProductEntity[] = await this.cacheManager.get<
+      ProductEntity[]
+    >(cacheKey);
+    if (!cached) {
+      const culture: CultureEntity = await this.cultureService.findOne(
+        cultureId,
+      );
+      const products: ProductEntity[] = culture.products;
+      await this.cacheManager.set(cacheKey, products);
+      return products;
+    }
+    return cached;
   }
 
   async associateCulturesToProduct(
@@ -113,7 +153,11 @@ export class CultureProductService {
       newCultures.push(await this.cultureService.findOne(culturesIds[i]));
     }
     product.cultures = newCultures;
-    return await this.productRepository.save(product);
+    const newProduct = await this.productRepository.save(product);
+    await this.removeActualKeys(
+      `CulturesProducts.productId.${productId}.cultures`,
+    );
+    return newProduct;
   }
 
   async associateProductsToCulture(
@@ -126,7 +170,11 @@ export class CultureProductService {
       newProducts.push(await this.productService.findOne(productsIds[i]));
     }
     culture.products = newProducts;
-    return await this.cultureRepository.save(culture);
+    const newCulture = await this.cultureRepository.save(culture);
+    await this.removeActualKeys(
+      `CulturesProducts.cultureId.${cultureId}.products`,
+    );
+    return newCulture;
   }
 
   async deleteProductFromCulture(productId, cultureId): Promise<CultureEntity> {
@@ -136,7 +184,11 @@ export class CultureProductService {
       culture,
     );
     culture.products = culture.products.filter((pr) => pr !== undesiredProduct);
-    return await this.cultureRepository.save(culture);
+    const newCulture = await this.cultureRepository.save(culture);
+    await this.removeActualKeys(
+      `CulturesProducts.cultureId.${cultureId}.products`,
+    );
+    return newCulture;
   }
 
   async deleteCultureFromProduct(
@@ -149,6 +201,10 @@ export class CultureProductService {
       product,
     );
     product.cultures = product.cultures.filter((cu) => cu !== undesiredCulture);
-    return await this.productRepository.save(product);
+    const newProduct = await this.productRepository.save(product);
+    await this.removeActualKeys(
+      `CulturesProducts.productId.${productId}.cultures`,
+    );
+    return newProduct;
   }
 }

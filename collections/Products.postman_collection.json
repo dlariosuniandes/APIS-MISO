@@ -1,0 +1,542 @@
+{
+	"info": {
+		"_postman_id": "ded03a47-f652-4eb3-92ba-55cec9d9a939",
+		"name": "Products",
+		"description": "Representa los productos característicos que conforman la cultura gastronómica.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"productId\", data.id);",
+							"pm.collectionVariables.set(\"productId\", data.id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"wasabi\",\n    \"description\":\"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\":\"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n    \"category\":\"{{category_1}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "Crea un nuevo producto"
+			},
+			"response": [
+				{
+					"name": "Create product",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": null
+					},
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"name\": \"wasabi\",\n    \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n    \"category\": \"PROTEINS\",\n    \"id\": \"895b3de2-318a-4dc3-bc0c-ae0cbf185773\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of products > ' + 0, function () {",
+							"   var data = pm.response.json()",
+							"   pm.expect(data.length).to.greaterThan(0)",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products?amount=1000&skip=1000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products"
+					],
+					"query": [
+						{
+							"key": "amount",
+							"value": "1000"
+						},
+						{
+							"key": "skip",
+							"value": "1000"
+						}
+					]
+				},
+				"description": "Obtiene una lista de todos los productos"
+			},
+			"response": [
+				{
+					"name": "Get products",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": null
+					},
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"9e5453b6-b578-4fe6-ac01-6b60c68eee6d\",\n        \"name\": \"wasabi\",\n        \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n        \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n        \"category\": \"PROTEINS\",\n        \"cultures\": []\n    },\n    {\n        \"id\": \"895b3de2-318a-4dc3-bc0c-ae0cbf185773\",\n        \"name\": \"wasabi\",\n        \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n        \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n        \"category\": \"PROTEINS\",\n        \"cultures\": []\n    },\n    {\n        \"id\": \"b9d61663-e0f6-45ba-98f3-08941047ccd8\",\n        \"name\": \"wasabi\",\n        \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n        \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n        \"category\": \"PROTEINS\",\n        \"cultures\": []\n    },\n    {\n        \"id\": \"f217395b-239f-4a3f-a6d8-21d7eb70a0b9\",\n        \"name\": \"wasabi\",\n        \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n        \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n        \"category\": \"PROTEINS\",\n        \"cultures\": []\n    },\n    {\n        \"id\": \"9ab02020-ee2d-4deb-9367-347f2be8f2c7\",\n        \"name\": \"wasabi\",\n        \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n        \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n        \"category\": \"PROTEINS\",\n        \"cultures\": []\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{productId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				},
+				"description": "Obtiene un producto segun el ID."
+			},
+			"response": [
+				{
+					"name": "Get product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"895b3de2-318a-4dc3-bc0c-ae0cbf185773\",\n    \"name\": \"wasabi\",\n    \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n    \"category\": \"PROTEINS\",\n    \"cultures\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Get non-existing product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The product with the given id was not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{wrongProductId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{wrongProductId}}"
+					]
+				},
+				"description": "Ejemplo de un request para obtener un producto que no existe."
+			},
+			"response": [
+				{
+					"name": "Get non-existing product",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": null
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"wasabi\",\n    \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n    \"category\": \"{{category_2}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products/{{productId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				},
+				"description": "Actualización de un producto segun el ID."
+			},
+			"response": [
+				{
+					"name": "Update product",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": null
+					},
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"895b3de2-318a-4dc3-bc0c-ae0cbf185773\",\n    \"name\": \"wasabi\",\n    \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\": \"Se extrae del tallo de la planta del mismo nombre, un rábano denominado con el nombre científico de Eutrema japonicum o Cochlearia wasabi, que pertenece a la familia de las brasicáceas (sinónimo de crucíferas), a la que también pertenecen el nabo, la mostaza y el repollo.\",\n    \"category\": \"VEGETABLES\",\n    \"cultures\": []\n}"
+				}
+			]
+		},
+		{
+			"name": "Update non-existing product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The product with the given id was not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"name\": \"wasabi\",\n    \"description\": \"El wasabi es una especia o condimento picante de la cocina japonesa, que se usa a menudo en sushi y otros platos con pescado. Tiene un sabor complejo, picante seguido de un sabor dulce y se utiliza principalmente para mojar el sushi. En general, es usado para decorar los platos de pescado o carne.\",\n    \"story\": \"null\",\n    \"category\": \"{{category_2}}\",\n    \"cultures\":[]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products/{{wrongProductId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{wrongProductId}}"
+					]
+				},
+				"description": "Ejemplo de un request para actualizar un producto que no existe."
+			},
+			"response": [
+				{
+					"name": "Update non-existing product",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": null
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/products/{{productId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{productId}}"
+					]
+				},
+				"description": "Eliminación de un producto segun el ID"
+			},
+			"response": [
+				{
+					"name": "Delete product",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": null
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": ""
+				}
+			]
+		},
+		{
+			"name": "Delete non-existing product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The product with the given id was not found\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"historia\":null\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/products/{{wrongProductId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"products",
+						"{{wrongProductId}}"
+					]
+				},
+				"description": "Ejemplo de un request para eliminar un producto que no existe."
+			},
+			"response": [
+				{
+					"name": "Delete non-existing product",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": null
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The product with the given id was not found\",\n    \"error\": \"Not Found\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:3000/api/v1"
+		},
+		{
+			"key": "wrongProductId",
+			"value": "00000000-0000-0000-0000-000000000000"
+		},
+		{
+			"key": "category_1",
+			"value": ""
+		},
+		{
+			"key": "category_2",
+			"value": ""
+		},
+		{
+			"key": "category_3",
+			"value": ""
+		},
+		{
+			"key": "category_4",
+			"value": ""
+		},
+		{
+			"key": "category_5",
+			"value": ""
+		},
+		{
+			"key": "category_6",
+			"value": ""
+		},
+		{
+			"key": "productId",
+			"value": ""
+		}
+	]
+}
