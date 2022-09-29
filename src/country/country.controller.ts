@@ -8,7 +8,6 @@ import {
   Post,
   Put,
   Query,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
@@ -29,8 +28,7 @@ export class CountryController {
 
   @ApiQuery({ name: 'skip', type: Number, required: false })
   @ApiQuery({ name: 'amount', type: Number, required: false })
-  @UseGuards(JwtAuthGuard)
-  @Roles(Role.Reader, Role.Creator)
+  @Roles(Role.READ_ONLY)
   @Get()
   async findAll(@Query('skip') skip = 0, @Query('amount') amount = 50000) {
     return await this.countryService.findAll(skip, amount);

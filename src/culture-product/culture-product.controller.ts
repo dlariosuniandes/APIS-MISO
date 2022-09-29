@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Inject,
   Param,
   Post,
   Put,
@@ -13,8 +12,7 @@ import { CultureProductService } from './culture-product.service';
 import { BusinessErrorsInterceptor } from '../shared/interceptors/business-errors.interceptor';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../authorization/role.decorator';
-import { Role } from '../authorization/role.enum';
-import { Cache } from 'cache-manager';
+import { Role } from 'src/shared/enums/role.enum';
 
 @ApiTags('Cultures-Products')
 @ApiBearerAuth()
@@ -23,15 +21,13 @@ import { Cache } from 'cache-manager';
 export class CultureProductController {
   constructor(private cultureProductService: CultureProductService) {}
 
-  @Roles(Role.Reader)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.READ_ONLY)
   @Get(':cultureId/products')
   async findAllCultureProducts(@Param('cultureId') cultureId: string) {
     return await this.cultureProductService.findProductsByCultureId(cultureId);
   }
 
-  @Roles(Role.Reader)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.READ_ONLY)
   @Get(':cultureId/products/:productId')
   async findProductByCultureIdProductId(
     @Param('cultureId') cultureId: string,
@@ -43,8 +39,7 @@ export class CultureProductController {
     );
   }
 
-  @Roles(Role.Creator, Role.Editor)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_CREATE)
   @Post(':cultureId/products/:productId')
   async addProductToCulture(
     @Param('cultureId') cultureId: string,
@@ -56,8 +51,7 @@ export class CultureProductController {
     );
   }
 
-  @Roles(Role.Creator, Role.Editor)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_MODIFY)
   @Put(':cultureId/products')
   async associateProductsToCulture(
     @Param('cultureId') cultureId: string,
@@ -69,8 +63,7 @@ export class CultureProductController {
     );
   }
 
-  @Roles(Role.Editor, Role.Remover)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_DELETE)
   @Delete(':cultureId/products/:productId')
   async removeProductFromCulture(
     @Param('cultureId') cultureId: string,

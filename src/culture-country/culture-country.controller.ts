@@ -1,13 +1,22 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put, UseGuards, UseInterceptors,} from '@nestjs/common';
-import {plainToInstance} from 'class-transformer';
-import {CountryDto} from 'src/country/country.dto';
-import {CountryEntity} from 'src/country/country.entity';
-import {BusinessErrorsInterceptor} from 'src/shared/interceptors/business-errors.interceptor';
-import {CultureCountryService} from './culture-country.service';
-import {ApiBearerAuth, ApiTags} from '@nestjs/swagger';
-import {JwtAuthGuard} from '../auth/guards/jwt-auth.guard';
-import {Roles} from '../authorization/role.decorator';
-import {Role} from '../authorization/role.enum';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Put,
+  UseInterceptors,
+} from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import { CountryDto } from 'src/country/country.dto';
+import { CountryEntity } from 'src/country/country.entity';
+import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
+import { CultureCountryService } from './culture-country.service';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../authorization/role.decorator';
+import { Role } from 'src/shared/enums/role.enum';
 
 @ApiTags('Cultures-Countries')
 @ApiBearerAuth()
@@ -16,8 +25,7 @@ import {Role} from '../authorization/role.enum';
 export class CultureCountryController {
   constructor(private readonly cultureCountryService: CultureCountryService) {}
 
-  @Roles(Role.Creator, Role.Editor)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_CREATE)
   @Post(':cultureId/countries/:countryId')
   @HttpCode(200)
   async addCountryToCulture(
@@ -30,8 +38,7 @@ export class CultureCountryController {
     );
   }
 
-  @Roles(Role.Creator, Role.Editor)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_CREATE)
   @Put(':cultureId/countries')
   async associateCountriesToCulture(
     @Param('cultureId') cultureId: string,
@@ -44,8 +51,7 @@ export class CultureCountryController {
     );
   }
 
-  @Roles(Role.Editor, Role.Remover)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_DELETE)
   @Delete(':cultureId/countries/:countryId')
   @HttpCode(204)
   async deleteCountryOfACulture(
@@ -58,15 +64,13 @@ export class CultureCountryController {
     );
   }
 
-  @Roles(Role.Reader)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.READ_ONLY)
   @Get(':cultureId/countries/')
   async findCultureCountries(@Param('cultureId') cultureId: string) {
     return await this.cultureCountryService.findCultureCountries(cultureId);
   }
 
-  @Roles(Role.Reader)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.READ_ONLY)
   @Get(':cultureId/countries/:countryId')
   async findCultureCountry(
     @Param('cultureId') cultureId: string,
