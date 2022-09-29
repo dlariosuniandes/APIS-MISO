@@ -9,6 +9,8 @@ import {
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { CountryRestaurantService } from './country-restaurant.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Role } from 'src/shared/enums/role.enum';
+import { Roles } from 'src/authorization/role.decorator';
 
 @ApiTags('Countries - Restaurants')
 @ApiBearerAuth()
@@ -19,6 +21,7 @@ export class CountryRestaurantController {
     private readonly countryRestaurantService: CountryRestaurantService,
   ) {}
 
+  @Roles(Role.ALLOW_CREATE)
   @Post(':restaurantId/countries/:countryId')
   async addCountryToRestaurant(
     @Param('restaurantId') restaurantId: string,
@@ -30,6 +33,7 @@ export class CountryRestaurantController {
     );
   }
 
+  @Roles(Role.ALLOW_DELETE)
   @Delete(':restaurantId/countries/:countryId')
   @HttpCode(204)
   async deleteCountryOfARestaurant(

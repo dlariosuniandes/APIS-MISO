@@ -31,11 +31,13 @@ export class RestaurantController {
     return await this.restaurantService.findAll();
   }
 
+  @Roles(Role.READ_ONLY)
   @Get(':restaurantId')
   async findOne(@Param('restaurantId') restaurantId: string) {
     return await this.restaurantService.findOne(restaurantId);
   }
 
+  @Roles(Role.ALLOW_CREATE)
   @Post()
   async create(@Body() restaurantDto: RestaurantDto) {
     const restaurant: RestaurantEntity = plainToInstance(
@@ -45,6 +47,7 @@ export class RestaurantController {
     return await this.restaurantService.create(restaurant);
   }
 
+  @Roles(Role.ALLOW_MODIFY)
   @Put(':restaurantId')
   async update(
     @Param('restaurantId') restaurantId: string,
@@ -57,6 +60,7 @@ export class RestaurantController {
     return await this.restaurantService.update(restaurantId, restaurant);
   }
 
+  @Roles(Role.ALLOW_DELETE)
   @Delete(':restaurantId')
   @HttpCode(204)
   async delete(@Param('restaurantId') restaurantId: string) {
