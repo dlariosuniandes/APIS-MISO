@@ -9,7 +9,7 @@ import { CountryEntity } from '../country/country.entity';
 import { RestaurantService } from '../restaurant/restaurant.service';
 import { RestaurantEntity } from '../restaurant/restaurant.entity';
 import { CountryService } from '../country/country.service';
-import {CacheModule} from "@nestjs/common";
+import { CacheModule } from '@nestjs/common';
 
 describe('CountryRestaurantService', () => {
   let countryRestaurantProvider: CountryRestaurantService;
@@ -107,5 +107,15 @@ describe('CountryRestaurantService', () => {
     const restaurantDeleted: RestaurantEntity =
       await restaurantProvider.findOne(restaurant.id);
     expect(restaurantDeleted.country).toBeFalsy();
+  });
+
+  it('should get country by restaurant id', async () => {
+    const country = await countryRestaurantProvider.findCountryByRestaurantId(
+      restaurant.id,
+    );
+    const findResult: RestaurantEntity = await restaurantProvider.findOne(
+      restaurant.id,
+    );
+    expect(findResult.country).toEqual(country);
   });
 });

@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -30,8 +31,8 @@ export class CultureController {
   @Roles(Role.Reader, Role.Creator)
   @UseGuards(JwtAuthGuard)
   @Get()
-  async findAll() {
-    return await this.cultureService.findAll();
+  async findAll(@Query('skip') skip: number, @Query('amount') amount: number) {
+    return await this.cultureService.findAll(skip, amount);
   }
   @UseGuards(JwtAuthGuard)
   @Get(':cultureId')

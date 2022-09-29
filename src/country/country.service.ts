@@ -32,12 +32,12 @@ export class CountryService {
     const cacheKey = `countries.skip_${skip}.amount_${amount}`;
     const cached: CountryEntity[] = await this.cacheManager.get(cacheKey);
     if (!cached) {
-      const countires = await this.countryRepository.find({
+      const countries = await this.countryRepository.find({
         skip: skip,
         take: amount,
       });
-      await this.cacheManager.set(cacheKey, countires);
-      return countires;
+      await this.cacheManager.set(cacheKey, countries);
+      return countries;
     }
     return cached;
   }
