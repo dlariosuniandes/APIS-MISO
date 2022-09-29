@@ -19,7 +19,6 @@ import { CountryEntity } from './country.entity';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/authorization/role.decorator';
 import { Role } from 'src/shared/enums/role.enum';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 @ApiTags('Countries')
 @UseInterceptors(BusinessErrorsInterceptor)
@@ -37,20 +36,20 @@ export class CountryController {
     return await this.countryService.findAll(skip, amount);
   }
 
-  @Roles(Role.Reader, Role.Creator)
+  @Roles(Role.READ_ONLY)
   @Get(':countryId')
   async findOne(@Param('countryId') countryId: string) {
     return await this.countryService.findOne(countryId);
   }
 
-  @Roles(Role.Creator)
+  @Roles(Role.ALLOW_CREATE)
   @Post()
   async create(@Body() countryDto: CountryDto) {
     const country: CountryEntity = plainToInstance(CountryEntity, countryDto);
     return await this.countryService.create(country);
   }
 
-  @Roles(Role.Creator)
+  @Roles(Role.ALLOW_MODIFY)
   @Put(':countryId')
   async update(
     @Param('countryId') countryId: string,
@@ -60,7 +59,7 @@ export class CountryController {
     return await this.countryService.update(countryId, country);
   }
 
-  @Roles(Role.Creator)
+  @Roles(Role.ALLOW_DELETE)
   @Delete(':countryId')
   @HttpCode(204)
   async delete(@Param('countryId') countryId: string) {

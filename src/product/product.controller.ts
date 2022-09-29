@@ -8,13 +8,11 @@ import {
   Post,
   Put,
   Query,
-  UseGuards,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ProductDto } from './product.dto';
 import { ProductEntity } from './product.entity';
 import { plainToInstance } from 'class-transformer';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../authorization/role.decorator';
 import { Role } from '../authorization/role.enum';

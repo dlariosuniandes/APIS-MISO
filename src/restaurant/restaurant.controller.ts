@@ -7,16 +7,16 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { RestaurantDto } from './restaurant.dto';
 import { RestaurantEntity } from './restaurant.entity';
 import { RestaurantService } from './restaurant.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Role } from 'src/shared/enums/role.enum';
+import { Roles } from 'src/authorization/role.decorator';
 
 @ApiTags('Restaurants')
 @ApiBearerAuth()
@@ -25,6 +25,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 export class RestaurantController {
   constructor(private readonly restaurantService: RestaurantService) {}
 
+  @Roles(Role.READ_ONLY)
   @Get()
   async findAll() {
     return await this.restaurantService.findAll();

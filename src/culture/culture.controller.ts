@@ -7,7 +7,6 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
@@ -15,7 +14,6 @@ import { CultureDto } from './culture.dto';
 import { CultureEntity } from './culture.entity';
 import { CultureService } from './culture.service';
 import { plainToInstance } from 'class-transformer';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../authorization/role.decorator';
 import { Role } from 'src/shared/enums/role.enum';
@@ -27,7 +25,7 @@ import { Role } from 'src/shared/enums/role.enum';
 export class CultureController {
   constructor(private readonly cultureService: CultureService) {}
 
-  @Roles(Role.Reader, Role.Creator)
+  @Roles(Role.READ_ONLY)
   @Get()
   async findAll() {
     return await this.cultureService.findAll();

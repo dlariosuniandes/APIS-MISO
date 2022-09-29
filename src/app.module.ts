@@ -17,6 +17,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { CultureCountryModule } from './culture-country/culture-country.module';
 import { CountryRestaurantModule } from './restaurant-country/country-restaurant.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { RolesGuard } from './authorization/guards/role.guard';
 
 @Module({
   imports: [
@@ -41,6 +42,10 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     {
       provide: APP_GUARD,
       useClass: JwtAuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })

@@ -4,10 +4,8 @@ import {
   HttpCode,
   Param,
   Post,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { CountryRestaurantService } from './country-restaurant.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';

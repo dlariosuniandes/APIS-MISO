@@ -7,7 +7,6 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
@@ -16,7 +15,6 @@ import { RecipeEntity } from 'src/recipe/recipe.entity';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { CultureRecipeService } from './culture-recipe.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Roles } from 'src/authorization/role.decorator';
 import { Role } from 'src/shared/enums/role.enum';
 
@@ -27,6 +25,7 @@ import { Role } from 'src/shared/enums/role.enum';
 export class CultureRecipeController {
   constructor(private readonly cultureRecipeService: CultureRecipeService) {}
 
+  @Roles(Role.ALLOW_CREATE)
   @Post(':cultureId/recipes')
   async addRecipeToCulture(
     @Param('cultureId') cultureId: string,
@@ -39,7 +38,7 @@ export class CultureRecipeController {
     );
   }
 
-  @Roles(Role.Creator, Role.Reader)
+  @Roles(Role.ALLOW_MODIFY)
   @Put(':cultureId/recipes')
   async updateCultureRecipes(
     @Param('cultureId') cultureId: string,
@@ -52,7 +51,7 @@ export class CultureRecipeController {
     );
   }
 
-  @Roles(Role.Reader, Role.Creator)
+  @Roles(Role.READ_ONLY)
   @Get(':cultureId/recipes/:recipeId')
   async findRecipeByCultureIdRecipeId(
     @Param('cultureId') cultureId: string,
@@ -64,13 +63,13 @@ export class CultureRecipeController {
     );
   }
 
-  @Roles(Role.Reader, Role.Creator)
+  @Roles(Role.READ_ONLY)
   @Get(':cultureId/recipes')
   async findRecipesByCultureId(@Param('cultureId') cultureId: string) {
     return await this.cultureRecipeService.findRecipesByCultureId(cultureId);
   }
 
-  @Roles(Role.Remover)
+  @Roles(Role.ALLOW_DELETE)
   @Delete(':cultureId/recipes/:recipeId')
   @HttpCode(204)
   async deleteRecipeCulture(

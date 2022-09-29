@@ -4,11 +4,12 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import jwtConstants from '../shared/security/constants';
 import { UserEntity } from '../user/user.entity';
+import { Role } from 'src/shared/enums/role.enum';
 
 export type Token = {
   sub: string;
   username: string;
-  role: string;
+  roles: Role[];
   resources: string[] | undefined;
 };
 
@@ -40,7 +41,7 @@ export class AuthService {
     const payload: Token = {
       username: userRetrieved.userName,
       sub: userRetrieved.id,
-      role: userRetrieved.role,
+      roles: userRetrieved.roles,
       resources: userRetrieved.resources,
     };
     return {
