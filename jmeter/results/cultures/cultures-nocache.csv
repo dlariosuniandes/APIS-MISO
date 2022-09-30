@@ -1,0 +1,21 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1664486642787,1044,HTTP Request Cultures,200,OK,Thread Group 1-2,text,true,,27974884,389,20,20,http://localhost:3000/api/v1/cultures,605,0,9
+1664486642783,1445,HTTP Request Cultures,200,OK,Thread Group 1-1,text,true,,27974884,389,19,19,http://localhost:3000/api/v1/cultures,871,0,13
+1664486642834,2822,HTTP Request Cultures,200,OK,Thread Group 1-3,text,true,,27974884,389,18,18,http://localhost:3000/api/v1/cultures,1338,0,1
+1664486642889,3439,HTTP Request Cultures,200,OK,Thread Group 1-4,text,true,,27974884,389,17,17,http://localhost:3000/api/v1/cultures,1742,0,0
+1664486643133,4312,HTTP Request Cultures,200,OK,Thread Group 1-9,text,true,,27974884,389,16,16,http://localhost:3000/api/v1/cultures,2769,0,1
+1664486642934,4783,HTTP Request Cultures,200,OK,Thread Group 1-5,text,true,,27974884,389,15,15,http://localhost:3000/api/v1/cultures,2053,0,1
+1664486643334,4414,HTTP Request Cultures,200,OK,Thread Group 1-13,text,true,,27974884,389,14,14,http://localhost:3000/api/v1/cultures,3228,0,0
+1664486643283,4469,HTTP Request Cultures,200,OK,Thread Group 1-12,text,true,,27974884,389,13,13,http://localhost:3000/api/v1/cultures,3574,0,1
+1664486642984,4777,HTTP Request Cultures,200,OK,Thread Group 1-6,text,true,,27974884,389,12,12,http://localhost:3000/api/v1/cultures,2290,0,0
+1664486643033,4731,HTTP Request Cultures,200,OK,Thread Group 1-7,text,true,,27974884,389,11,11,http://localhost:3000/api/v1/cultures,3226,0,1
+1664486643084,5201,HTTP Request Cultures,200,OK,Thread Group 1-8,text,true,,27974884,389,10,10,http://localhost:3000/api/v1/cultures,2541,0,1
+1664486643183,5333,HTTP Request Cultures,200,OK,Thread Group 1-10,text,true,,27974884,389,9,9,http://localhost:3000/api/v1/cultures,3943,0,1
+1664486643233,5570,HTTP Request Cultures,200,OK,Thread Group 1-11,text,true,,27974884,389,8,8,http://localhost:3000/api/v1/cultures,4123,0,0
+1664486643384,5878,HTTP Request Cultures,200,OK,Thread Group 1-14,text,true,,27974884,389,7,7,http://localhost:3000/api/v1/cultures,4298,0,1
+1664486643432,5834,HTTP Request Cultures,200,OK,Thread Group 1-15,text,true,,27974884,389,6,6,http://localhost:3000/api/v1/cultures,4555,0,1
+1664486643482,5791,HTTP Request Cultures,200,OK,Thread Group 1-16,text,true,,27974884,389,5,5,http://localhost:3000/api/v1/cultures,4782,0,0
+1664486643532,5768,HTTP Request Cultures,200,OK,Thread Group 1-17,text,true,,27974884,389,4,4,http://localhost:3000/api/v1/cultures,4972,0,1
+1664486643627,5677,HTTP Request Cultures,200,OK,Thread Group 1-19,text,true,,27974884,389,3,3,http://localhost:3000/api/v1/cultures,5392,0,1
+1664486643582,5731,HTTP Request Cultures,200,OK,Thread Group 1-18,text,true,,27974884,389,2,2,http://localhost:3000/api/v1/cultures,5210,0,1
+1664486643679,5639,HTTP Request Cultures,200,OK,Thread Group 1-20,text,true,,27974884,389,1,1,http://localhost:3000/api/v1/cultures,5580,0,1

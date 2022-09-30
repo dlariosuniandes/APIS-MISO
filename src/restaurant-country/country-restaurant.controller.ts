@@ -1,6 +1,7 @@
 import {
   Controller,
   Delete,
+  Get,
   HttpCode,
   Param,
   Post,
@@ -29,6 +30,14 @@ export class CountryRestaurantController {
   ) {
     return await this.countryRestaurantService.addCountryToRestaurant(
       countryId,
+      restaurantId,
+    );
+  }
+
+  @Roles(Role.READ_ONLY)
+  @Get(':restaurantId/countries')
+  async findCountryByRestaurantId(@Param('restaurantId') restaurantId: string) {
+    return await this.countryRestaurantService.findCountryByRestaurantId(
       restaurantId,
     );
   }

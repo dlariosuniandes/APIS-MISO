@@ -25,12 +25,16 @@ export class CultureService {
     productsKeys.map(async (key) => await this.cacheManager.del(key));
   }
 
-  async findAll(): Promise<CultureEntity[]> {
+  async findAll(skip = 0, amount = 50000): Promise<CultureEntity[]> {
+    const cacheKey = `cultures.skip_${skip}.amount_${amount}`;
     const cached: CultureEntity[] = await this.cacheManager.get<
       CultureEntity[]
-    >(this.cacheKey);
+    >(cacheKey);
     if (!cached) {
-      const culture = await this.cultureRepository.find();
+      const culture = await this.cultureRepository.find({
+        skip: skip,
+        take: amount,
+      });
       await this.cacheManager.set(this.cacheKey, culture);
       return culture;
     }

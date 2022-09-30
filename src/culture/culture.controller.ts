@@ -7,6 +7,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseInterceptors,
 } from '@nestjs/common';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
@@ -27,8 +28,8 @@ export class CultureController {
 
   @Roles(Role.READ_ONLY)
   @Get()
-  async findAll() {
-    return await this.cultureService.findAll();
+  async findAll(@Query('skip') skip: number, @Query('amount') amount: number) {
+    return await this.cultureService.findAll(skip, amount);
   }
 
   @Get(':cultureId')
