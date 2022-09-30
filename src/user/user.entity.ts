@@ -1,5 +1,6 @@
-import { Role } from 'src/authorization/role.enum';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { RoleEntity } from 'src/role/role.entity';
+import { Role } from 'src/shared/enums/role.enum';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity()
 export class UserEntity {
@@ -12,14 +13,14 @@ export class UserEntity {
   @Column()
   password: string;
 
-  @Column()
-  role: Role;
-
   @Column({ nullable: true })
   _resources: string;
 
   @Column({ default: false })
   isActive: boolean;
+
+  @OneToMany(() => RoleEntity, (role) => role.user)
+  roles: Role[];
 
   obtainUser() {
     const userObject = JSON.parse(JSON.stringify(this));

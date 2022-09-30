@@ -5,13 +5,13 @@ import {
   HttpCode,
   Param,
   Post,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { CountryRestaurantService } from './country-restaurant.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Role } from 'src/shared/enums/role.enum';
+import { Roles } from 'src/authorization/role.decorator';
 
 @ApiTags('Countries - Restaurants')
 @ApiBearerAuth()
@@ -22,7 +22,7 @@ export class CountryRestaurantController {
     private readonly countryRestaurantService: CountryRestaurantService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_CREATE)
   @Post(':restaurantId/countries/:countryId')
   async addCountryToRestaurant(
     @Param('restaurantId') restaurantId: string,
@@ -34,7 +34,7 @@ export class CountryRestaurantController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.READ_ONLY)
   @Get(':restaurantId/countries')
   async findCountryByRestaurantId(@Param('restaurantId') restaurantId: string) {
     return await this.countryRestaurantService.findCountryByRestaurantId(
@@ -42,7 +42,7 @@ export class CountryRestaurantController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_DELETE)
   @Delete(':restaurantId/countries/:countryId')
   @HttpCode(204)
   async deleteCountryOfARestaurant(

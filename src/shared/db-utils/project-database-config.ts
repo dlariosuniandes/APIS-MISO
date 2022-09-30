@@ -5,6 +5,7 @@ import { CountryEntity } from '../../country/country.entity';
 import { ProductEntity } from '../../product/product.entity';
 import { MichelineStarEntity } from '../../micheline-star/micheline-star.entity';
 import { UserEntity } from '../../user/user.entity';
+import { RoleEntity } from 'src/role/role.entity';
 
 export const databaseConfig: object = {
   type: process.env.DBTYPE || 'postgres',
@@ -21,6 +22,7 @@ export const databaseConfig: object = {
     ProductEntity,
     MichelineStarEntity,
     UserEntity,
+    RoleEntity,
   ],
   dropSchema: false,
   synchronize: true,

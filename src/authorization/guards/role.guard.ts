@@ -1,17 +1,13 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
-import { ExtractJwt } from 'passport-jwt';
 import { Reflector } from '@nestjs/core';
-import { JwtService } from '@nestjs/jwt';
-import { Role } from '../role.enum';
+import { Role } from 'src/shared/enums/role.enum';
 import { ROLES_KEY } from '../role.decorator';
-import { Token } from 'src/auth/auth.service';
-import { resourcesList } from '../../shared/security/constants';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
-  constructor(private reflector: Reflector, private jwtService: JwtService) {}
+  constructor(private reflector: Reflector) {}
 
-  async canActivate(context: ExecutionContext): Promise<any> {
+  canActivate(context: ExecutionContext): boolean {
     const requiredRoles = this.reflector.getAllAndOverride<Role[]>(ROLES_KEY, [
       context.getHandler(),
       context.getClass(),
@@ -19,6 +15,10 @@ export class RolesGuard implements CanActivate {
     if (!requiredRoles) {
       return true;
     }
+    const { user } = context.switchToHttp().getRequest();
+    return requiredRoles.some((role) => user.roles?.includes(role));
+
+    /*
     const jwt = ExtractJwt.fromAuthHeaderAsBearerToken()(
       context.switchToHttp().getRequest(),
     );
@@ -46,5 +46,6 @@ export class RolesGuard implements CanActivate {
           } else return true;
         } else return false;
     }
+    */
   }
 }

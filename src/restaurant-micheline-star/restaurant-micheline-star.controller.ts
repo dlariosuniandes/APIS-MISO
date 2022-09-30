@@ -7,16 +7,16 @@ import {
   Param,
   Post,
   Put,
-  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { MichelineStarDto } from 'src/micheline-star/micheline-star.dto';
 import { MichelineStarEntity } from 'src/micheline-star/micheline-star.entity';
 import { BusinessErrorsInterceptor } from 'src/shared/interceptors/business-errors.interceptor';
 import { RestaurantMichelineStarService } from './restaurant-micheline-star.service';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/authorization/role.decorator';
+import { Role } from 'src/shared/enums/role.enum';
 
 @ApiTags('Restaurants - Stars')
 @ApiBearerAuth()
@@ -27,7 +27,7 @@ export class RestaurantMichelineStarController {
     private readonly restaurantMichelineStarService: RestaurantMichelineStarService,
   ) {}
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_CREATE)
   @Post(':restaurantId/micheline-stars')
   async addMichelineStarToRestaurant(
     @Param('restaurantId') restaurantId: string,
@@ -43,7 +43,7 @@ export class RestaurantMichelineStarController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.READ_ONLY)
   @Get(':restaurantId/micheline-stars/:michelineStarId')
   async findMichelineStarByRestaurantIdAndMichelineStarId(
     @Param('restaurantId') restaurantId: string,
@@ -55,7 +55,7 @@ export class RestaurantMichelineStarController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.READ_ONLY)
   @Get(':restaurantId/micheline-stars')
   async findMichelineStarsByRestaurantId(
     @Param('restaurantId') restaurantId: string,
@@ -65,7 +65,7 @@ export class RestaurantMichelineStarController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_MODIFY)
   @Put(':restaurantId/micheline-stars/:michelineStarId')
   async updateMichelineStar(
     @Param('restaurantId') resturantId: string,
@@ -83,7 +83,7 @@ export class RestaurantMichelineStarController {
     );
   }
 
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.ALLOW_DELETE)
   @Delete(':restaurantId/micheline-stars/:michelineStarId')
   @HttpCode(204)
   async deleteMichelineStarOfARestaurant(

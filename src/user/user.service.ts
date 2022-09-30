@@ -5,7 +5,8 @@ import { Repository } from 'typeorm';
 import { faker } from '@faker-js/faker';
 import { plainToInstance } from 'class-transformer';
 import * as bcrypt from 'bcryptjs';
-import { Role } from 'src/authorization/role.enum';
+import { Role } from 'src/shared/enums/role.enum';
+import { RoleEntity } from 'src/role/role.entity';
 
 @Injectable()
 export class UserService implements OnModuleInit {
@@ -14,6 +15,9 @@ export class UserService implements OnModuleInit {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
+
+    @InjectRepository(RoleEntity)
+    private roleRepository: Repository<RoleEntity>,
   ) {
     this.defaultUsers = [];
   }
@@ -22,6 +26,14 @@ export class UserService implements OnModuleInit {
     const users = this.generateSeedUsers();
     for (let i = 0; i < users.length; i++) {
       const userEntity = await this.userRepository.save(users[i]);
+      for (let index = 0; index < userEntity.roles.length; index++) {
+        const role: RoleEntity = {
+          id: faker.datatype.uuid(),
+          name: userEntity.roles[index],
+          user: userEntity,
+        };
+        await this.roleRepository.save(role);
+      }
       this.defaultUsers = [...this.defaultUsers, userEntity];
     }
   }
@@ -34,28 +46,40 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'Admin',
         password: 'Admin',
-        role: Role.Admin,
+        roles: [
+          Role.READ_ONLY,
+          Role.ALLOW_CREATE,
+          Role.ALLOW_MODIFY,
+          Role.ALLOW_DELETE,
+        ],
         isActive: true,
       },
       {
         id: faker.datatype.uuid(),
         userName: 'Creator',
         password: 'Creator',
-        role: Role.Creator,
+        roles: [Role.ALLOW_CREATE, Role.ALLOW_MODIFY],
         isActive: true,
       },
       {
         id: faker.datatype.uuid(),
         userName: 'Reader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
+        isActive: true,
+      },
+      {
+        id: faker.datatype.uuid(),
+        userName: 'Remover',
+        password: 'Remover',
+        roles: [Role.ALLOW_DELETE],
         isActive: true,
       },
       {
         id: faker.datatype.uuid(),
         userName: 'CulturesReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['cultures'],
         isActive: true,
       },
@@ -63,7 +87,7 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'ProductsReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['products'],
         isActive: true,
       },
@@ -71,7 +95,7 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'CountriesReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['countries'],
         isActive: true,
       },
@@ -79,7 +103,7 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'RecipesReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['recipes'],
         isActive: true,
       },
@@ -87,7 +111,7 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'RestaurantsReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['restaurants'],
         isActive: true,
       },
@@ -95,7 +119,7 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'RestaurantsStarsReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['restaurants', 'micheline-stars'],
         isActive: true,
       },
@@ -103,7 +127,7 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'CulturesRestaurantsReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['restaurants', 'cultures'],
         isActive: true,
       },
@@ -111,7 +135,7 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'CulturesProductsReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['products', 'cultures'],
         isActive: true,
       },
@@ -119,7 +143,7 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'CulturesRecipesReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['recipes', 'cultures'],
         isActive: true,
       },
@@ -127,7 +151,7 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'CulturesCountriesReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['countries', 'cultures'],
         isActive: true,
       },
@@ -135,22 +159,8 @@ export class UserService implements OnModuleInit {
         id: faker.datatype.uuid(),
         userName: 'CountriesRestaurantReader',
         password: 'Reader',
-        role: Role.Reader,
+        roles: [Role.READ_ONLY],
         resources: ['countries', 'restaurants'],
-        isActive: true,
-      },
-      {
-        id: faker.datatype.uuid(),
-        userName: 'Editor',
-        password: 'Editor',
-        role: Role.Editor,
-        isActive: true,
-      },
-      {
-        id: faker.datatype.uuid(),
-        userName: 'Remover',
-        password: 'Remover',
-        role: Role.Remover,
         isActive: true,
       },
     ];
@@ -162,6 +172,9 @@ export class UserService implements OnModuleInit {
   }
 
   async findOne(userName: string): Promise<UserEntity> {
-    return await this.userRepository.findOne({ where: { userName: userName } });
+    return await this.userRepository.findOne({
+      where: { userName: userName },
+      relations: ['roles'],
+    });
   }
 }
