@@ -10,18 +10,24 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
 
+@ObjectType()
 @Entity()
 export class CultureEntity {
+  @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Field()
   @Column()
   name: string;
 
+  @Field()
   @Column()
   description: string;
 
+  @Field((type) => [ProductEntity])
   @ManyToMany(() => ProductEntity, (product) => product.cultures)
   @JoinTable()
   products: ProductEntity[];

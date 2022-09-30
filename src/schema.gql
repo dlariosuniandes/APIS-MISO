@@ -1,0 +1,24 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type ProductEntity {
+  id: String!
+  name: String!
+  description: String!
+  story: String!
+  category: String!
+  cultures: [CultureEntity!]!
+}
+
+type CultureEntity {
+  id: String!
+  name: String!
+  description: String!
+  products: [ProductEntity!]!
+}
+
+type Query {
+  products(skip: Float = 0, amount: Float = 100): [ProductEntity!]!
+  product(id: String!): ProductEntity!
+}

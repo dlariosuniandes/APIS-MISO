@@ -15,7 +15,7 @@ import { CultureDto } from './culture.dto';
 import { CultureEntity } from './culture.entity';
 import { CultureService } from './culture.service';
 import { plainToInstance } from 'class-transformer';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Roles } from '../authorization/role.decorator';
 import { Role } from 'src/shared/enums/role.enum';
 
@@ -26,9 +26,11 @@ import { Role } from 'src/shared/enums/role.enum';
 export class CultureController {
   constructor(private readonly cultureService: CultureService) {}
 
+  @ApiQuery({ name: 'skip', type: Number, required: false })
+  @ApiQuery({ name: 'amount', type: Number, required: false })
   @Roles(Role.READ_ONLY)
   @Get()
-  async findAll(@Query('skip') skip: number, @Query('amount') amount: number) {
+  async findAll(@Query('skip') skip = 0, @Query('amount') amount = 1000) {
     return await this.cultureService.findAll(skip, amount);
   }
 
