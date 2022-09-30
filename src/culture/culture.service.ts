@@ -45,7 +45,7 @@ export class CultureService {
     const culture: CultureEntity = await this.cultureRepository.findOne({
       where: { id },
       relations: ['recipes', 'products', 'restaurants', 'countries'],
-      relationLoadStrategy: 'query',
+      //relationLoadStrategy: 'query',
     });
     if (!culture) {
       throw new BusinessLogicException(

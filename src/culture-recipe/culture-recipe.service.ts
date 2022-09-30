@@ -1,4 +1,6 @@
 import {
+  CACHE_MANAGER,
+  Inject,
   Injectable,
   NotFoundException,
   PreconditionFailedException,
@@ -9,9 +11,11 @@ import { CultureService } from 'src/culture/culture.service';
 import { RecipeEntity } from 'src/recipe/recipe.entity';
 import { RecipeService } from 'src/recipe/recipe.service';
 import { Repository } from 'typeorm';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class CultureRecipeService {
+  cacheKey = 'culture-recipes';
   constructor(
     @InjectRepository(CultureEntity)
     private cultureRepository: Repository<CultureEntity>,
@@ -19,6 +23,8 @@ export class CultureRecipeService {
     private recipeRepository: Repository<RecipeEntity>,
     private recipeService: RecipeService,
     private cultureService: CultureService,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
   private findRecipeInCulture(
@@ -73,8 +79,17 @@ export class CultureRecipeService {
     return this.findRecipeInCulture(recipeId, culture);
   }
   async findRecipesByCultureId(cultureId: string): Promise<RecipeEntity[]> {
-    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
-    return culture.recipes;
+    const cached: CultureEntity = await this.cacheManager.get<CultureEntity>(
+      this.cacheKey,
+    );
+    if (!cached) {
+      const culture: CultureEntity = await this.cultureService.findOne(
+        cultureId,
+      );
+      await this.cacheManager.set(this.cacheKey, culture);
+      return culture.recipes;
+    }
+    return cached.recipes;
   }
 
   async deleteRecipeFromCulture(
