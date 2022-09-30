@@ -18,6 +18,9 @@ import { CultureCountryModule } from './culture-country/culture-country.module';
 import { CountryRestaurantModule } from './restaurant-country/country-restaurant.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RolesGuard } from './authorization/guards/role.guard';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -37,6 +40,10 @@ import { RolesGuard } from './authorization/guards/role.guard';
     UserModule,
     TypeOrmModule.forRoot(databaseConfig),
     CacheModule.register({ ttl: 60, isGlobal: true }),
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      driver: ApolloDriver,
+    }),
   ],
   providers: [
     {

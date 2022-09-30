@@ -37,7 +37,7 @@ export class ProductController {
   @ApiQuery({ name: 'skip', type: Number, required: false })
   @ApiQuery({ name: 'amount', type: Number, required: false })
   @Get()
-  async findAll(@Query('skip') skip = 0, @Query('amount') amount = 50000) {
+  async findAll(@Query('skip') skip = 0, @Query('amount') amount = 1000) {
     return await this.productService.findAll(skip, amount);
   }
 
