@@ -16,36 +16,25 @@ export class RolesGuard implements CanActivate {
       return true;
     }
     const { user } = context.switchToHttp().getRequest();
-    return requiredRoles.some((role) => user.roles?.includes(role));
+    const { url } = context.switchToHttp().getRequest();
+    return this.isAuthorized(user, requiredRoles, url);
+  }
 
-    /*
-    const jwt = ExtractJwt.fromAuthHeaderAsBearerToken()(
-      context.switchToHttp().getRequest(),
+  isAuthorized(user: any, requiredRoles: Role[], urlResource: string) {
+    const userHasRole = requiredRoles.some((role) =>
+      user.roles?.includes(role),
     );
-    if (!jwt) {
-      return false;
-    }
-    const decoded: Token = this.jwtService.decode(jwt) as Token;
-    switch (decoded.role) {
-      case 'admin':
-        return true;
+    if (!userHasRole) return false;
 
-      default:
-        if (requiredRoles.some((role) => decoded.role === role)) {
-          if (decoded.resources) {
-            const url: string = context.switchToHttp().getRequest().url;
+    const resources = user.resources;
+    if (!resources.length) return true;
 
-            let allResources = resourcesList.join('|');
-            allResources =
-              '\\W*(?:\\b(?!(?:' + allResources + ')\\b)\\w+\\W*|\\W+)+';
-            const Rx = new RegExp(allResources, 'g');
-            const urlResources = [
-              ...new Set(url.replace(Rx, '|').split('|')),
-            ].filter((s) => s);
-            return urlResources.every((r) => decoded.resources.includes(r));
-          } else return true;
-        } else return false;
+    const requiredResources = urlResource.replace('/api/v1/', '').split('/');
+    requiredResources.sort();
+    resources.sort();
+    for (let index = 0; index < requiredResources.length; ++index) {
+      if (requiredResources[index] !== resources[index]) return false;
     }
-    */
+    return true;
   }
 }
