@@ -34,6 +34,7 @@ export class CultureController {
     return await this.cultureService.findAll(skip, amount);
   }
 
+  @Roles(Role.READ_ONLY)
   @Get(':cultureId')
   async findOne(@Param('cultureId') cultureId: string) {
     return await this.cultureService.findOne(cultureId);
