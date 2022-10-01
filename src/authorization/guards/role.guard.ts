@@ -1,6 +1,7 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Role } from 'src/shared/enums/role.enum';
+import { resourcesList } from 'src/shared/security/constants';
 import { ROLES_KEY } from '../role.decorator';
 
 @Injectable()
@@ -29,12 +30,13 @@ export class RolesGuard implements CanActivate {
     const resources = user.resources;
     if (!resources.length) return true;
 
-    const requiredResources = urlResource.replace('/api/v1/', '').split('/');
-    requiredResources.sort();
-    resources.sort();
-    for (let index = 0; index < requiredResources.length; ++index) {
-      if (requiredResources[index] !== resources[index]) return false;
-    }
-    return true;
+    const requiredResources = [];
+    const urlResources = urlResource.replace('/api/v1/', '').split('/');
+    resourcesList.forEach((resource) => {
+      if (urlResources.includes(resource)) {
+        requiredResources.push(resource);
+      }
+    });
+    return requiredResources.every((r) => resources.includes(r));
   }
 }

@@ -24,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   getRoles(payload: any) {
     const roles = [];
-    for (let index = 0; index < payload.roles.length; index++) {
+    for (let index = 0; index < payload.roles?.length; index++) {
       roles.push(payload.roles[index].name);
     }
     return roles;
