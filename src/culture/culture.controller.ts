@@ -40,12 +40,14 @@ export class CultureController {
     return await this.cultureService.findOne(cultureId);
   }
 
+  @Roles(Role.ALLOW_CREATE)
   @Post()
   async create(@Body() cultureDto: CultureDto) {
     const culture: CultureEntity = plainToInstance(CultureEntity, cultureDto);
     return await this.cultureService.create(culture);
   }
 
+  @Roles(Role.ALLOW_MODIFY)
   @Put(':cultureId')
   async update(
     @Param('cultureId') cultureId: string,
@@ -55,6 +57,7 @@ export class CultureController {
     return await this.cultureService.update(cultureId, culture);
   }
 
+  @Roles(Role.ALLOW_DELETE)
   @Delete(':cultureId')
   @HttpCode(204)
   async delete(@Param('cultureId') cultureId: string) {
