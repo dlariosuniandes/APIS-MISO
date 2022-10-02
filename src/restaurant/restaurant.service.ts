@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
   BusinessError,
@@ -6,21 +6,36 @@ import {
 } from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
 import { RestaurantEntity } from './restaurant.entity';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class RestaurantService {
   constructor(
     @InjectRepository(RestaurantEntity)
     private readonly restaurantRepository: Repository<RestaurantEntity>,
+
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
+
+  cacheKey = 'restaurants';
 
   private messageExcepetionRestaurantNotFound =
     'The Restaurant with the given id was not found';
 
   async findAll(): Promise<RestaurantEntity[]> {
-    return await this.restaurantRepository.find({
-      relations: ['michelineStars'],
-    });
+    const cached = await this.cacheManager.get<RestaurantEntity[]>(
+      this.cacheKey,
+    );
+
+    if (!cached) {
+      const restaurants = await this.restaurantRepository.find({
+        relations: ['michelineStars'],
+      });
+      await this.cacheManager.set(this.cacheKey, restaurants);
+      return restaurants;
+    }
+    return cached;
   }
 
   async findOne(id: string): Promise<RestaurantEntity> {
