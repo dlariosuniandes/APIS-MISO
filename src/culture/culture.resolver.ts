@@ -25,4 +25,19 @@ export class CultureResolver {
     const culture = plainToInstance(CultureEntity, cultureDto);
     return this.cultureService.create(culture);
   }
+
+  @Mutation(() => CultureEntity)
+  updateCulture(
+    @Args('id') id: string,
+    @Args('culture')
+    cultureDto: CultureDto,
+  ): Promise<CultureEntity> {
+    const culture = plainToInstance(CultureEntity, cultureDto);
+    return this.cultureService.update(id, culture);
+  }
+
+  @Mutation(() => CultureEntity)
+  deleteCulture(@Args('id') id: string): Promise<void> {
+    return this.cultureService.delete(id);
+  }
 }

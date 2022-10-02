@@ -20,6 +20,7 @@ export class CountryEntity {
   @Column()
   name: string;
 
+  @Field(() => [CultureEntity], { nullable: true })
   @ManyToMany(() => CultureEntity, (culture) => culture.countries)
   cultures: CultureEntity[];
 
