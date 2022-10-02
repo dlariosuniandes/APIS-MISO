@@ -20,6 +20,7 @@ type RestaurantEntity {
 type CountryEntity {
   id: String!
   name: String!
+  cultures: [CultureEntity!]
   restaurants: [RestaurantEntity!]!
 }
 
@@ -37,22 +38,35 @@ type CultureEntity {
   name: String!
   description: String!
   products: [ProductEntity!]!
+  countries: [CountryEntity!]
   restaurants: [RestaurantEntity!]
 }
 
 type Query {
+  cultures: [CultureEntity!]!
+  culture(id: String!): CultureEntity!
   products(skip: Float = 0, amount: Float = 100): [ProductEntity!]!
   product(id: String!): ProductEntity!
+  countrys: [CountryEntity!]!
+  country(id: String!): CountryEntity!
   restaurants: [RestaurantEntity!]!
   restaurant(id: String!): RestaurantEntity!
   michelineStar(restaurantId: String!, michelineStarId: String!): MichelineStarEntity!
   michelineStars(restaurantId: String!): [MichelineStarEntity!]!
   findOneRestaurantByCulture(cultureId: String!, restaurantId: String!): RestaurantEntity
   findAllRestaurantByCulture(cultureId: String!): [RestaurantEntity!]
+  findCountryByCultureIdCountryId(countryId: String!, cultureId: String!): CountryEntity!
+  findCultureCountries(cultureId: String!): [CountryEntity!]!
   getCountryByRestaurant(restaurantId: String!): CountryEntity
 }
 
 type Mutation {
+  createCulture(culture: CultureDto!): CultureEntity!
+  updateCulture(id: String!, culture: CultureDto!): CultureEntity!
+  deleteCulture(id: String!): CultureEntity!
+  createCountry(country: CountryDto!): CountryEntity!
+  updateCountry(id: String!, country: CountryDto!): CountryEntity!
+  deleteCountry(id: String!): CountryEntity!
   createRestaurant(restaurant: RestaurantDto!): RestaurantEntity!
   updateRestaurant(id: String!, restaurant: RestaurantDto!): RestaurantEntity!
   deleteRestaurant(id: String!): String!
@@ -62,8 +76,20 @@ type Mutation {
   addRestaurantToCulture(cultureId: String!, restaurantId: String!): CultureEntity!
   associateRestaurantsToCulture(cultureId: String!, restaurants: [CultureRestaurantDto!]!): CultureEntity!
   deleteRestaurantOfACulture(cultureId: String!, restaurantId: String!): String!
+  addCountryToCulture(cultureId: String!, countryId: String!): [CultureEntity!]!
+  associateCountriesToCulture(cultureId: String!, countries: [CountryDto!]!): [CultureEntity!]!
+  deleteCountryFromCulture(cultureId: String!, countryId: String!): [CultureEntity!]!
   addCountryToRestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
   deleteCountryOfARestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
+}
+
+input CultureDto {
+  name: String!
+  description: String!
+}
+
+input CountryDto {
+  name: String!
 }
 
 input RestaurantDto {

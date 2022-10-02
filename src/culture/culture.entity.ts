@@ -32,6 +32,7 @@ export class CultureEntity {
   @JoinTable()
   products: ProductEntity[];
 
+  @Field(() => [CountryEntity], { nullable: true })
   @ManyToMany(() => CountryEntity, (country) => country.cultures)
   @JoinTable()
   countries: CountryEntity[];
