@@ -36,7 +36,7 @@ export class CultureRecipeResolver {
     return this.cultureRecipeService.addRecipeToCulture(cultureId, recipe);
   }
 
-  @Mutation(() => [CultureEntity])
+  @Mutation(() => CultureEntity)
   updateCultureRecipes(
     @Args('cultureId') cultureId: string,
     @Args('recipes', { type: () => [RecipeDto] }) recipesDto: RecipeDto[],
@@ -45,12 +45,14 @@ export class CultureRecipeResolver {
     return this.cultureRecipeService.updateCultureRecipes(cultureId, recipes);
   }
 
-  @Mutation(() => [CultureEntity])
+  @Mutation(() => CultureEntity)
   async deleteCultureRecipe(
     @Args('recipeId') recipeId: string,
     @Args('cultureId') cultureId: string,
   ) {
-    this.cultureRecipeService.deleteRecipeFromCulture(recipeId, cultureId);
-    return cultureId;
+    return this.cultureRecipeService.deleteRecipeFromCulture(
+      recipeId,
+      cultureId,
+    );
   }
 }

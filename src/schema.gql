@@ -106,8 +106,8 @@ type Mutation {
   removeProductCulture(cultureId: String!, productId: String!): ProductEntity!
   updateProductCultures(culturesIds: [String!]!, productId: String!): ProductEntity!
   createRecipe(cultureId: String!, recipe: RecipeDto!): CultureEntity!
-  updateCultureRecipes(cultureId: String!, recipes: [RecipeDto!]!): [CultureEntity!]!
-  deleteCultureRecipe(recipeId: String!, cultureId: String!): [CultureEntity!]!
+  updateCultureRecipes(cultureId: String!, recipes: [RecipeDto!]!): CultureEntity!
+  deleteCultureRecipe(recipeId: String!, cultureId: String!): CultureEntity!
   addCountryToCulture(cultureId: String!, countryId: String!): [CultureEntity!]!
   associateCountriesToCulture(cultureId: String!, countries: [CultureCountryDto!]!): [CultureEntity!]!
   deleteCountryFromCulture(cultureId: String!, countryId: String!): [CultureEntity!]!
