@@ -33,6 +33,16 @@ type ProductEntity {
   cultures: [CultureEntity!]!
 }
 
+type RecipeEntity {
+  id: String!
+  name: String!
+  description: String!
+  preparation: String!
+  url_photo: String!
+  url_video: String!
+  culture: CultureEntity!
+}
+
 type CultureEntity {
   id: String!
   name: String!
@@ -47,6 +57,10 @@ type Query {
   culture(id: String!): CultureEntity!
   products(skip: Float = 0, amount: Float = 100): [ProductEntity!]!
   product(id: String!): ProductEntity!
+  recipes: [RecipeEntity!]!
+  recipe(id: String!): RecipeEntity!
+  cultureRecipes(cultureId: String!): [RecipeEntity!]!
+  cultureRecipe(cultureId: String!, recipeId: String!): RecipeEntity!
   countries: [CountryEntity!]!
   country(id: String!): CountryEntity!
   restaurants: [RestaurantEntity!]!
@@ -94,6 +108,11 @@ type Mutation {
   deleteCountryFromCulture(cultureId: String!, countryId: String!): [CultureEntity!]!
   addCountryToRestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
   deleteCountryOfARestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
+  updateRecipe(id: String!, recipe: RecipeDto!): RecipeEntity!
+  deleteRecipe(id: String!): String!
+  createRecipe(cultureId: String!, recipe: RecipeDto!): CultureEntity!
+  updateCultureRecipes(cultureId: String!, recipes: [RecipeDto!]!): [CultureEntity!]!
+  deleteCultureRecipe(recipeId: String!, cultureId: String!): [CultureEntity!]!
 }
 
 input CultureDto {
@@ -128,4 +147,12 @@ input CultureRestaurantDto {
 
 input CultureCountryDto {
   id: String!
+}
+
+input RecipeDto {
+  name: String!
+  description: String!
+  preparation: String!
+  url_photo: String!
+  url_video: String!
 }
