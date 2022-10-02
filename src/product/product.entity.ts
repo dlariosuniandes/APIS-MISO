@@ -2,7 +2,6 @@ import { CultureEntity } from 'src/culture/culture.entity';
 import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Field, ObjectType } from '@nestjs/graphql';
 
-
 @ObjectType()
 @Entity()
 export class ProductEntity {

@@ -2,6 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type CountryEntity {
+  id: String!
+  name: String!
+  culture: CultureEntity!
+}
+
 type ProductEntity {
   id: String!
   name: String!
@@ -16,9 +22,43 @@ type CultureEntity {
   name: String!
   description: String!
   products: [ProductEntity!]!
+  countries: [CountryEntity!]!
 }
 
 type Query {
   products(skip: Float = 0, amount: Float = 100): [ProductEntity!]!
   product(id: String!): ProductEntity!
+  cultureProducts(cultureId: String!): [ProductEntity!]!
+  cultureProduct(cultureId: String!, productId: String!): ProductEntity!
+  productCultures(productId: String!): [CultureEntity!]!
+  productCulture(productId: String!, cultureId: String!): CultureEntity!
+  cultureCountries(cultureId: String!): [CountryEntity!]!
+  cultureCountry(cultureId: String!, countryId: String!): CountryEntity!
+}
+
+type Mutation {
+  createProduct(productDto: ProductDto!): ProductEntity!
+  updateProduct(productId: String!, productDto: ProductDto!): ProductEntity!
+  deleteProduct(productId: String!): String!
+  addCultureProduct(cultureId: String!, productId: String!): CultureEntity!
+  removeCultureProduct(cultureId: String!, productId: String!): CultureEntity!
+  updateCultureProducts(cultureId: String!, productsIds: [String!]!): CultureEntity!
+  addProductCulture(cultureId: String!, productId: String!): ProductEntity!
+  removeProductCulture(cultureId: String!, productId: String!): ProductEntity!
+  updateProductCultures(culturesIds: [String!]!, productId: String!): ProductEntity!
+  addCultureCountry(cultureId: String!, countryId: String!): CultureEntity!
+  removeCultureCountry(cultureId: String!, countryId: String!): CultureEntity!
+  updateCultureCountries(cultureId: String!, countriesDtos: [CountryDto!]!): CultureEntity!
+}
+
+input ProductDto {
+  name: String!
+  description: String!
+  story: String!
+  category: Float!
+}
+
+input CountryDto {
+  id: String
+  name: String!
 }

@@ -7,15 +7,20 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
 
+@ObjectType()
 @Entity()
 export class CountryEntity {
+  @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Field()
   @Column()
   name: string;
 
+  @Field((type) => CultureEntity)
   @ManyToOne(() => CultureEntity, (culture) => culture.countries)
   culture: CultureEntity;
 
