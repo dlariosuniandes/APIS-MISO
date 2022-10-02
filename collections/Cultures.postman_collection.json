@@ -1,0 +1,581 @@
+{
+	"info": {
+		"_postman_id": "85f5fc30-8d0f-44ba-98b0-e5d899c8c8fb",
+		"name": "Cultures",
+		"description": "Representa una cultura gastronómica conformada por uno o un grupo de países o una región.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23001418"
+	},
+	"item": [
+		{
+			"name": "Add a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()",
+							"pm.globals.set(\"culturaId\", data.id);",
+							"pm.collectionVariables.set(\"culturaId\", data.id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"   pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures"
+					]
+				},
+				"description": "Crea una nueva cultura"
+			},
+			"response": [
+				{
+					"name": "Add a culture",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Cultura Mexicana\",\n    \"descripción\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cultures",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\":\"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all cultures",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Number of cultures > ' + 0, function () {",
+							"   var data = pm.response.json()",
+							"   pm.expect(data.length).to.greaterThan(0)",
+							"});",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures"
+					]
+				},
+				"description": "Obtiene una lista de todas las culturas"
+			},
+			"response": [
+				{
+					"name": "Get all cultures",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n    {\n    \"id\":\"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n    },\n    {\n      \"id\":\"48a9ab90-1276-11ed-861d-0242ac120003\",\n     \"name\": \"Cultura Mexicana\",\n     \"description\": \"La gastronomía de Colombia es el resultado de la fusión de alimentos, prácticas y tradiciones culinarias de las culturas indoamericanas locales, europeas (principalmente española) y africanas. Aunque no hay consenso en cuanto a un único plato que represente a toda la gastronomía colombiana, son muy reconocidos el sancocho y la arepa en sus distintas variantes, el ajiaco santafereño, la bandeja paisa, el mote de queso, la lechona tolimense, la mamona o ternera a la llanera, el mute santandereano, el tamal y los pescados, sobre todo en las regiones costeras.\"   \n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{culturaId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{culturaId}}"
+					]
+				},
+				"description": "Obtiene una cultura segun el ID."
+			},
+			"response": [
+				{
+					"name": "Get a culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/culturas/{{culturaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"culturas",
+								"{{culturaId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"name\": \"Cultura Mexicana\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get a non existant culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The culture with the given id was not found\");",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Ejemplo de un request para obtener una cultura que no existe"
+			},
+			"response": [
+				{
+					"name": "Get a non existant culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"   pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Cultura Mexicana Nuevo\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{culturaId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{culturaId}}"
+					]
+				},
+				"description": "Actualiza una cultura segun el ID."
+			},
+			"response": [
+				{
+					"name": "Update a culture",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Cultura Mexicana Nuevo\",\n    \"descripción\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{culturaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{culturaId}}"
+							]
+						}
+					},
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n    \"name\": \"Cultura Mexicana Nuevo\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update a non existant culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The culture with the given id was not found\");",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Cultura Mexicana Nuevo\",\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Ejemplo de un request para actualizar una cultura que no existe."
+			},
+			"response": [
+				{
+					"name": "Update a non existant culture",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Cultura Mexicana Nuevo\",\n    \"descripción\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"   pm.response.to.have.status(204);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{culturaId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{culturaId}}"
+					]
+				},
+				"description": "Eliminación de una cultura segun el ID"
+			},
+			"response": [
+				{
+					"name": "Delete a culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{culturaId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{culturaId}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Update a non existant culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"   pm.response.to.have.status(404);",
+							"});",
+							"",
+							"pm.test(\"Get expected error message\", function () {",
+							"   var data = pm.response.json();",
+							"   pm.expect(data.message).to.eql(\"The culture with the given id was not found\");",
+							"}); "
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				},
+				"description": "Ejemplo de un request para eliminar una cultura que no existe."
+			},
+			"response": [
+				{
+					"name": "Update a non existant culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture was not found\"\n}"
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": " http://localhost:3000/api/v1"
+		},
+		{
+			"key": "culturaId",
+			"value": "8bf4f2b5-7248-49ca-a7df-1a12e3204928"
+		}
+	]
+}
