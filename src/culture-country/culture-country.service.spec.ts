@@ -25,9 +25,11 @@ describe('CultureCountryService', () => {
   let cultureList: CultureEntity[];
 
   const generateCountry = () => {
-    const countryDict: object = {
+    const countryDict: CountryEntity = {
       id: faker.datatype.uuid(),
-      name: faker.lorem.sentence(),
+      name: faker.address.country(),
+      cultures: [],
+      restaurants: [],
     };
     return countryDict;
   };
@@ -48,7 +50,7 @@ describe('CultureCountryService', () => {
     cultureList = [];
     for (let i = 0; i < 5; i++) {
       const country: CountryEntity = await countryRepository.save(
-        plainToInstance(CountryEntity, generateCountry()),
+        generateCountry(),
       );
       const culture: CultureEntity = await cultureRepository.save(
         plainToInstance(CultureEntity, generateCulture()),
@@ -56,8 +58,8 @@ describe('CultureCountryService', () => {
       countryList.push(country);
       cultureList.push(culture);
     }
-    countryList[0].culture = cultureList[0];
-    countryList[1].culture = cultureList[0];
+    countryList[0].cultures.push(cultureList[0]);
+    countryList[1].cultures.push(cultureList[0]);
     countryList.map(async (pr) => await countryRepository.save(pr));
     for (let i = 0; i < countryList.length; i++) {
       countryList[i] = await countryProvider.findOne(countryList[i].id);

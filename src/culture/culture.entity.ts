@@ -27,15 +27,16 @@ export class CultureEntity {
   @Column()
   description: string;
 
-  @Field((type) => [ProductEntity])
+  @Field(() => [ProductEntity])
   @ManyToMany(() => ProductEntity, (product) => product.cultures)
   @JoinTable()
   products: ProductEntity[];
 
-  @OneToMany(() => CountryEntity, (country) => country.culture)
+  @ManyToMany(() => CountryEntity, (country) => country.cultures)
   @JoinTable()
   countries: CountryEntity[];
 
+  @Field(() => [RestaurantEntity], { nullable: true })
   @ManyToMany(() => RestaurantEntity, (restaurant) => restaurant.cultures)
   @JoinTable()
   restaurants: RestaurantEntity[];

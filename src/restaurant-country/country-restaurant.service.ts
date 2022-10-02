@@ -5,7 +5,10 @@ import { CountryEntity } from '../country/country.entity';
 import { CountryService } from '../country/country.service';
 import { RestaurantService } from '../restaurant/restaurant.service';
 import { RestaurantEntity } from '../restaurant/restaurant.entity';
-import { BusinessError, BusinessLogicException } from 'src/shared/errors/business-errors';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from 'src/shared/errors/business-errors';
 
 @Injectable()
 export class CountryRestaurantService {
@@ -32,8 +35,8 @@ export class CountryRestaurantService {
   }
 
   async deleteCountryFromRestaurant(
-    countryId,
-    restaurantId,
+    countryId: string,
+    restaurantId: string,
   ): Promise<RestaurantEntity> {
     const restaurant: RestaurantEntity = await this.restaurantService.findOne(
       restaurantId,

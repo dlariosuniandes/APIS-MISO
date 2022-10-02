@@ -6,6 +6,7 @@ import { RestaurantEntity } from '../restaurant/restaurant.entity';
 import { RestaurantModule } from '../restaurant/restaurant.module';
 import { RestaurantMichelineStarService } from './restaurant-micheline-star.service';
 import { RestaurantMichelineStarController } from './restaurant-micheline-star.controller';
+import { RestaurantMichelineStarResolver } from './restaurant-micheline-star.resolver';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { RestaurantMichelineStarController } from './restaurant-micheline-star.c
     RestaurantModule,
     MichelineStarModule,
   ],
-  providers: [RestaurantMichelineStarService],
+  providers: [RestaurantMichelineStarService, RestaurantMichelineStarResolver],
   controllers: [RestaurantMichelineStarController],
 })
 export class RestaurantMichelineStarModule {}
