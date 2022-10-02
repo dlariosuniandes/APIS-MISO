@@ -24,7 +24,7 @@ describe('CountryRestaurantService', () => {
     const country: CountryEntity = {
       id: faker.datatype.uuid(),
       name: faker.lorem.sentence(),
-      culture: {} as CultureEntity,
+      cultures: [],
       restaurants: [],
     };
     return country;

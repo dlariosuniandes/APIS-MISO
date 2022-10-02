@@ -6,6 +6,7 @@ import { RestaurantEntity } from '../restaurant/restaurant.entity';
 import { RestaurantModule } from '../restaurant/restaurant.module';
 import { CultureRestaurantService } from './culture-restaurant.service';
 import { CultureRestaurantController } from './culture-restaurant.controller';
+import { CultureRestaurantResolver } from './culture-restaurant.resolver';
 
 @Module({
   imports: [
@@ -13,7 +14,7 @@ import { CultureRestaurantController } from './culture-restaurant.controller';
     RestaurantModule,
     CultureModule,
   ],
-  providers: [CultureRestaurantService],
+  providers: [CultureRestaurantService, CultureRestaurantResolver],
   controllers: [CultureRestaurantController],
 })
 export class CultureRestaurantModule {}

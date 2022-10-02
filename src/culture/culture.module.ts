@@ -7,9 +7,10 @@ import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
 import { RecipeEntity } from 'src/recipe/recipe.entity';
 import { ProductEntity } from 'src/product/product.entity';
 import { CountryEntity } from 'src/country/country.entity';
+import { CultureResolver } from './culture.resolver';
 
 @Module({
-  providers: [CultureService],
+  providers: [CultureService, CultureResolver],
   imports: [
     TypeOrmModule.forFeature([
       CultureEntity,

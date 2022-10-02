@@ -51,7 +51,7 @@ export class CultureProductController {
     );
   }
 
-  @Roles(Role.ALLOW_MODIFY)
+  @Roles(Role.ALLOW_CREATE)
   @Put(':cultureId/products')
   async associateProductsToCulture(
     @Param('cultureId') cultureId: string,

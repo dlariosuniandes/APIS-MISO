@@ -157,7 +157,7 @@ export class UserService implements OnModuleInit {
       },
       {
         id: faker.datatype.uuid(),
-        userName: 'CountriesRestaurantReader',
+        userName: 'RestaurantCountriesReader',
         password: 'Reader',
         roles: [Role.READ_ONLY],
         resources: ['countries', 'restaurants'],
