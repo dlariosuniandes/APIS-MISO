@@ -63,12 +63,15 @@ export class RestaurantMichelineStarService {
     restaurantId: string,
   ): Promise<MichelineStarEntity[]> {
     const cached = await this.cacheManager.get<MichelineStarEntity[]>(
-      this.cacheKey,
+      this.cacheKey + '_' + restaurantId,
     );
 
     if (!cached) {
       const restaurant = await this.serviceRestaurant.findOneBy(restaurantId, ['michelineStars']);
-      await this.cacheManager.set(this.cacheKey, restaurant.michelineStars);
+      await this.cacheManager.set(
+        this.cacheKey + '_' + restaurantId,
+        restaurant.michelineStars,
+      );
       return restaurant.michelineStars;
     }
     return cached;

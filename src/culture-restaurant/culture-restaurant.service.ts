@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CultureEntity } from '../culture/culture.entity';
 import { RestaurantEntity } from '../restaurant/restaurant.entity';
@@ -9,6 +9,7 @@ import {
 import { Repository } from 'typeorm';
 import { RestaurantService } from '../restaurant/restaurant.service';
 import { CultureService } from '../culture/culture.service';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class CultureRestaurantService {
@@ -17,9 +18,13 @@ export class CultureRestaurantService {
     private readonly cultureRepository: Repository<CultureEntity>,
     @InjectRepository(RestaurantEntity)
     private readonly restaurantRepository: Repository<RestaurantEntity>,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
     private restaurantService: RestaurantService,
     private cultureService: CultureService,
   ) {}
+
+  cacheKey = 'culture-restaurant';
 
   async addRestaurantToCulture(
     cultureId: string,
@@ -81,13 +86,24 @@ export class CultureRestaurantService {
   async findRestaurantsByCultureId(
     cultureId: string,
   ): Promise<RestaurantEntity[]> {
-    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
-    if (!culture)
-      throw new BusinessLogicException(
-        'The Culture with the given id was not found',
-        BusinessError.NOT_FOUND,
+    const cached = await this.cacheManager.get<RestaurantEntity[]>(
+      this.cacheKey + '_' + cultureId,
+    );
+
+    if (!cached) {
+      const culture = await this.cultureService.findOne(cultureId);
+      if (!culture)
+        throw new BusinessLogicException(
+          'The Culture with the given id was not found',
+          BusinessError.NOT_FOUND,
+        );
+      await this.cacheManager.set(
+        this.cacheKey + '_' + cultureId,
+        culture.restaurants,
       );
-    return culture.restaurants;
+      return culture.restaurants;
+    }
+    return cached;
   }
 
   async associateRestaurantsToCulture(
