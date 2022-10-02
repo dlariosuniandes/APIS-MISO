@@ -57,12 +57,10 @@ type Query {
   culture(id: String!): CultureEntity!
   products(skip: Float = 0, amount: Float = 100): [ProductEntity!]!
   product(id: String!): ProductEntity!
-  recipes: [RecipeEntity!]!
-  recipe(id: String!): RecipeEntity!
-  cultureRecipes(cultureId: String!): [RecipeEntity!]!
-  cultureRecipe(cultureId: String!, recipeId: String!): RecipeEntity!
   countries: [CountryEntity!]!
   country(id: String!): CountryEntity!
+  recipes: [RecipeEntity!]!
+  recipe(id: String!): RecipeEntity!
   restaurants: [RestaurantEntity!]!
   restaurant(id: String!): RestaurantEntity!
   michelineStar(restaurantId: String!, michelineStarId: String!): MichelineStarEntity!
@@ -73,6 +71,8 @@ type Query {
   cultureProduct(cultureId: String!, productId: String!): ProductEntity!
   productCultures(productId: String!): [CultureEntity!]!
   productCulture(productId: String!, cultureId: String!): CultureEntity!
+  cultureRecipes(cultureId: String!): [RecipeEntity!]!
+  cultureRecipe(cultureId: String!, recipeId: String!): RecipeEntity!
   findCountryByCultureIdCountryId(countryId: String!, cultureId: String!): CountryEntity!
   findCultureCountries(cultureId: String!): [CountryEntity!]!
   getCountryByRestaurant(restaurantId: String!): CountryEntity
@@ -88,6 +88,8 @@ type Mutation {
   createCountry(country: CountryDto!): CountryEntity!
   updateCountry(id: String!, country: CountryDto!): CountryEntity!
   deleteCountry(id: String!): CountryEntity!
+  updateRecipe(id: String!, recipe: RecipeDto!): RecipeEntity!
+  deleteRecipe(id: String!): String!
   createRestaurant(restaurant: RestaurantDto!): RestaurantEntity!
   updateRestaurant(id: String!, restaurant: RestaurantDto!): RestaurantEntity!
   deleteRestaurant(id: String!): String!
@@ -103,16 +105,14 @@ type Mutation {
   addProductCulture(cultureId: String!, productId: String!): ProductEntity!
   removeProductCulture(cultureId: String!, productId: String!): ProductEntity!
   updateProductCultures(culturesIds: [String!]!, productId: String!): ProductEntity!
+  createRecipe(cultureId: String!, recipe: RecipeDto!): CultureEntity!
+  updateCultureRecipes(cultureId: String!, recipes: [RecipeDto!]!): [CultureEntity!]!
+  deleteCultureRecipe(recipeId: String!, cultureId: String!): [CultureEntity!]!
   addCountryToCulture(cultureId: String!, countryId: String!): [CultureEntity!]!
   associateCountriesToCulture(cultureId: String!, countries: [CultureCountryDto!]!): [CultureEntity!]!
   deleteCountryFromCulture(cultureId: String!, countryId: String!): [CultureEntity!]!
   addCountryToRestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
   deleteCountryOfARestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
-  updateRecipe(id: String!, recipe: RecipeDto!): RecipeEntity!
-  deleteRecipe(id: String!): String!
-  createRecipe(cultureId: String!, recipe: RecipeDto!): CultureEntity!
-  updateCultureRecipes(cultureId: String!, recipes: [RecipeDto!]!): [CultureEntity!]!
-  deleteCultureRecipe(recipeId: String!, cultureId: String!): [CultureEntity!]!
 }
 
 input CultureDto {
@@ -131,6 +131,14 @@ input CountryDto {
   name: String!
 }
 
+input RecipeDto {
+  name: String!
+  description: String!
+  preparation: String!
+  url_photo: String!
+  url_video: String!
+}
+
 input RestaurantDto {
   name: String!
   city: String!
@@ -147,12 +155,4 @@ input CultureRestaurantDto {
 
 input CultureCountryDto {
   id: String!
-}
-
-input RecipeDto {
-  name: String!
-  description: String!
-  preparation: String!
-  url_photo: String!
-  url_video: String!
 }
