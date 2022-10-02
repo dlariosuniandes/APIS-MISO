@@ -6,9 +6,10 @@ import { RestaurantEntity } from '../restaurant/restaurant.entity';
 import { RestaurantModule } from '../restaurant/restaurant.module';
 import { CountryRestaurantController } from './country-restaurant.controller';
 import { CountryRestaurantService } from './country-restaurant.service';
+import { CountryRestaurantResolver } from './country-restaurant.resolver';
 
 @Module({
-  providers: [CountryRestaurantService],
+  providers: [CountryRestaurantService, CountryRestaurantResolver],
   imports: [
     TypeOrmModule.forFeature([RestaurantEntity, CountryEntity]),
     RestaurantModule,

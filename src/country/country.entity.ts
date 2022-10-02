@@ -3,7 +3,7 @@ import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
 import {
   Column,
   Entity,
-  ManyToOne,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -20,10 +20,11 @@ export class CountryEntity {
   @Column()
   name: string;
 
-  @Field((type) => CultureEntity)
-  @ManyToOne(() => CultureEntity, (culture) => culture.countries)
-  culture: CultureEntity;
+  @Field(() => [CultureEntity], { nullable: true })
+  @ManyToMany(() => CultureEntity, (culture) => culture.countries)
+  cultures: CultureEntity[];
 
+  @Field(() => [RestaurantEntity])
   @OneToMany(() => RestaurantEntity, (restaurant) => restaurant.country)
   restaurants: RestaurantEntity[];
 }
