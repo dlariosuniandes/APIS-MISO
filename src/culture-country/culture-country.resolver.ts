@@ -39,7 +39,7 @@ export class CultureCountryResolver {
   @Mutation(() => [CultureEntity])
   associateCountriesToCulture(
     @Args('cultureId') cultureId: string,
-    @Args('countries', { type: () => [CountryDto] })
+    @Args('countries', { type: () => [CultureCountryDto] })
     countriesDto: CultureCountryDto[],
   ): Promise<CultureEntity> {
     const countries = plainToInstance(CountryEntity, countriesDto);

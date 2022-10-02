@@ -55,6 +55,10 @@ type Query {
   michelineStars(restaurantId: String!): [MichelineStarEntity!]!
   findOneRestaurantByCulture(cultureId: String!, restaurantId: String!): RestaurantEntity
   findAllRestaurantByCulture(cultureId: String!): [RestaurantEntity!]
+  cultureProducts(cultureId: String!): [ProductEntity!]!
+  cultureProduct(cultureId: String!, productId: String!): ProductEntity!
+  productCultures(productId: String!): [CultureEntity!]!
+  productCulture(productId: String!, cultureId: String!): CultureEntity!
   findCountryByCultureIdCountryId(countryId: String!, cultureId: String!): CountryEntity!
   findCultureCountries(cultureId: String!): [CountryEntity!]!
   getCountryByRestaurant(restaurantId: String!): CountryEntity
@@ -64,6 +68,9 @@ type Mutation {
   createCulture(culture: CultureDto!): CultureEntity!
   updateCulture(id: String!, culture: CultureDto!): CultureEntity!
   deleteCulture(id: String!): CultureEntity!
+  createProduct(productDto: ProductDto!): ProductEntity!
+  updateProduct(productId: String!, productDto: ProductDto!): ProductEntity!
+  deleteProduct(productId: String!): String!
   createCountry(country: CountryDto!): CountryEntity!
   updateCountry(id: String!, country: CountryDto!): CountryEntity!
   deleteCountry(id: String!): CountryEntity!
@@ -76,8 +83,14 @@ type Mutation {
   addRestaurantToCulture(cultureId: String!, restaurantId: String!): CultureEntity!
   associateRestaurantsToCulture(cultureId: String!, restaurants: [CultureRestaurantDto!]!): CultureEntity!
   deleteRestaurantOfACulture(cultureId: String!, restaurantId: String!): String!
+  addCultureProduct(cultureId: String!, productId: String!): CultureEntity!
+  removeCultureProduct(cultureId: String!, productId: String!): CultureEntity!
+  updateCultureProducts(cultureId: String!, productsIds: [String!]!): CultureEntity!
+  addProductCulture(cultureId: String!, productId: String!): ProductEntity!
+  removeProductCulture(cultureId: String!, productId: String!): ProductEntity!
+  updateProductCultures(culturesIds: [String!]!, productId: String!): ProductEntity!
   addCountryToCulture(cultureId: String!, countryId: String!): [CultureEntity!]!
-  associateCountriesToCulture(cultureId: String!, countries: [CountryDto!]!): [CultureEntity!]!
+  associateCountriesToCulture(cultureId: String!, countries: [CultureCountryDto!]!): [CultureEntity!]!
   deleteCountryFromCulture(cultureId: String!, countryId: String!): [CultureEntity!]!
   addCountryToRestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
   deleteCountryOfARestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
@@ -86,6 +99,13 @@ type Mutation {
 input CultureDto {
   name: String!
   description: String!
+}
+
+input ProductDto {
+  name: String!
+  description: String!
+  story: String!
+  category: Float!
 }
 
 input CountryDto {
@@ -103,5 +123,9 @@ input MichelineStarDto {
 }
 
 input CultureRestaurantDto {
+  id: String!
+}
+
+input CultureCountryDto {
   id: String!
 }
