@@ -2,6 +2,27 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type MichelineStarEntity {
+  id: String!
+  starRating: String!
+  awardedDate: String!
+  restaurant: RestaurantEntity!
+}
+
+type RestaurantEntity {
+  id: String!
+  name: String!
+  city: String!
+  country: CountryEntity
+  michelineStars: [MichelineStarEntity!]
+}
+
+type CountryEntity {
+  id: String!
+  name: String!
+  restaurants: [RestaurantEntity!]!
+}
+
 type ProductEntity {
   id: String!
   name: String!
@@ -16,9 +37,45 @@ type CultureEntity {
   name: String!
   description: String!
   products: [ProductEntity!]!
+  restaurants: [RestaurantEntity!]
 }
 
 type Query {
   products(skip: Float = 0, amount: Float = 100): [ProductEntity!]!
   product(id: String!): ProductEntity!
+  restaurants: [RestaurantEntity!]!
+  restaurant(id: String!): RestaurantEntity!
+  michelineStar(restaurantId: String!, michelineStarId: String!): MichelineStarEntity!
+  michelineStars(restaurantId: String!): [MichelineStarEntity!]!
+  findOneRestaurantByCulture(cultureId: String!, restaurantId: String!): RestaurantEntity
+  findAllRestaurantByCulture(cultureId: String!): [RestaurantEntity!]
+  getCountryByRestaurant(restaurantId: String!): CountryEntity
+}
+
+type Mutation {
+  createRestaurant(restaurant: RestaurantDto!): RestaurantEntity!
+  updateRestaurant(id: String!, restaurant: RestaurantDto!): RestaurantEntity!
+  deleteRestaurant(id: String!): String!
+  createMichelineStar(restaurantId: String!, michelineStar: MichelineStarDto!): RestaurantEntity!
+  updateMichelineStar(restaurantId: String!, michelineStarId: String!, michelineStar: MichelineStarDto!): RestaurantEntity!
+  deleteMichelineStar(restaurantId: String!, michelineStarId: String!): String!
+  addRestaurantToCulture(cultureId: String!, restaurantId: String!): CultureEntity!
+  associateRestaurantsToCulture(cultureId: String!, restaurants: [CultureRestaurantDto!]!): CultureEntity!
+  deleteRestaurantOfACulture(cultureId: String!, restaurantId: String!): String!
+  addCountryToRestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
+  deleteCountryOfARestaurant(countryId: String!, restaurantId: String!): RestaurantEntity!
+}
+
+input RestaurantDto {
+  name: String!
+  city: String!
+}
+
+input MichelineStarDto {
+  starRating: String!
+  awardedDate: String!
+}
+
+input CultureRestaurantDto {
+  id: String!
 }

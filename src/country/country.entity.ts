@@ -3,22 +3,27 @@ import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
 import {
   Column,
   Entity,
-  ManyToOne,
+  ManyToMany,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
 
+@ObjectType()
 @Entity()
 export class CountryEntity {
+  @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Field()
   @Column()
   name: string;
 
-  @ManyToOne(() => CultureEntity, (culture) => culture.countries)
-  culture: CultureEntity;
+  @ManyToMany(() => CultureEntity, (culture) => culture.countries)
+  cultures: CultureEntity[];
 
+  @Field(() => [RestaurantEntity])
   @OneToMany(() => RestaurantEntity, (restaurant) => restaurant.country)
   restaurants: RestaurantEntity[];
 }
