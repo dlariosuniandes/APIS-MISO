@@ -22,7 +22,9 @@ export class CountryService {
   private async removeActualKeys() {
     const keys: string[] = await this.cacheManager.store.keys();
     const productsKeys = keys.filter((key) => key.search('countries.') === 0);
-    productsKeys.map(async (key) => await this.cacheManager.del(key));
+    for (const key of productsKeys) {
+      await this.cacheManager.del(key);
+    }
   }
 
   private messageExceptionCountryNotFound =

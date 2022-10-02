@@ -60,7 +60,9 @@ describe('CultureCountryService', () => {
     }
     countryList[0].cultures.push(cultureList[0]);
     countryList[1].cultures.push(cultureList[0]);
-    countryList.map(async (pr) => await countryRepository.save(pr));
+    for (const pr of countryList) {
+      await countryRepository.save(pr);
+    }
     for (let i = 0; i < countryList.length; i++) {
       countryList[i] = await countryProvider.findOne(countryList[i].id);
     }
@@ -68,7 +70,9 @@ describe('CultureCountryService', () => {
       cultureList[i] = await cultureProvider.findOne(cultureList[i].id);
     }
     cultureList[0].countries = [countryList[0], countryList[1]];
-    cultureList.map(async (cu) => await cultureRepository.save(cu));
+    for (const cu of cultureList) {
+      await cultureRepository.save(cu);
+    }
     for (let i = 0; i < cultureList.length; i++) {
       cultureList[i] = await cultureProvider.findOne(cultureList[i].id);
     }

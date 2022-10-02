@@ -22,7 +22,9 @@ export class CultureService {
   private async removeActualKeys(keyChars: string) {
     const keys: string[] = await this.cacheManager.store.keys();
     const productsKeys = keys.filter((key) => key.search(keyChars) === 0);
-    productsKeys.map(async (key) => await this.cacheManager.del(key));
+    for (const key of productsKeys) {
+      await this.cacheManager.del(key);
+    }
   }
 
   async findAll(skip = 0, amount = 50000): Promise<CultureEntity[]> {

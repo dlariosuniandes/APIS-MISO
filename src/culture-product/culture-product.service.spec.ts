@@ -58,7 +58,9 @@ describe('CultureProductService', () => {
     }
     productList[0].cultures = cultureList.slice(0, 2);
     productList[1].cultures = cultureList.slice(2, 5);
-    productList.map(async (pr) => await productRepository.save(pr));
+    for (const pr of productList) {
+      await productRepository.save(pr);
+    }
     for (let i = 0; i < productList.length; i++) {
       productList[i] = await productProvider.findOne(productList[i].id);
     }
@@ -70,7 +72,9 @@ describe('CultureProductService', () => {
       ...productList.slice(2, 4),
     ];
     cultureList[1].products = [...cultureList[1].products, productList[4]];
-    cultureList.map(async (cu) => await cultureRepository.save(cu));
+    for (const cu of cultureList) {
+      await cultureRepository.save(cu);
+    }
     for (let i = 0; i < cultureList.length; i++) {
       cultureList[i] = await cultureProvider.findOne(cultureList[i].id);
     }
