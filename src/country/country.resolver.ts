@@ -10,7 +10,7 @@ export class CountryResolver {
   constructor(private countryService: CountryService) {}
 
   @Query(() => [CountryEntity])
-  countrys(): Promise<CountryEntity[]> {
+  countries(): Promise<CountryEntity[]> {
     return this.countryService.findAll();
   }
 

@@ -47,7 +47,7 @@ type Query {
   culture(id: String!): CultureEntity!
   products(skip: Float = 0, amount: Float = 100): [ProductEntity!]!
   product(id: String!): ProductEntity!
-  countrys: [CountryEntity!]!
+  countries: [CountryEntity!]!
   country(id: String!): CountryEntity!
   restaurants: [RestaurantEntity!]!
   restaurant(id: String!): RestaurantEntity!
