@@ -33,10 +33,8 @@ export class RestaurantService {
         relations: ['michelineStars'],
       });
       await this.cacheManager.set(this.cacheKey, restaurants);
-      console.log('return data from db');
       return restaurants;
     }
-    console.log('return data from cache');
     return cached;
   }
 
