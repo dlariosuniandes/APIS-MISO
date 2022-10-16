@@ -8,6 +8,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { CultureEntity } from '../culture/culture.entity';
 import { CultureService } from '../culture/culture.service';
 import { ProductService } from '../product/product.service';
+import { CacheModule } from '@nestjs/common';
 
 describe('CultureProductService', () => {
   let cultureProductProvider: CultureProductService;
@@ -24,7 +25,7 @@ describe('CultureProductService', () => {
       name: faker.lorem.sentence(),
       description: faker.lorem.sentence(),
       story: faker.lorem.sentence(),
-      category: faker.datatype.number({ min: 0, max: 5 }),
+      category: faker.lorem.sentence(),
       cultures: [],
     };
     return productDict;
@@ -57,7 +58,9 @@ describe('CultureProductService', () => {
     }
     productList[0].cultures = cultureList.slice(0, 2);
     productList[1].cultures = cultureList.slice(2, 5);
-    productList.map(async (pr) => await productRepository.save(pr));
+    for (const pr of productList) {
+      await productRepository.save(pr);
+    }
     for (let i = 0; i < productList.length; i++) {
       productList[i] = await productProvider.findOne(productList[i].id);
     }
@@ -69,7 +72,9 @@ describe('CultureProductService', () => {
       ...productList.slice(2, 4),
     ];
     cultureList[1].products = [...cultureList[1].products, productList[4]];
-    cultureList.map(async (cu) => await cultureRepository.save(cu));
+    for (const cu of cultureList) {
+      await cultureRepository.save(cu);
+    }
     for (let i = 0; i < cultureList.length; i++) {
       cultureList[i] = await cultureProvider.findOne(cultureList[i].id);
     }
@@ -78,7 +83,7 @@ describe('CultureProductService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CultureProductService, ProductService, CultureService],
-      imports: [...TypeOrmTestingConfig()],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
     }).compile();
 
     cultureProductProvider = module.get<CultureProductService>(
@@ -202,9 +207,10 @@ describe('CultureProductService', () => {
   it('should associate cultures to product', async () => {
     const productId = productList[0].id;
     const newCultures: CultureEntity[] = await cultureProvider.findAll();
+    const newCulturesIds: string[] = newCultures.map((culture) => culture.id);
     await cultureProductProvider.associateCulturesToProduct(
       productId,
-      newCultures,
+      newCulturesIds,
     );
     const product = await productProvider.findOne(productId);
     expect(product.cultures.length).toEqual(5);
@@ -212,10 +218,11 @@ describe('CultureProductService', () => {
 
   it('should associate products to culture', async () => {
     const cultureId = cultureList[0].id;
-    const newProducts: ProductEntity[] = await productProvider.findAll();
+    const newProducts: ProductEntity[] = await productProvider.findAll(0, 5);
+    const newProductsIds: string[] = newProducts.map((product) => product.id);
     await cultureProductProvider.associateProductsToCulture(
       cultureId,
-      newProducts,
+      newProductsIds,
     );
     const culture = await cultureProvider.findOne(cultureId);
     expect(culture.products.length).toEqual(5);

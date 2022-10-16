@@ -1,23 +1,24 @@
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
+import { StarRating } from '../shared/enums/star-rating.enum';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Field, ObjectType } from '@nestjs/graphql';
 
-export enum StarRating {
-  ONE = 'One Star',
-  TWO = 'Two Star',
-  THREE = 'Three Stars',
-}
-
+@ObjectType()
 @Entity()
 export class MichelineStarEntity {
+  @Field()
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  @Field()
   @Column()
   starRating: StarRating;
 
+  @Field()
   @Column()
   awardedDate: string;
 
+  @Field(() => RestaurantEntity)
   @ManyToOne(() => RestaurantEntity, (restaurant) => restaurant.michelineStars)
   restaurant: RestaurantEntity;
 }

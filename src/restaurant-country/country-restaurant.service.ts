@@ -1,10 +1,14 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CountryEntity } from 'src/country/country.entity';
-import { CountryService } from 'src/country/country.service';
-import { RestaurantService } from 'src/restaurant/restaurant.service';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
+import { CountryEntity } from '../country/country.entity';
+import { CountryService } from '../country/country.service';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from 'src/shared/errors/business-errors';
 
 @Injectable()
 export class CountryRestaurantService {
@@ -23,7 +27,7 @@ export class CountryRestaurantService {
       restaurantId,
     );
     const country: CountryEntity = await this.countryService.findOne(countryId);
-    if (restaurant.country.id === restaurantId) {
+    if (restaurant.country && restaurant.country.id === countryId) {
       throw new ConflictException('Country already has this restaurant');
     }
     restaurant.country = country;
@@ -31,8 +35,8 @@ export class CountryRestaurantService {
   }
 
   async deleteCountryFromRestaurant(
-    countryId,
-    restaurantId,
+    countryId: string,
+    restaurantId: string,
   ): Promise<RestaurantEntity> {
     const restaurant: RestaurantEntity = await this.restaurantService.findOne(
       restaurantId,
@@ -45,5 +49,20 @@ export class CountryRestaurantService {
       restaurant.country = null;
     }
     return await this.restaurantRepository.save(restaurant);
+  }
+
+  async findCountryByRestaurantId(
+    restaurantId: string,
+  ): Promise<CountryEntity> {
+    const restaurant: RestaurantEntity = await this.restaurantService.findOneBy(
+      restaurantId,
+      ['country'],
+    );
+    if (!restaurant)
+      throw new BusinessLogicException(
+        'The restaurant with the given id was not found',
+        BusinessError.NOT_FOUND,
+      );
+    return restaurant.country;
   }
 }

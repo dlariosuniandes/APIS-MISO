@@ -2,12 +2,13 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CultureRestaurantService } from './culture-restaurant.service';
-import { TypeOrmTestingConfig } from 'src/shared/testing-utils/typeorm-testing-config';
-import { CultureService } from 'src/culture/culture.service';
-import { RestaurantService } from 'src/restaurant/restaurant.service';
-import { CultureEntity } from 'src/culture/culture.entity';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
+import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
+import { CultureService } from '../culture/culture.service';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import { CultureEntity } from '../culture/culture.entity';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
 import { faker } from '@faker-js/faker';
+import { CacheModule } from '@nestjs/common';
 
 describe('CultureRestaurantService', () => {
   let service: CultureRestaurantService;
@@ -19,7 +20,7 @@ describe('CultureRestaurantService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [...TypeOrmTestingConfig()],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
       providers: [CultureRestaurantService, CultureService, RestaurantService],
     }).compile();
 

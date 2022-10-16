@@ -1,11 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CultureEntity } from 'src/culture/culture.entity';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { BusinessError, BusinessLogicException } from 'src/shared/errors';
+import { CultureEntity } from '../culture/culture.entity';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from '../shared/errors/business-errors';
 import { Repository } from 'typeorm';
-import { RestaurantService } from 'src/restaurant/restaurant.service';
-import { CultureService } from 'src/culture/culture.service';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import { CultureService } from '../culture/culture.service';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class CultureRestaurantService {
@@ -14,9 +18,13 @@ export class CultureRestaurantService {
     private readonly cultureRepository: Repository<CultureEntity>,
     @InjectRepository(RestaurantEntity)
     private readonly restaurantRepository: Repository<RestaurantEntity>,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
     private restaurantService: RestaurantService,
     private cultureService: CultureService,
   ) {}
+
+  cacheKey = 'culture-restaurant';
 
   async addRestaurantToCulture(
     cultureId: string,
@@ -40,16 +48,62 @@ export class CultureRestaurantService {
     return await this.cultureRepository.save(culture);
   }
 
-  async findRestaurantsByCultureId(
+  async findRestaurantByCultureIdAndRestaurantId(
     cultureId: string,
-  ): Promise<RestaurantEntity[]> {
-    const culture: CultureEntity = await this.cultureService.findOne(cultureId);
+    restaurantId: string,
+  ): Promise<RestaurantEntity> {
+    const restaurant: RestaurantEntity =
+      await this.restaurantRepository.findOne({
+        where: { id: restaurantId },
+      });
+    if (!restaurant)
+      throw new BusinessLogicException(
+        'The Restaurant with the given id was not found',
+        BusinessError.NOT_FOUND,
+      );
+
+    const culture: CultureEntity = await this.cultureRepository.findOne({
+      where: { id: cultureId },
+      relations: ['restaurants'],
+    });
     if (!culture)
       throw new BusinessLogicException(
         'The Culture with the given id was not found',
         BusinessError.NOT_FOUND,
       );
-    return culture.restaurants;
+
+    const cultureRestaurant: RestaurantEntity = culture.restaurants.find(
+      (e) => e.id === restaurant.id,
+    );
+    if (!cultureRestaurant)
+      throw new BusinessLogicException(
+        'The artwork with the given id is not associated to the museum',
+        BusinessError.PRECONDITION_FAILED,
+      );
+    return cultureRestaurant;
+  }
+
+  async findRestaurantsByCultureId(
+    cultureId: string,
+  ): Promise<RestaurantEntity[]> {
+    const cached = await this.cacheManager.get<RestaurantEntity[]>(
+      this.cacheKey + '_' + cultureId,
+    );
+
+    if (!cached) {
+      const culture = await this.cultureService.findOne(cultureId);
+      if (!culture)
+        throw new BusinessLogicException(
+          'The Culture with the given id was not found',
+          BusinessError.NOT_FOUND,
+        );
+      await this.cacheManager.set(
+        this.cacheKey + '_' + cultureId,
+        culture.restaurants,
+      );
+      return culture.restaurants;
+    }
+    return cached;
   }
 
   async associateRestaurantsToCulture(

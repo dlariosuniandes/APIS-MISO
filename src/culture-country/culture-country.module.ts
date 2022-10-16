@@ -4,14 +4,17 @@ import { CountryEntity } from 'src/country/country.entity';
 import { CountryModule } from 'src/country/country.module';
 import { CultureEntity } from 'src/culture/culture.entity';
 import { CultureModule } from 'src/culture/culture.module';
+import { CultureCountryController } from './culture-country.controller';
 import { CultureCountryService } from './culture-country.service';
+import { CultureCountryResolver } from './culture-country.resolver';
 
 @Module({
-  providers: [CultureCountryService],
+  providers: [CultureCountryService, CultureCountryResolver],
   imports: [
     TypeOrmModule.forFeature([CultureEntity, CountryEntity]),
     CultureModule,
     CountryModule,
   ],
+  controllers: [CultureCountryController],
 })
 export class CultureCountryModule {}

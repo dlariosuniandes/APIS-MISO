@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { ProductEntity } from './product.entity';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CategoryEnum } from '../enums/category.enum';
+import { CacheModule } from '@nestjs/common';
 
 describe('ProductService', () => {
   let provider: ProductService;
@@ -18,7 +18,7 @@ describe('ProductService', () => {
       name: faker.lorem.sentence(),
       description: faker.lorem.sentence(),
       story: faker.lorem.sentence(),
-      category: faker.datatype.number({ min: 0, max: 5 }),
+      category: faker.lorem.sentence(),
     };
     return productDict;
   };
@@ -35,7 +35,10 @@ describe('ProductService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [ProductService],
-      imports: [...TypeOrmTestingConfig()],
+      imports: [
+        ...TypeOrmTestingConfig(),
+        CacheModule.register({ ttl: 600, isGlobal: true }),
+      ],
     }).compile();
 
     provider = module.get<ProductService>(ProductService);
@@ -50,7 +53,7 @@ describe('ProductService', () => {
   });
 
   it('products list length should be 5', async () => {
-    const products: ProductEntity[] = await provider.findAll();
+    const products: ProductEntity[] = await provider.findAll(0, 5);
     expect(products).not.toBeNull();
     expect(products.length).toBe(5);
   });
@@ -94,7 +97,7 @@ describe('ProductService', () => {
 
   it('should delete an existing product', async () => {
     await provider.deleteOne(productList[0].id);
-    const products: ProductEntity[] = await provider.findAll();
+    const products: ProductEntity[] = await provider.findAll(0, 5);
     expect(products.length).toEqual(4);
   });
 

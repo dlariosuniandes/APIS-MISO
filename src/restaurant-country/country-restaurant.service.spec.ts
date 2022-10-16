@@ -4,11 +4,12 @@ import { Repository } from 'typeorm';
 import { faker } from '@faker-js/faker';
 import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CultureEntity } from 'src/culture/culture.entity';
-import { CountryEntity } from 'src/country/country.entity';
-import { RestaurantService } from 'src/restaurant/restaurant.service';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { CountryService } from 'src/country/country.service';
+import { CultureEntity } from '../culture/culture.entity';
+import { CountryEntity } from '../country/country.entity';
+import { RestaurantService } from '../restaurant/restaurant.service';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import { CountryService } from '../country/country.service';
+import { CacheModule } from '@nestjs/common';
 
 describe('CountryRestaurantService', () => {
   let countryRestaurantProvider: CountryRestaurantService;
@@ -23,7 +24,7 @@ describe('CountryRestaurantService', () => {
     const country: CountryEntity = {
       id: faker.datatype.uuid(),
       name: faker.lorem.sentence(),
-      culture: {} as CultureEntity,
+      cultures: [],
       restaurants: [],
     };
     return country;
@@ -68,7 +69,7 @@ describe('CountryRestaurantService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CountryRestaurantService, CountryService, RestaurantService],
-      imports: [...TypeOrmTestingConfig()],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
     }).compile();
     countryRestaurantProvider = module.get<CountryRestaurantService>(
       CountryRestaurantService,
@@ -106,5 +107,15 @@ describe('CountryRestaurantService', () => {
     const restaurantDeleted: RestaurantEntity =
       await restaurantProvider.findOne(restaurant.id);
     expect(restaurantDeleted.country).toBeFalsy();
+  });
+
+  it('should get country by restaurant id', async () => {
+    const country = await countryRestaurantProvider.findCountryByRestaurantId(
+      restaurant.id,
+    );
+    const findResult: RestaurantEntity = await restaurantProvider.findOne(
+      restaurant.id,
+    );
+    expect(findResult.country).toEqual(country);
   });
 });

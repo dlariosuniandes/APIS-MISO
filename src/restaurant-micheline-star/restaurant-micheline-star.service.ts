@@ -1,11 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MichelineStarEntity } from 'src/micheline-star/micheline-star.entity';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { RestaurantService } from 'src/restaurant/restaurant.service';
+import { MichelineStarEntity } from '../micheline-star/micheline-star.entity';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import { RestaurantService } from '../restaurant/restaurant.service';
 import { Repository } from 'typeorm';
-import { BusinessError, BusinessLogicException } from 'src/shared/errors';
-import { MichelineStarService } from 'src/micheline-star/micheline-star.service';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from '../shared/errors/business-errors';
+import { MichelineStarService } from '../micheline-star/micheline-star.service';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class RestaurantMichelineStarService {
@@ -16,24 +20,28 @@ export class RestaurantMichelineStarService {
     @InjectRepository(MichelineStarEntity)
     private readonly michelineStarRepository: Repository<MichelineStarEntity>,
 
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
+
     private readonly serviceRestaurant: RestaurantService,
 
     private readonly serviceMichelineStar: MichelineStarService,
   ) {}
 
+  cacheKey = 'restaurant-micheline-star';
+
   async addMichelineStarToRestaurant(
     restaurantId: string,
-    MichelineStarEntity: MichelineStarEntity,
+    michelineStar: MichelineStarEntity,
   ): Promise<RestaurantEntity> {
     const restaurant: RestaurantEntity = await this.serviceRestaurant.findOneBy(
       restaurantId,
-      ['michelineStars'],
     );
-    restaurant.michelineStars = [
-      ...restaurant.michelineStars,
-      MichelineStarEntity,
-    ];
-    return await this.restaurantRepository.save(restaurant);
+    michelineStar.restaurant = restaurant;
+    await this.serviceMichelineStar.create(michelineStar);
+    return await this.serviceRestaurant.findOneBy(restaurantId, [
+      'michelineStars',
+    ]);
   }
 
   async findMichelineStarByRestaurantIdAndMichelineStarId(
@@ -54,11 +62,19 @@ export class RestaurantMichelineStarService {
   async findMichelineStarsByRestaurantId(
     restaurantId: string,
   ): Promise<MichelineStarEntity[]> {
-    const restaurant: RestaurantEntity = await this.serviceRestaurant.findOneBy(
-      restaurantId,
-      ['michelineStars'],
+    const cached = await this.cacheManager.get<MichelineStarEntity[]>(
+      this.cacheKey + '_' + restaurantId,
     );
-    return restaurant.michelineStars;
+
+    if (!cached) {
+      const restaurant = await this.serviceRestaurant.findOneBy(restaurantId, ['michelineStars']);
+      await this.cacheManager.set(
+        this.cacheKey + '_' + restaurantId,
+        restaurant.michelineStars,
+      );
+      return restaurant.michelineStars;
+    }
+    return cached;
   }
 
   async updateMichelineStarOfARestaurant(
@@ -77,7 +93,9 @@ export class RestaurantMichelineStarService {
       ...persistedMichelineStar,
       ...michelineStar,
     });
-    return restaurant;
+    return await this.serviceRestaurant.findOneBy(restaurantId, [
+      'michelineStars',
+    ]);
   }
 
   async deleteMichelineStarOfARestaurant(

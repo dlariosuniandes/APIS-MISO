@@ -1,0 +1,936 @@
+{
+	"info": {
+		"_postman_id": "285a86c3-a10d-4995-aa9f-0a216ca09a4d",
+		"name": "Cultures - Recipes",
+		"description": "Representa las diferentes recetas representativas que conforman cada cultura gastronómica.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Add a recipe to a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var data = pm.response.json()\r",
+							"pm.globals.set(\"recipeId\", data.recipes[0].id);\r",
+							"\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"   pm.response.to.have.status(201);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkFkbWluIiwic3ViIjoiYmI0NjNiOGItYjc2Yy00ZjZhLTk3MjYtNjVhYjU3MzBiNjliIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNjYzOTAxMjg1fQ.1GcaF2HaRQskzzHrxfczKvqSXXyMsQgxOirStZ4NBKo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Arepa con queso\",\r\n    \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n    \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\r\n    \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n    \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{cultureId}}",
+						"recipes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add a recipe to a culture",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Arepa con queso\",\r\n    \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n    \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\r\n    \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n    \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{cultureId}}",
+								"recipes"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\r\n    \"name\": \"Cultura Mexicana\",\r\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\",\r\n    \"recipes\": [\r\n            {\r\n                \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\r\n                \"name\": \"Arepa con queso\",\r\n                \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n                \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén  bien doradas de los dos lados\",\r\n                \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n                \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n            }\r\n        ],\r\n    \"products\": []\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Add a recipe to an invalid culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test('Get expected error message', function() {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql('The culture with the given id was not found');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Arepa con queso\",\r\n    \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n    \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\r\n    \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n    \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"00000000-0000-0000-0000-000000000000",
+						"recipes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Add a recipe to an invalid culture",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Arepa con queso\",\r\n    \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n    \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\r\n    \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n    \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"00000000-0000-0000-0000-000000000000",
+								"recipes"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get a recipe of a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/{{recipeId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{cultureId}}",
+						"recipes",
+						"{{recipeId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get a recipe of a culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/{{recipeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{cultureId}}",
+								"recipes",
+								"{{recipeId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\r\n    \"name\": \"Arepa con queso\",\r\n    \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n    \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\r\n    \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n    \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Get a recipe of an invalid culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test('Get expected error message', function() {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql('The culture with the given id was not found');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes/{{recipeId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"00000000-0000-0000-0000-000000000000",
+						"recipes",
+						"{{recipeId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get a recipe of an invalid culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes/{{recipeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"00000000-0000-0000-0000-000000000000",
+								"recipes",
+								"{{recipeId}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get an invalid recipe of a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test('Get expected error message', function() {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql('The recipe with the given id was not found');\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{cultureId}}",
+						"recipes",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get an invalid recipe of a culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{cultureId}}",
+								"recipes",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"Recipe with the given id was not found\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Get a non-associated recipe to a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 412', function() {\r",
+							"    pm.response.to.have.status(412);\r",
+							"});\r",
+							"\r",
+							"pm.test('Get expected error message', function() {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql('recipe with the given id is not associated to that culture');\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/{{recipeId2}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{cultureId}}",
+						"recipes",
+						"{{recipeId2}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get a non-associated recipe to a culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/{{recipeId_2}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{cultureId}}",
+								"recipes",
+								"{{recipeId_2}}"
+							]
+						}
+					},
+					"status": "Precondition Failed",
+					"code": 412,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 412,\n    \"message\": \"Recipe with the given id is not associated to the culture\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get all recipes of a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{cultureId}}",
+						"recipes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get all recipes of a culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{cultureId}}",
+								"recipes"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\n        \"name\": \"Arepa con queso\",\n        \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\n        \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\n        \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\n        \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get all recipes of an invalid culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test('Get expected error message', function() {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql('The culture with the given id was not found');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"00000000-0000-0000-0000-000000000000",
+						"recipes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get all recipes of an invalid culture",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"00000000-0000-0000-0000-000000000000",
+								"recipes"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n   \"statusCode\": 404,\n   \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Update a recipe of a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 200', function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"id\": \"3fc11e97-8855-42ee-a010-fe1bf3180bbe\",\r\n        \"name\": \"Arepa con queso doble crema\",\r\n        \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n        \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\r\n        \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n        \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{cultureId}}",
+						"recipes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update a recipe of a culture",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"name\": \"Arepa con queso doble crema\",\r\n        \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n        \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\r\n        \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n        \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/{{recipeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{cultureId}}",
+								"recipes",
+								"{{recipeId}}"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\r\n    \"name\": \"Cultura Mexicana\",\r\n    \"description\": \"La gastronomía mexicana es el conjunto de platillos y técnicas culinarias de México que forman parte de las tradiciones y vida común de sus habitantes, enriquecida por las aportaciones de las distintas regiones del país, que deriva de la experiencia del México prehispánico con la cocina europea, entre otras. El 16 de noviembre del año 2010, la gastronomía mexicana fue reconocida como Patrimonio Cultural Inmaterial de la Humanidad por la Unesco.\",\r\n    \"recipes\": [\r\n            {\r\n                \"id\": \"48a9ab90-1276-11ed-861d-0242ac120002\",\r\n                \"name\": \"Arepa con queso doble crema\",\r\n                \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n                \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén  bien doradas de los dos lados\",\r\n                \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n                \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n            }\r\n        ],\r\n    \"products\": []\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Update a recipe of an invalid culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test('Get expected error message', function() {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql('The culture with the given id was not found');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    {\r\n        \"name\": \"Arepa con queso doble crema\",\r\n        \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n        \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\r\n        \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n        \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n    }\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"00000000-0000-0000-0000-000000000000",
+						"recipes"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Update a recipe of an invalid culture",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"name\": \"Arepa con queso doble crema\",\r\n        \"description\": \"Las arepas colombianas son uno de los platos insignia del país. Se dice que la receta original a base de maíz molido y cocido proviene de los indígenas. Sin embrago, con la llegada de los colonizadores la receta se fue modificando con rellenos, y otros ingredientes provenientes de España, que se encargaron de enriquecer su sabor.\",\r\n        \"preparation\": \"1 Lavar los granos de maíz blanco pisado y ponerlos a remojar en un bol o recipiénte hondo, llenándolo de agua hasta que todos los granos estén sumergidos. 2 Luego de esas 10 horas de remojo, enjuagar nuevamente los granos de maíz y colocarlos en una olla con agua, que vamos a llevar a hervir durante 1 hora y media o dos aproximadamente (hasta que esté bien tierno). 3 Ahora vamos a colar el maíz. Una vez que estén colados los vamos a pasar a un plato y volver a dejarlos reposar varios minutos, tienen que estár 100% secos. 3 Con una procesadora o mixer vamos a triturar el maíz. Van a ver que a medida que lo procesan se va formando una especie de pasta o puré. 4 Dado que la masa debe estar lo más fina posible para que las arepas queden con buena consistencia, luego de procesar el maíz vamos a pisar el puré obtenido con un pisapapas (de forma similar a como hacemos el puré tradicional). Repetir varias veces hasta que la masa quede lisa. 5 Agregar sal y un buen chorro de aceite de oliva. Mi cuñada colombiana en ésta parte le agrega queso rallado, pero es opcional. Ya tenemos la masa lista!. 5 Reservar a un lado un bol o recipiente con agua. Vamos a utilizar el agua para mojarnos las manos mientras vamos armando las arepas, y el agua evitará que la masa se nos pegue. 5 Armar las arepas dándole una forma similar a la de una hamburguesa (puede variar a su gusto). Si quieren rellenarlas con queso, simplemente agregan en el medio una pequeña feta de queso. 6.Para cocinarlas, las llevamos a la plancha o si no tienen pueden hacerlo en una sartén. Si las arepas están congeladas, esperar unas 7-8 minutos antes de darlas vueltas. Cocinarlas vuelta y vuelta hasta que estén bien doradas de los dos lados\",\r\n        \"url_photo\": \"https://blog.redbus.co/wp-content/uploads/2019/12/Colombian-Arepas-768x576.jpg\",\r\n        \"url_video\": \"https://www.youtube.com/watch?v=MhzjQesj2TA\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"00000000-0000-0000-0000-000000000000",
+								"recipes"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\r\n    \"statusCode\": 404,\r\n    \"message\": \"The culture with the given id was not found\"\r\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete a recipe of a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 204', function() {\r",
+							"    pm.response.to.have.status(204);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/{{recipeId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{cultureId}}",
+						"recipes",
+						"{{recipeId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete a recipe of a culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/{{recipeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{cultureId}}",
+								"recipes",
+								"{{recipeId}}"
+							]
+						}
+					},
+					"status": "No Content",
+					"code": 204,
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Delete a recipe of an invalid culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test('Get expected error message', function() {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql('The culture with the given id was not found');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes/{{recipeId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"00000000-0000-0000-0000-000000000000",
+						"recipes",
+						"{{recipeId}}"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete a recipe of an invalid culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/00000000-0000-0000-0000-000000000000/recipes/{{recipeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"00000000-0000-0000-0000-000000000000",
+								"recipes",
+								"{{recipeId}}"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The culture with the given id was not found\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete an invalid recipe to a culture",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test('Status code is 404', function() {\r",
+							"    pm.response.to.have.status(404);\r",
+							"});\r",
+							"\r",
+							"pm.test('Get expected error message', function() {\r",
+							"    var data = pm.response.json();\r",
+							"    pm.expect(data.message).to.eql('The recipe with the given id was not found');\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/00000000-0000-0000-0000-000000000000",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cultures",
+						"{{cultureId}}",
+						"recipes",
+						"00000000-0000-0000-0000-000000000000"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Delete an invalid recipe to a culture",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/cultures/{{cultureId}}/recipes/00000000-0000-0000-0000-000000000000",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"cultures",
+								"{{cultureId}}",
+								"recipes",
+								"00000000-0000-0000-0000-000000000000"
+							]
+						}
+					},
+					"status": "Not Found",
+					"code": 404,
+					"_postman_previewlanguage": "json",
+					"header": null,
+					"cookie": [],
+					"body": "{\n    \"statusCode\": 404,\n    \"message\": \"The recipe with the given id was not found\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": " http://localhost:3000/api/v1"
+		},
+		{
+			"key": "recipeId",
+			"value": "4a4031f8-6c00-4f13-8bfa-ec734a61c190"
+		},
+		{
+			"key": "cultureId",
+			"value": "8bf4f2b5-7248-49ca-a7df-1a12e3204928"
+		},
+		{
+			"key": "recipeId2",
+			"value": "ab092340-aeda-4ead-80b3-875e355a8c77"
+		}
+	]
+}

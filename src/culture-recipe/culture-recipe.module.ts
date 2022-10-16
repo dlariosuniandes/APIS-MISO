@@ -5,13 +5,16 @@ import { CultureModule } from 'src/culture/culture.module';
 import { RecipeEntity } from 'src/recipe/recipe.entity';
 import { RecipeModule } from 'src/recipe/recipe.module';
 import { CultureRecipeService } from './culture-recipe.service';
+import { CultureRecipeController } from './culture-recipe.controller';
+import { CultureRecipeResolver } from './culture-recipe.resolver';
 
 @Module({
-  providers: [CultureRecipeService],
+  providers: [CultureRecipeService, CultureRecipeResolver],
   imports: [
     TypeOrmModule.forFeature([RecipeEntity, CultureEntity]),
     RecipeModule,
     CultureModule,
   ],
+  controllers: [CultureRecipeController],
 })
 export class CultureRecipeModule {}

@@ -1,22 +1,38 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  CACHE_MANAGER,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BusinessError, BusinessLogicException } from 'src/shared/errors';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from 'src/shared/errors/business-errors';
 import { Repository } from 'typeorm';
 import { RecipeEntity } from './recipe.entity';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class RecipeService {
+  cacheKey = 'recipes';
   constructor(
     @InjectRepository(RecipeEntity)
     private readonly recipeRepository: Repository<RecipeEntity>,
+    @Inject(CACHE_MANAGER)
+    private readonly cacheManager: Cache,
   ) {}
 
-  // async create(recipe: RecipeEntity): Promise<RecipeEntity> {
-  //   return await this.recipeRepository.save(recipe);
-  // }
-
   async findAll(): Promise<RecipeEntity[]> {
-    return await this.recipeRepository.find();
+    const cached: RecipeEntity[] = await this.cacheManager.get<RecipeEntity[]>(
+      this.cacheKey,
+    );
+    if (!cached) {
+      const recipes: RecipeEntity[] = await this.recipeRepository.find();
+      await this.cacheManager.set(this.cacheKey, recipes);
+      return recipes;
+    }
+    return cached;
   }
 
   async findOne(id: string): Promise<RecipeEntity> {
@@ -36,9 +52,7 @@ export class RecipeService {
       relations: ['culture'],
     });
     if (!recipeDB) {
-      throw new NotFoundException(
-        'The culture with the given id was not found',
-      );
+      throw new NotFoundException('The recipe with the given id was not found');
     }
     return await this.recipeRepository.save({ ...recipeDB, ...recipe });
   }
@@ -50,7 +64,7 @@ export class RecipeService {
     });
     if (!recipeDB) {
       throw new BusinessLogicException(
-        'The culture with the given id was not found',
+        'The recipe with the given id was not found',
         BusinessError.NOT_FOUND,
       );
     }

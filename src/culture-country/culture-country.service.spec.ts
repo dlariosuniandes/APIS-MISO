@@ -8,6 +8,12 @@ import { CultureEntity } from 'src/culture/culture.entity';
 import { CultureService } from 'src/culture/culture.service';
 import { CountryService } from 'src/country/country.service';
 import { CountryEntity } from 'src/country/country.entity';
+import { plainToInstance } from 'class-transformer';
+import {
+  CacheModule,
+  ConflictException,
+  PreconditionFailedException,
+} from '@nestjs/common';
 
 describe('CultureCountryService', () => {
   let cultureCountryProvider: CultureCountryService;
@@ -19,9 +25,11 @@ describe('CultureCountryService', () => {
   let cultureList: CultureEntity[];
 
   const generateCountry = () => {
-    const countryDict: object = {
+    const countryDict: CountryEntity = {
       id: faker.datatype.uuid(),
-      name: faker.lorem.sentence(),
+      name: faker.address.country(),
+      cultures: [],
+      restaurants: [],
     };
     return countryDict;
   };
@@ -42,17 +50,19 @@ describe('CultureCountryService', () => {
     cultureList = [];
     for (let i = 0; i < 5; i++) {
       const country: CountryEntity = await countryRepository.save(
-        Object.assign(new CountryEntity(), generateCountry()),
+        generateCountry(),
       );
       const culture: CultureEntity = await cultureRepository.save(
-        Object.assign(new CultureEntity(), generateCulture()),
+        plainToInstance(CultureEntity, generateCulture()),
       );
       countryList.push(country);
       cultureList.push(culture);
     }
-    countryList[0].culture = cultureList[0];
-    countryList[1].culture = cultureList[0];
-    countryList.map(async (pr) => await countryRepository.save(pr));
+    countryList[0].cultures.push(cultureList[0]);
+    countryList[1].cultures.push(cultureList[0]);
+    for (const pr of countryList) {
+      await countryRepository.save(pr);
+    }
     for (let i = 0; i < countryList.length; i++) {
       countryList[i] = await countryProvider.findOne(countryList[i].id);
     }
@@ -60,7 +70,9 @@ describe('CultureCountryService', () => {
       cultureList[i] = await cultureProvider.findOne(cultureList[i].id);
     }
     cultureList[0].countries = [countryList[0], countryList[1]];
-    cultureList.map(async (cu) => await cultureRepository.save(cu));
+    for (const cu of cultureList) {
+      await cultureRepository.save(cu);
+    }
     for (let i = 0; i < cultureList.length; i++) {
       cultureList[i] = await cultureProvider.findOne(cultureList[i].id);
     }
@@ -69,7 +81,7 @@ describe('CultureCountryService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [CultureCountryService, CultureService, CountryService],
-      imports: [...TypeOrmTestingConfig()],
+      imports: [...TypeOrmTestingConfig(), CacheModule.register()],
     }).compile();
     cultureCountryProvider = module.get<CultureCountryService>(
       CultureCountryService,
@@ -106,11 +118,12 @@ describe('CultureCountryService', () => {
     const cultureId = cultureList[0].id;
     try {
       await cultureCountryProvider.addCountryToCulture(countryId, cultureId);
-    } catch {
+    } catch (e) {
       const modifiedCulture: CultureEntity = await cultureProvider.findOne(
         cultureId,
       );
       expect(modifiedCulture.countries.length).toEqual(2);
+      expect(e instanceof ConflictException).toBeTruthy();
     }
   });
 
@@ -131,5 +144,41 @@ describe('CultureCountryService', () => {
     await cultureCountryProvider.deleteCountryFromCulture(countryId, cultureId);
     const culture: CultureEntity = await cultureProvider.findOne(cultureId);
     expect(culture.countries.length).toEqual(1);
+  });
+
+  it('should obtain all culture countries', async () => {
+    const cultureId = cultureList[0].id;
+    const storedCultureCountries =
+      await cultureCountryProvider.findCultureCountries(cultureId);
+    expect(cultureList[0].countries.length).toEqual(
+      storedCultureCountries.length,
+    );
+    expect(storedCultureCountries.map((culture) => culture.id)).toEqual(
+      cultureList[0].countries.map((culture) => culture.id),
+    );
+  });
+
+  it('should obtain one specific country from culture', async () => {
+    const cultureId = cultureList[0].id;
+    const countryId = cultureList[0].countries[0].id;
+    const storedCultureCountry: CountryEntity =
+      await cultureCountryProvider.findCountryByCultureIdCountryId(
+        countryId,
+        cultureId,
+      );
+    expect(storedCultureCountry.id).toEqual(countryId);
+  });
+
+  it('should raise an exception if Country Id cannot be found within culture countries', async () => {
+    const cultureId = cultureList[0].id;
+    const countryId = faker.datatype.uuid();
+    try {
+      await cultureCountryProvider.findCountryByCultureIdCountryId(
+        countryId,
+        cultureId,
+      );
+    } catch (e) {
+      expect(e instanceof PreconditionFailedException).toBeTruthy();
+    }
   });
 });

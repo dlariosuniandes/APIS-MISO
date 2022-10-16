@@ -2,7 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MichelineStarEntity } from './micheline-star.entity';
 import { Repository } from 'typeorm';
-import { BusinessError, BusinessLogicException } from 'src/shared/errors';
+import {
+  BusinessError,
+  BusinessLogicException,
+} from '../shared/errors/business-errors';
 
 @Injectable()
 export class MichelineStarService {
@@ -13,6 +16,12 @@ export class MichelineStarService {
 
   private messageExcepetionMichelineStarNotFound =
     'The Micheline Star with the given id was not found';
+
+  async create(
+    michelineStar: MichelineStarEntity,
+  ): Promise<MichelineStarEntity> {
+    return await this.michelineStarRepository.save(michelineStar);
+  }
 
   async findOneBy(id: string): Promise<MichelineStarEntity> {
     const michelineStar: MichelineStarEntity =

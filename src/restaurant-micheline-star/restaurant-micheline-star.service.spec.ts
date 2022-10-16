@@ -1,11 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import {
-  MichelineStarEntity,
-  StarRating,
-} from 'src/micheline-star/micheline-star.entity';
-import { RestaurantEntity } from 'src/restaurant/restaurant.entity';
-import { TypeOrmTestingConfig } from 'src/shared/testing-utils/typeorm-testing-config';
+import { RestaurantEntity } from '../restaurant/restaurant.entity';
+import { MichelineStarEntity } from '../micheline-star/micheline-star.entity';
+import { StarRating } from '../shared/enums/star-rating.enum';
+import { TypeOrmTestingConfig } from '../shared/testing-utils/typeorm-testing-config';
 import { Repository } from 'typeorm';
 import { RestaurantMichelineStarService } from './restaurant-micheline-star.service';
 import { RestaurantService } from '../restaurant/restaurant.service';
