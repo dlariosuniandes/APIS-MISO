@@ -58,6 +58,39 @@ export class CountryService {
     return cached;
   }
 
+  async findAll3(skip = 0, amount = 50000): Promise<CountryEntity[]> {
+    const cacheKey = `countries.skip_${skip}.amount_${amount}`;
+    const cached: CountryEntity[] = await this.cacheManager.get(cacheKey);
+    if (!cached) {
+      const countries = await this.countryRepository.find({
+        skip: skip,
+        take: amount,
+      });
+      await this.cacheManager.set(cacheKey, countries);
+      return countries;
+    }
+    return cached;
+  }
+
+  async findAll4(skip = 0, amount = 50000): Promise<CountryEntity[]> {
+    const cacheKey = `countries.skip_${skip}.amount_${amount}`;
+    const cached: CountryEntity[] = await this.cacheManager.get(cacheKey);
+    if (!cached) {
+      const countries = await this.countryRepository.find({
+        skip: skip,
+        take: amount,
+      });
+      await this.cacheManager.set(cacheKey, countries);
+      return countries;
+    }
+    return cached;
+  }
+
+  findAll5(): void {
+    console.log('new function');
+    const countries = this.countryRepository.find();
+  }
+
   async findOne(id: string): Promise<CountryEntity> {
     return await this.findOneBy(id);
   }
