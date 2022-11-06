@@ -19,12 +19,12 @@ jobs:
           node-version: '16'
       - name: Install dependencies
         run: npm i
+      - name: pruebas+coverage
+        id: pruebas
+        run: | 
+         npm run test:cov
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - name: pruebas+coverage
-        id: pruebas
-        run: | 
-         npm run test:cov
